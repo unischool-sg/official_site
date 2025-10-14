@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ================================
+// Enums
+// ================================
+
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum TokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+// ================================
+// User & Authentication
+// ================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime? // メール認証済みの日時
+  password      String    // ハッシュ化されたパスワード（bcryptで最大72文字）
+  name          String    @default("unknown")
+  role          UserRole  @default(MEMBER)
+  
+  // タイムスタンプ
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? // ソフトデリート用
+
+  // リレーション
+  profile  Profile?
+  blogs    Blog[]
+  tokens   VerificationToken[]
+  sessions Session[]
+  loginHistory LoginHistory[]
+
+  @@map("users")
+  @@index([email])
+  @@index([deletedAt])
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+  bio       String?  @db.Text // 自己紹介（長文対応）
+  avatarUrl String?  @db.VarChar(500) // アバターURL（長さ制限）
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("profiles")
+  @@index([userId])
+}
+
+// ================================
+// Content
+// ================================
+
+model Blog {
+  id        String   @id @default(cuid())
+  title     String   @db.VarChar(200)
+  content   String   @db.Text // Markdown/HTML対応
+  published Boolean  @default(false) // 公開/非公開
+  slug      String?  @unique // SEO用のURL
+  
+  // 作者（UserとのみRelation - Profileとの重複を削除）
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  
+  // タイムスタンプ
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  publishedAt DateTime?
+  deletedAt DateTime? // ソフトデリート
+
+  @@map("blogs")
+  @@index([authorId])
+  @@index([published])
+  @@index([createdAt(sort: Desc)]) // 新着順ソート用
+  @@index([slug])
+  @@index([deletedAt])
+}
+
+// ================================
+// Authentication Tokens
+// ================================
+
+model VerificationToken {
+  id        String    @id @default(cuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  token     String    @unique @default(cuid())
+  type      TokenType
+  expires   DateTime  // アプリケーション側で有効期限を設定
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, token])
+  @@map("verification_tokens")
+  @@index([userId])
+  @@index([expires]) // 期限切れトークンのクリーンアップ用
+  @@index([type])
+}
+
+// ================================
+// Sessions
+// ================================
+
+model Session {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  sessionToken String   @unique @default(cuid())
+  expires      DateTime // アプリケーション側で30日後を設定
+  
+  // 追加情報
+  userAgent    String?  @db.Text // ブラウザ情報
+  ipAddress    String?  @db.VarChar(45) // IPv6対応
+  
+  createdAt    DateTime @default(now())
+  lastActivity DateTime @default(now()) // 最終アクティビティ時刻
+
+  @@map("sessions")
+  @@index([userId])
+  @@index([expires]) // 期限切れセッションのクリーンアップ用
+  @@index([sessionToken])
+  @@index([lastActivity])
+}
+
+// ================================
+// Audit & Security
+// ================================
+
+model LoginHistory {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  
+  success   Boolean  // ログイン成功/失敗
+  ipAddress String?  @db.VarChar(45)
+  userAgent String?  @db.Text
+  
+  createdAt DateTime @default(now())
+
+  @@map("login_history")
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
+  @@index([success])
+}
