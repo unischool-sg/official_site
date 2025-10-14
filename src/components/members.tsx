@@ -61,7 +61,7 @@ export function Members() {
                 name: "田中 博悠", 
                 href: "https://twitter.com/tanahiro2010",
                 role: "Chief Programmer", 
-                image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg" 
+                image: "https://pbs.twimg.com/profile_images/1945969669770280960/yNmM0voi_400x400.jpg" 
             },
             { 
                 name: "吉岡 和也", 
