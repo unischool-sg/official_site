@@ -1,5 +1,6 @@
 "use client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, router: AppRouterInstance) {
     e.preventDefault();
     setIsLoading(true);
@@ -25,6 +26,7 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
         console.log("Login successful:", data);
         // リダイレクトなどの処理をここに追加
         router.push("/admin"); // 例: ダッシュボードページへリダイレクト
+        router.refresh(); // セッション状態を更新
     } catch (error) {
         console.error("Login failed:", error);
     }
