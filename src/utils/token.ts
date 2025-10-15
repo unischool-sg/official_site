@@ -1,12 +1,14 @@
-import { randomBytes, createHash } from "crypto";
-
 /**
  * セキュアなランダムトークンを生成
  * @param length - バイト数（デフォルト: 32）
  * @returns ランダムなトークン（16進数文字列）
  */
 export function generateSecureToken(length: number = 32): string {
-  return randomBytes(length).toString("hex");
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 /**
@@ -15,11 +17,12 @@ export function generateSecureToken(length: number = 32): string {
  * @returns ランダムなトークン（Base64URL形字列）
  */
 export function generateSecureTokenBase64(length: number = 32): string {
-  return randomBytes(length)
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=/g, "");
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
+  // Base64エンコード
+  const base64 = btoa(String.fromCharCode(...bytes));
+  // Base64URLに変換
+  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 }
 
 /**
@@ -44,8 +47,12 @@ export function generateNumericCode(length: number = 6): string {
  * @param data - ハッシュ化する文字列
  * @returns ハッシュ値（16進数文字列）
  */
-export function sha256Hash(data: string): string {
-  return createHash("sha256").update(data).digest("hex");
+export async function sha256Hash(data: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const dataBuffer = encoder.encode(data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 /**
@@ -54,10 +61,13 @@ export function sha256Hash(data: string): string {
  * @param size - 画像サイズ（デフォルト: 200）
  * @returns GravatarのURL
  */
-export function generateGravatarUrl(email: string, size: number = 200): string {
-  const hash = createHash("md5")
-    .update(email.toLowerCase().trim())
-    .digest("hex");
+export async function generateGravatarUrl(
+  email: string,
+  size: number = 200,
+): Promise<string> {
+  // GravatarはMD5を要求するが、Edge RuntimeではMD5が使えないため
+  // SHA-256で代用（Gravatarが対応していない場合はidenticonが表示される）
+  const hash = await sha256Hash(email.toLowerCase().trim());
   return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 }
 
@@ -122,10 +132,10 @@ export function isTokenValid(expiryDate: Date): boolean {
  * @param ipAddress - IPアドレス
  * @returns ハッシュ化されたIPアドレス
  */
-export function hashIpAddress(ipAddress: string): string {
+export async function hashIpAddress(ipAddress: string): Promise<string> {
   // 日付ごとに異なるソルトを使用（分析は可能だが、完全な特定は困難）
   const dateSalt = new Date().toISOString().split("T")[0];
-  return sha256Hash(`${ipAddress}:${dateSalt}`);
+  return await sha256Hash(`${ipAddress}:${dateSalt}`);
 }
 
 /**
