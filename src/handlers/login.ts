@@ -1,7 +1,7 @@
 "use client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, router: AppRouterInstance) {
+async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, setError: React.Dispatch<React.SetStateAction<string | null>>, router: AppRouterInstance) {
     e.preventDefault();
     setIsLoading(true);
     // ここに処理を
@@ -29,6 +29,7 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
         router.refresh(); // セッション状態を更新
     } catch (error) {
         console.error("Login failed:", error);
+        setError((error as Error).message);
     }
 
 

@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRouter, useSearchParams } from "next/navigation";
 import { handleLogin } from "@/handlers/login";
-import { useRouter } from "next/navigation";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,8 @@ import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4">
@@ -49,7 +50,13 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={async (e) => { handleLogin(e, setIsLoading, router) }} className="space-y-6">
+            <form onSubmit={(e) => handleLogin(e, setIsLoading, setError, router)} className="space-y-6">
+              {error && (
+                <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg">
+                  {error}
+                </div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium">
                   メールアドレス
