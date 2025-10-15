@@ -11,13 +11,15 @@ export function Footer() {
         <div className="flex items-top justify-between">
           <BlurFade delay={0.5} inView>
             <div className="flex flex-col">
-              <Image
-                src="/assets/logo-edit.png"
-                alt="Logo"
-                width={100}
-                height={141}
-                className="w-36  h-auto grayscale"
-              />
+              <Link href="/">
+                <Image
+                  src="/assets/logo-edit.png"
+                  alt="Logo"
+                  width={100}
+                  height={141}
+                  className="w-36  h-auto grayscale"
+                />
+              </Link>
               <p className="text-xs text-neutral-400 mt-4">
                 © 2025 Uni School. All rights reserved.
               </p>

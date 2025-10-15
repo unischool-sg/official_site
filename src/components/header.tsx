@@ -9,7 +9,9 @@ export function Header() {
     <Container className="bg-white max-w-6xl w-full mx-auto">
       <div className="flex justify-between items-center h-16 pt-3">
         <div className="flex-shrink-0">
-          <Image src={"/assets/logo.png"} alt="Logo" width={120} height={40} />
+          <Link href="/">
+            <Image src={"/assets/logo.png"} alt="Logo" width={120} height={40} />
+          </Link>
         </div>
 
         <nav className="flex justify-center items-center space-x-4">
