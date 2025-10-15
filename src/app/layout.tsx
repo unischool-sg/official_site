@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto_Slab } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { BlurFade } from "@/components/ui/blur-fade";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -84,6 +86,9 @@ export default function RootLayout({
             <Footer />
           </BlurFade>
         </div>
+
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

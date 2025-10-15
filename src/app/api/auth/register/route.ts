@@ -26,7 +26,8 @@ export async function POST(req: NextRequest) {
     // 新規ユーザー作成
     try {
       const password = Math.random().toString(36).slice(-8);
-      const newUser = await User.new({ email, password });
+      const hashedPassword = await User.hashPassword(password);
+      const newUser = await User.new({ email, password: hashedPassword });
       await newUser.sendEmailVerification();
       return successResponse(newUser.toJSON());
     } catch (error) {
