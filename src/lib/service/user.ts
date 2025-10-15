@@ -1,6 +1,6 @@
+import { verifyPassword, hashPassword } from "@/utils/hash";
 import { Prisma, User as PrismaUser } from "@prisma/client";
 import { generateSecureToken } from "@/utils/token";
-import { verifyPassword } from "@/utils/hash";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
 import { resend } from "../resend";
@@ -83,6 +83,10 @@ class User {
         }
 
         return new User(session.user);
+    }
+
+    static async hashPassword(password: string): Promise<string> {
+        return await hashPassword(password);
     }
 
 	// 基本機能
