@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { User } from "./lib/service/user";
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -8,14 +6,16 @@ export async function middleware(request: NextRequest) {
 	// /admin パスへのアクセスをチェック
 	if (pathname.startsWith("/admin")) {
 		// クッキーからセッショントークンを取得
-		const user = await User.current();
-        if (!user) {
-            return redirectToLogin(request, pathname);
-        }
+		const sessionToken = request.cookies.get("s-token")?.value;
+		
+		// セッショントークンがない場合はログインページにリダイレクト
+		if (!sessionToken) {
+			return redirectToLogin(request, pathname);
+		}
 
-		// セッションの有効性をチェック（オプション：パフォーマンスとのトレードオフ）
-		// 注意: middlewareでPrismaを使うとコールドスタート時に遅くなる可能性があります
-		// より詳細なチェックが必要な場合は、API RouteやServer Componentで行うことを推奨
+		// セッショントークンの存在のみチェック
+		// 詳細な検証（有効期限、ロール等）はServer Componentで行う
+		// 理由: Edge Runtimeでのサイズ制限とパフォーマンス最適化のため
 	}
 
 	return NextResponse.next();
