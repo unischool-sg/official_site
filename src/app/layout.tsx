@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto_Slab } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { BlurFade } from "@/components/ui/blur-fade"
+import { BlurFade } from "@/components/ui/blur-fade";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(url),
   title: {
     default: `${siteName}`,
-    template: `%s / ${siteName}`
+    template: `%s / ${siteName}`,
   },
   description,
   openGraph: {
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
     siteName,
     locale: "ja-JP",
     type: "website",
-    images: ogpIcon
+    images: ogpIcon,
   },
   icons: icon,
   verification: {
-    google: ""
+    google: "",
   },
 
   twitter: {
@@ -54,7 +54,15 @@ export const metadata: Metadata = {
     description,
     images: ogpIcon,
   },
-  keywords: ["Uni School", "Sanda Gakuen", "三田学園", "三田学園中学校", "学校", "クリエイター", "学生"],
+  keywords: [
+    "Uni School",
+    "Sanda Gakuen",
+    "三田学園",
+    "三田学園中学校",
+    "学校",
+    "クリエイター",
+    "学生",
+  ],
 };
 
 export default function RootLayout({
@@ -71,9 +79,7 @@ export default function RootLayout({
           <BlurFade delay={0.4} inView>
             <Header />
           </BlurFade>
-          <main>
-            {children}
-          </main>
+          <main>{children}</main>
           <BlurFade delay={0.4} inView>
             <Footer />
           </BlurFade>

@@ -1,4 +1,4 @@
-import { BlurFade } from "@/components/ui/blur-fade"
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Members } from "@/components/members";
@@ -6,7 +6,7 @@ import { Achievements } from "@/components/achievements";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-y-20" >
+    <div className="flex flex-col gap-y-20">
       <BlurFade delay={0.8} inView>
         <Hero />
       </BlurFade>

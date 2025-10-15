@@ -5,7 +5,13 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { BlurFade } from "@/components/ui/blur-fade";
 
 export default function LoginPage() {
@@ -16,20 +22,22 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     // ここで実際のログイン処理を実装
     try {
       // ログインAPI呼び出し
       console.log("Login attempt:", { email, password });
-      
+
       // ダミーの処理時間
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // 成功時の処理
       alert("ログインに成功しました！");
     } catch (error) {
       console.error("Login error:", error);
-      alert("ログインに失敗しました。メールアドレスとパスワードを確認してください。");
+      alert(
+        "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +46,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4">
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <BlurFade delay={0.3} inView>
         <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-4 text-center pb-6">
@@ -61,7 +69,7 @@ export default function LoginPage() {
               クリエイターチームへのログイン
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
@@ -78,7 +86,7 @@ export default function LoginPage() {
                   className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-medium">
                   パスワード
@@ -93,7 +101,7 @@ export default function LoginPage() {
                   className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
                 />
               </div>
-              
+
               <Button
                 type="submit"
                 disabled={isLoading}
@@ -109,7 +117,7 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
-            
+
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
                 We are team of Creators. We are students. But we are pro.
@@ -118,7 +126,7 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </BlurFade>
-      
+
       <style jsx>{`
         .bg-grid-pattern {
           background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
