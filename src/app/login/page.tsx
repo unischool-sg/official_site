@@ -1,10 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -12,36 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { handleLogin } from "@/handlers/login";
+import { useRouter } from "next/router";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // ここで実際のログイン処理を実装
-    try {
-      // ログインAPI呼び出し
-      console.log("Login attempt:", { email, password });
-
-      // ダミーの処理時間
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // 成功時の処理
-      alert("ログインに成功しました！");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(
-        "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4">
@@ -71,17 +49,15 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={async (e) => { handleLogin(e, setIsLoading, router) }} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm font-medium">
                   メールアドレス
                 </Label>
                 <Input
-                  id="email"
+                  name="email"
                   type="email"
                   placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
                 />
@@ -92,11 +68,9 @@ export default function LoginPage() {
                   パスワード
                 </Label>
                 <Input
-                  id="password"
+                  name="password"
                   type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="•••••••"
                   required
                   className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
                 />
