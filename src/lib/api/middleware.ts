@@ -14,6 +14,14 @@ import { errorResponse, serverErrorResponse } from './response';
  */
 export type RequestContext = {
   user: User;
+  params?: Record<string, string>;
+};
+
+/**
+ * Next.js Route Context
+ */
+export type RouteContext = {
+  params: Promise<Record<string, string>>;
 };
 
 /**
@@ -29,8 +37,8 @@ export type ApiHandler<T = any> = (
  * @param handler - APIハンドラー関数
  * @returns ラップされたハンドラー
  */
-export function withAuth(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest) => {
+export function withAuth(handler: ApiHandler) {
+  return async (request: NextRequest, routeContext?: RouteContext): Promise<Response> => {
     try {
       // 現在のユーザーを取得
       const user = await User.current();
@@ -39,9 +47,13 @@ export function withAuth(handler: ApiHandler): ApiHandler {
         throw new AuthenticationError('認証が必要です');
       }
 
+      // パラメータを取得
+      const params = routeContext?.params ? await routeContext.params : undefined;
+
       // コンテキストを作成
       const context: RequestContext = {
         user,
+        params,
       };
 
       // ハンドラーを実行
@@ -75,24 +87,43 @@ export function withAuth(handler: ApiHandler): ApiHandler {
 export function withRole(
   handler: ApiHandler,
   allowedRoles: UserRole[]
-): ApiHandler {
-  return withAuth(async (request: NextRequest, context?: RequestContext) => {
+) {
+  return async (request: NextRequest, routeContext?: RouteContext): Promise<Response> => {
     try {
-      if (!context?.user) {
-        throw new AuthenticationError();
+      // 現在のユーザーを取得
+      const user = await User.current();
+
+      if (!user) {
+        throw new AuthenticationError('認証が必要です');
       }
 
-      if (!allowedRoles.includes(context.user.role)) {
+      if (!allowedRoles.includes(user.role)) {
         throw new AuthorizationError(
           'この操作を実行する権限がありません'
         );
       }
+
+      // パラメータを取得
+      const params = routeContext?.params ? await routeContext.params : undefined;
+
+      // コンテキストを作成
+      const context: RequestContext = {
+        user,
+        params,
+      };
 
       return await handler(request, context);
     } catch (error) {
       logError(error, 'withRole');
 
       if (error instanceof AuthorizationError) {
+        return errorResponse(error.message, {
+          status: error.statusCode,
+          code: error.code,
+        });
+      }
+
+      if (error instanceof AuthenticationError) {
         return errorResponse(error.message, {
           status: error.statusCode,
           code: error.code,
@@ -106,7 +137,7 @@ export function withRole(
         details: apiError.details,
       });
     }
-  });
+  };
 }
 
 /**
@@ -114,9 +145,15 @@ export function withRole(
  * @param handler - APIハンドラー関数
  * @returns ラップされたハンドラー
  */
-export function withErrorHandler(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest, context?: RequestContext) => {
+export function withErrorHandler(handler: ApiHandler) {
+  return async (request: NextRequest, routeContext?: RouteContext): Promise<Response> => {
     try {
+      // パラメータを取得
+      const params = routeContext?.params ? await routeContext.params : undefined;
+      
+      // コンテキストを作成（ユーザーなし）
+      const context: RequestContext | undefined = params ? { user: null as any, params } : undefined;
+      
       return await handler(request, context);
     } catch (error) {
       logError(error, 'API Handler');
