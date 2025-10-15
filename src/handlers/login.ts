@@ -1,6 +1,6 @@
 "use client";
-import { NextRouter } from "next/router";
-async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, router: NextRouter) {
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, router: AppRouterInstance) {
     e.preventDefault();
     setIsLoading(true);
     // ここに処理を
