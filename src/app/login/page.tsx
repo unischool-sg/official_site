@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { handleLogin } from "@/handlers/login";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
