@@ -11,8 +11,16 @@ export default async function AdminLayout({
 }) {
   // サーバーサイドで詳細な認証チェック
   const user = await User.current(true); // プロフィール込みで取得
+  
+  console.log("[AdminLayout] User check:", {
+    hasUser: !!user,
+    userId: user?.id,
+    role: user?.role,
+  });
+
   if (!user) {
-    redirect("/403");
+    console.log("[AdminLayout] No user found, redirecting to login");
+    redirect("/login");
   }
 
   return (

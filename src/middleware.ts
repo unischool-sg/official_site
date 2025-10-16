@@ -1,38 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-	const { pathname } = request.nextUrl;
-
-	// /admin パスへのアクセスをチェック
-	if (pathname.startsWith("/admin")) {
-		// クッキーからセッショントークンを取得
-		const sessionToken = request.cookies.get("s-token")?.value;
-		
-		// セッショントークンがない場合はログインページにリダイレクト
-		if (!sessionToken) {
-			return redirectToLogin(request, pathname);
-		}
-
-		// セッショントークンの存在のみチェック
-		// 詳細な検証（有効期限、ロール等）はServer Componentで行う
-		// 理由: Edge Runtimeでのサイズ制限とパフォーマンス最適化のため
-	}
+	const pathname = request.nextUrl.pathname;
 
 	// パス情報をヘッダーに追加（Server Componentで利用可能に）
 	const response = NextResponse.next();
 	response.headers.set("x-pathname", pathname);
 	response.headers.set("x-url", request.url);
 	
+	// クッキーを保持（重要！）
+	// NextResponse.next()は既存のクッキーを保持しますが、
+	// 明示的に確認してログ出力
+	const sessionToken = request.cookies.get("s-token");
+	if (sessionToken) {
+		console.log("[Middleware] Session token found:", {
+			path: pathname,
+			tokenPrefix: sessionToken.value.substring(0, 10) + "...",
+		});
+	}
+	
 	return response;
-}
-
-/**
- * ログインページにリダイレクト
- */
-function redirectToLogin(request: NextRequest, pathname: string): NextResponse {
-	const loginUrl = new URL("/login", request.url);
-	loginUrl.searchParams.set("redirect", pathname);
-	return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

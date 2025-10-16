@@ -152,15 +152,10 @@ const user = await User.current(true); // プロフィール込み
 if (!user) {
   redirect("/login?redirect=/admin");
 }
-
-if (user.role !== "ADMIN") {
-  redirect("/403");
-}
 ```
 
 **チェック項目:**
 1. ✅ ログイン済みか
-2. ✅ ADMINロールを持っているか
 
 ## 🚀 使用例
 

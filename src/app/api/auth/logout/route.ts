@@ -1,7 +1,6 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/lib/service/user";
 import { successResponse } from "@/lib/api/response";
-import { redirect } from "next/navigation";
 
 export async function GET() {
   const user = await User.current();
@@ -10,8 +9,11 @@ export async function GET() {
     await user.logout();
   }
 
-  // ログインページにリダイレクト
-  return redirect("/login");
+  // クッキーを削除してログインページにリダイレクト
+  const response = NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"));
+  response.cookies.delete("s-token");
+  
+  return response;
 }
 
 export async function POST(request: NextRequest) {
@@ -27,7 +29,12 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  return successResponse({
+  // レスポンスを作成してクッキーを削除
+  const response = successResponse({
     message: "ログアウトしました",
   });
+  
+  response.cookies.delete("s-token");
+
+  return response;
 }

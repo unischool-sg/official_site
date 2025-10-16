@@ -116,6 +116,7 @@ class User {
         const store = await cookies();
         const sessionToken = store.get("s-token")?.value;
         if (!sessionToken) {
+            console.log("[User.current] No session token found");
             return null;
         }
 
@@ -130,9 +131,31 @@ class User {
             },
         });
 
-        if (!session || session.expires < new Date()) {
+        if (!session) {
+            console.log("[User.current] Session not found in database");
             return null;
         }
+
+        const now = new Date();
+        const isExpired = session.expires < now;
+        
+        if (isExpired) {
+            console.log("[User.current] Session expired:", {
+                expires: session.expires,
+                now: now,
+                diff: (now.getTime() - session.expires.getTime()) / 1000 / 60 + " minutes ago"
+            });
+            // 期限切れセッションを削除
+            await prisma.session.delete({
+                where: { sessionToken }
+            });
+            return null;
+        }
+
+        console.log("[User.current] Valid session found:", {
+            userId: session.userId,
+            expiresIn: (session.expires.getTime() - now.getTime()) / 1000 / 60 + " minutes"
+        });
 
         return new User(session.user);
     }
@@ -166,6 +189,13 @@ class User {
 			// セッショントークンを生成
 			const sessionToken = generateSecureToken(32);
 
+			console.log("[User.login] Creating session:", {
+				userId: this.userId,
+				tokenPrefix: sessionToken.substring(0, 10) + "...",
+				sessionDuration: sessionDuration / 1000 / 60 / 60 + " hours",
+				expires: new Date(Date.now() + sessionDuration)
+			});
+
 			const [session] = await Promise.all([
 				// 新しいセッションを作成
 				prisma.session.create({
@@ -197,16 +227,14 @@ class User {
 				}),
 			]);
 
-			// クッキーにセッショントークンを保存
-			const cookieStore = await cookies();
-			cookieStore.set("s-token", sessionToken, {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				maxAge: sessionDuration / 1000, // 秒単位
-				path: "/",
+			console.log("[User.login] Session created in database:", {
+				sessionId: session.id,
+				expires: session.expires,
+				tokenPrefix: sessionToken.substring(0, 10) + "..."
 			});
 
+			// セッショントークンを返す
+			// 注意: クッキーの設定はAPI Route層で行う
 			return session.sessionToken;
 		}
 
@@ -230,25 +258,22 @@ class User {
 		const sessionToken = cookieStore.get("s-token")?.value;
 
 		if (sessionToken) {
-			// セッションを削除
+			// セッションをデータベースから削除
 			await prisma.session.delete({
 				where: { sessionToken },
 			});
-
-			// クッキーを削除
-			cookieStore.delete("s-token");
+			
+			// 注意: クッキーの削除はAPI Route層で行う
 		}
 	}
 
 	async logoutAll(): Promise<void> {
-		// すべてのセッションを削除
+		// すべてのセッションをデータベースから削除
 		await prisma.session.deleteMany({
 			where: { userId: this.userId },
 		});
 
-		// クッキーを削除
-		const cookieStore = await cookies();
-		cookieStore.delete("s-token");
+		// 注意: クッキーの削除はAPI Route層で行う
 	}
     
     async update(data: Prisma.UserUpdateInput): Promise<User> {
