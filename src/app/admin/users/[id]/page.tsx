@@ -1,10 +1,11 @@
-import { User } from "@/lib/service/user";
+import { ArrowLeft, Mail, Calendar, Shield, Users, CheckCircle2, XCircle, KeyRound, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { User } from "@/lib/service/user";
+import Buttons from "@/components/layout/buttons";
 import Link from "next/link";
-import { ArrowLeft, Mail, Calendar, Shield, Users, CheckCircle2, XCircle } from "lucide-react";
 
 interface ControlContext {
     params: Promise<{ id: string }>;
@@ -197,6 +198,8 @@ export default async function UserPage(context: ControlContext) {
                                 </Button>
                             </Link>
                         </div>
+
+                        <Buttons userData={userData} />
                     </CardContent>
                 </Card>
             </div>
