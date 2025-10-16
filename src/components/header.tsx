@@ -2,12 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { session } from "@/app/layout";
 import { Button } from "@/components/ui/button";
+import { User } from "@/lib/service/user";
 
-export function Header() {
-  const user = session.get("user");
-  
+interface HeaderProps {
+  user?: User | null;
+}
+
+export async function Header({ user }: HeaderProps) {
+  const isLogin = !!user;
+
   return (
     <Container className="bg-white max-w-6xl w-full mx-auto">
       <div className="flex justify-between items-center h-16 pt-3">
@@ -51,15 +55,13 @@ export function Header() {
             </Link>
           </BlurFade>
 
-          <Link href="/">
-            <BlurFade delay={0.8} inView>
-              <Link href={user ? `/admin` : `/login`}>
-                <Button className="bg-neutral-950 hover:bg-neutral-900 text-white cursor-pointer px-5 py-2 rounded-sm text-sm font-medium transition-colors">
-                  {user ? `Admin` : `Login`}
-                </Button>
-              </Link>
-            </BlurFade>
-          </Link>
+          <BlurFade delay={0.8} inView>
+            <Link href={isLogin ? `/admin` : `/login`}>
+              <Button className="bg-neutral-950 hover:bg-neutral-900 text-white cursor-pointer px-5 py-2 rounded-sm text-sm font-medium transition-colors">
+                {isLogin ? `Admin` : `Login`}
+              </Button>
+            </Link>
+          </BlurFade>
         </nav>
       </div>
     </Container>
