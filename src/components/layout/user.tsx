@@ -245,7 +245,7 @@ export default function UserRow({ user }: UserRowProps) {
                               className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                               onClick={handleResendVerification}
                               type="button"
-                              disabled={isLoading || !!user.emailVerified}
+                              disabled={isLoading}
                               title="認証メール再送信"
                          >
                               <Mail className="h-4 w-4" />

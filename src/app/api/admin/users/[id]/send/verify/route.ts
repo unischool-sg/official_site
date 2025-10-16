@@ -6,7 +6,7 @@ interface Context {
     params: Promise<{ id: string }>;
 }
 
-export async function GET(_: NextRequest, context: Context) {
+export async function POST(_: NextRequest, context: Context) {
     const [{ id }, user] = await Promise.all([
         context.params,
         User.current(),
