@@ -189,6 +189,13 @@ class User {
 			// セッショントークンを生成
 			const sessionToken = generateSecureToken(32);
 
+			console.log("[User.login] Creating session:", {
+				userId: this.userId,
+				tokenPrefix: sessionToken.substring(0, 10) + "...",
+				sessionDuration: sessionDuration / 1000 / 60 / 60 + " hours",
+				expires: new Date(Date.now() + sessionDuration)
+			});
+
 			const [session] = await Promise.all([
 				// 新しいセッションを作成
 				prisma.session.create({
@@ -220,14 +227,30 @@ class User {
 				}),
 			]);
 
+			console.log("[User.login] Session created in database:", {
+				sessionId: session.id,
+				expires: session.expires
+			});
+
 			// クッキーにセッショントークンを保存
 			const cookieStore = await cookies();
-			cookieStore.set("s-token", sessionToken, {
+			const cookieOptions = {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
+				sameSite: "lax" as const,
 				maxAge: sessionDuration / 1000, // 秒単位
 				path: "/",
+			};
+
+			console.log("[User.login] Setting cookie with options:", cookieOptions);
+			
+			cookieStore.set("s-token", sessionToken, cookieOptions);
+
+			// クッキーが実際に設定されたか確認
+			const setCookie = cookieStore.get("s-token");
+			console.log("[User.login] Cookie verification:", {
+				cookieSet: !!setCookie,
+				cookieValue: setCookie?.value?.substring(0, 10) + "..." || "not found"
 			});
 
 			return session.sessionToken;

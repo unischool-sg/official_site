@@ -17,12 +17,7 @@ export async function POST(req: NextRequest) {
         return errorResponse("Invalid password", { status: 401 });
     }
 
-    store.set("s-token", token, {
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60, // 7 days
-        path: "/",
-        secure: false,
-    });
+    store.set("s-token", token);
 
     console.log("Cookie set successfully:", {
         token: token.substring(0, 20) + "...",

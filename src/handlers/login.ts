@@ -16,7 +16,7 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
-            credentials: "include", // クッキーを含める
+            // credentials: "include", // クッキーを含める
         });
         
         const data = await response.json();
