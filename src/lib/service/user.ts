@@ -364,7 +364,7 @@ class User {
           try {
                const result = await send(
                     this.data.email,
-                    subject,
+                    `【Uni School】${subject}`,
                     emailTemplates(subject, body)
                );
 
