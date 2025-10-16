@@ -34,7 +34,20 @@ export default async function UsersPage() {
      const uniqueUsers = users.filter(
           (user, index, self) =>
                self.findIndex((u) => u.id === user.id) === index,
-     );
+     )
+
+     // 認証済みから順に、そして名前順にソート
+     const sortedUsers = uniqueUsers.sort((a, b) => {
+          // 1. 認証済みを上に
+          const aVerified = a.emailVerified ? 1 : 0;
+          const bVerified = b.emailVerified ? 1 : 0;
+          if (aVerified !== bVerified) {
+               return bVerified - aVerified; // 認証済み（1）が上に
+          }
+
+          // 2. 名前順（昇順）
+          return a.name.localeCompare(b.name, 'ja');
+     })
 
      return (
           <div className="p-6 space-y-6">
@@ -56,7 +69,7 @@ export default async function UsersPage() {
                <Card>
                     <CardHeader>
                          <CardTitle>
-                              ユーザー一覧 ({uniqueUsers.length}名)
+                              ユーザー一覧 - {sortedUsers.length}名(内認証済み{sortedUsers.filter(u => u.emailVerified).length}名)
                          </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -86,8 +99,8 @@ export default async function UsersPage() {
                                         </TableRow>
                                    </TableHeader>
                                    <TableBody>
-                                        {uniqueUsers.length > 0 ? (
-                                             uniqueUsers.map((user, index) => {
+                                        {sortedUsers.length > 0 ? (
+                                             sortedUsers.map((user, index) => {
                                                   const userData =
                                                        user.toJSON();
                                                   return (
