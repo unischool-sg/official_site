@@ -25,6 +25,13 @@ enum TokenType {
   REGISTRATION_CONFIRMATION
 }
 
+enum UserTeam {
+  ALL
+  VIDEO
+  EDIT
+  DEVELOP
+}
+
 // ================================
 // User & Authentication
 // ================================
@@ -36,6 +43,7 @@ model User {
   password      String    // ハッシュ化されたパスワード（bcryptで最大72文字）
   name          String    @default("unknown")
   role          UserRole  @default(MEMBER)
+  team          UserTeam  @default(ALL) // チーム所属
   
   // タイムスタンプ
   createdAt DateTime @default(now())
