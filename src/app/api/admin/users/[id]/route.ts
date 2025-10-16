@@ -3,9 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { User } from "@/lib/service/user";
 
+interface Context {
+    params: Promise<{ id: string }>;
+}
+
 export async function GET(
     _: NextRequest,
-    context: { params: Promise<{ id: string }> }
+    context: Context
 ) {
     try {
         const { id } = await context.params;
@@ -20,7 +24,7 @@ export async function GET(
 
 export async function PATCH(
     request: NextRequest,
-    context: { params: Promise<{ id: string }> }
+    context: Context
 ) {
     try {
         // 認証チェック
@@ -51,7 +55,7 @@ export async function PATCH(
 
 export async function DELETE(
     _: NextRequest,
-    context: { params: Promise<{ id: string }> }
+    context: Context
 ) {
     try {
         // 認証チェック
