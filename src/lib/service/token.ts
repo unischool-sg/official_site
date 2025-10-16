@@ -1,4 +1,5 @@
 import { VerificationToken, TokenType } from "@prisma/client";
+import { generateSecureToken } from "@/utils/token";
 import { prisma } from "../prisma";
 import { User } from "./user";
 
@@ -22,7 +23,7 @@ class Token {
           type: TokenType,
           hoursValid: number = 24,
      ): Promise<Token> {
-          const token = crypto.randomUUID();
+          const token = generateSecureToken(32);
           const expires = new Date(Date.now() + hoursValid * 60 * 60 * 1000);
           const record = await prisma.verificationToken.create({
                data: { token, userId, type, expires },
