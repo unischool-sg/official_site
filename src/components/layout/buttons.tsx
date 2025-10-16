@@ -104,7 +104,7 @@ export default function Buttons({ userData }: ButtonsProps) {
     });
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 mt-6">
             {/* メール送信関連 */}
             <div className="p-4 rounded-lg border bg-muted/30 space-y-3">
                 <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
