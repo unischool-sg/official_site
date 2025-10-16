@@ -1,6 +1,5 @@
-export const resetEmailTemplate = (resetLink: string) => {
-    return `
-    <!DOCTYPE html>
+export const resetEmailTemplate = (resetLink: string) => `
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -102,6 +101,4 @@ export const resetEmailTemplate = (resetLink: string) => {
     </table>
 </body>
 </html>
-
-    `;
-}
+`;

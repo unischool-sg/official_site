@@ -1,5 +1,4 @@
-export const verifyEmailTemplate = (verifyLink: string) => {
-    return `
+export const verifyEmailTemplate = (verifyLink: string) => `
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -94,5 +93,4 @@ export const verifyEmailTemplate = (verifyLink: string) => {
     </table>
 </body>
 </html>
-    `;
-}
+`;
