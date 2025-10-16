@@ -3,8 +3,15 @@ import Image from "next/image";
 import { MoveUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { User } from "@/lib/service/user";
 
-export function Footer() {
+interface FooterProps {
+  user?: User | null;
+}
+
+export function Footer({ user }: FooterProps) {
+  const isLogin = !!user;
+
   return (
     <footer className="border-t border-neutral-200 pt-8 pb-25 mt-30">
       <Container>
@@ -65,10 +72,10 @@ export function Footer() {
             </BlurFade>
             <BlurFade delay={0.9} inView>
               <Link
-                href="/"
+                href={isLogin ? `/admin` : `/login`}
                 className="text-neutral-950 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
-                Login
+                {isLogin ? `Admin` : `Login`}
               </Link>
             </BlurFade>
           </nav>
