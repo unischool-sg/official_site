@@ -21,6 +21,13 @@ export async function POST(req: NextRequest) {
         httpOnly: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60, // 7 days
+        path: "/",
+    });
+
+    console.log("Cookie set successfully:", {
+        token: token.substring(0, 20) + "...",
+        maxAge: 7 * 24 * 60 * 60,
+        path: "/"
     });
 
     return successResponse({ token });

@@ -116,6 +116,7 @@ class User {
         const store = await cookies();
         const sessionToken = store.get("s-token")?.value;
         if (!sessionToken) {
+            console.log("[User.current] No session token found");
             return null;
         }
 
@@ -130,9 +131,31 @@ class User {
             },
         });
 
-        if (!session || session.expires < new Date()) {
+        if (!session) {
+            console.log("[User.current] Session not found in database");
             return null;
         }
+
+        const now = new Date();
+        const isExpired = session.expires < now;
+        
+        if (isExpired) {
+            console.log("[User.current] Session expired:", {
+                expires: session.expires,
+                now: now,
+                diff: (now.getTime() - session.expires.getTime()) / 1000 / 60 + " minutes ago"
+            });
+            // 期限切れセッションを削除
+            await prisma.session.delete({
+                where: { sessionToken }
+            });
+            return null;
+        }
+
+        console.log("[User.current] Valid session found:", {
+            userId: session.userId,
+            expiresIn: (session.expires.getTime() - now.getTime()) / 1000 / 60 + " minutes"
+        });
 
         return new User(session.user);
     }
