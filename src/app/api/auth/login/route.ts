@@ -18,24 +18,28 @@ export async function POST(req: NextRequest) {
     // セッション期間（7日間）
     const sessionDuration = 7 * 24 * 60 * 60; // 秒単位
 
+    // 本番環境かどうかを判定（Vercelではprocess.env.VERCEL === "1"）
+    const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
+
     // レスポンスを作成
     const response = successResponse({ token });
 
     // クッキーをレスポンスヘッダーに設定
-    response.cookies.set("s-token", token, {
+    const cookieOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: isProduction, // HTTPS接続時のみtrue
         maxAge: sessionDuration,
         path: "/",
-    });
+    };
+
+    response.cookies.set("s-token", token, cookieOptions);
 
     console.log("[Login API] Cookie set in response:", {
         tokenPrefix: token.substring(0, 10) + "...",
-        maxAge: sessionDuration,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/"
+        environment: isProduction ? "production" : "development",
+        options: cookieOptions,
+        host: req.headers.get("host"),
+        protocol: req.headers.get("x-forwarded-proto") || "http",
     });
 
     return response;

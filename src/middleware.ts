@@ -8,6 +8,17 @@ export async function middleware(request: NextRequest) {
 	response.headers.set("x-pathname", pathname);
 	response.headers.set("x-url", request.url);
 	
+	// クッキーを保持（重要！）
+	// NextResponse.next()は既存のクッキーを保持しますが、
+	// 明示的に確認してログ出力
+	const sessionToken = request.cookies.get("s-token");
+	if (sessionToken) {
+		console.log("[Middleware] Session token found:", {
+			path: pathname,
+			tokenPrefix: sessionToken.value.substring(0, 10) + "...",
+		});
+	}
+	
 	return response;
 }
 

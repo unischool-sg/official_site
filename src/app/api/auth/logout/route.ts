@@ -10,7 +10,7 @@ export async function GET() {
   }
 
   // クッキーを削除してログインページにリダイレクト
-  const response = NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_URL || "http://localhost:3000"));
+  const response = NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"));
   response.cookies.delete("s-token");
   
   return response;
