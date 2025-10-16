@@ -358,6 +358,20 @@ class User {
                throw error;
           }
      }
+
+     async sendCustomEmail({ subject, body }: {subject: string, body: string}): Promise<void> {
+          try {
+               const result = await send(
+                    this.data.email,
+                    subject,
+                    body
+               );
+
+               console.log("Email sent to:", result);
+          } catch (error) {
+               throw error;
+          }
+     }
 }
 
 export { User };
