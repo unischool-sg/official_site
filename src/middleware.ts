@@ -11,15 +11,6 @@ export async function middleware(request: NextRequest) {
 	return response;
 }
 
-/**
- * ログインページにリダイレクト
- */
-function redirectToLogin(request: NextRequest, pathname: string): NextResponse {
-	const loginUrl = new URL("/login", request.url);
-	loginUrl.searchParams.set("redirect", pathname);
-	return NextResponse.redirect(loginUrl);
-}
-
 export const config = {
 	matcher: [
 		/*

@@ -15,8 +15,7 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, password }),
-            credentials: "include", // クッキーを含める
+            body: JSON.stringify({ email, password })
         });
         
         const data = await response.json();
@@ -27,15 +26,16 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
 
         console.log("Login successful:", data);
         
+        // クッキーが確実に設定されるまで少し待つ
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         // ページをリロードしてセッション状態を更新
         window.location.href = "/admin";
     } catch (error) {
         console.error("Login failed:", error);
         setError((error as Error).message);
+        setIsLoading(false);
     }
-
-
-    setIsLoading(false);
 }
 
 export { handleLogin };
