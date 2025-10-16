@@ -6,24 +6,27 @@ import {
      SelectTrigger,
      SelectValue,
 } from "@/components/ui/select";
-import { TableCell, TableRow } from "@/components/ui/table";
 import { Trash2, Save, Mail, KeyRound } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User } from "@prisma/client";
-import { useState } from "react";
 import { toast } from "sonner";
+import { User } from "@prisma/client";
+import Link from "next/link";
+
 
 interface UserRowProps {
      user: Omit<User, "password">;
 }
 
 export default function UserRow({ user }: UserRowProps) {
-     const [name, setName] = useState(user.name);
-     const [email, setEmail] = useState(user.email);
-     const [role, setRole] = useState(user.role);
-     const [team, setTeam] = useState(user.team);
-     const [isLoading, setIsLoading] = useState(false);
+     const [isLoading, setIsLoading] = useState<boolean>(false);
+     const [email, setEmail] = useState<string>(user.email);
+     const [name, setName] = useState<string>(user.name);
+     const [role, setRole] = useState<string>(user.role);
+     const [team, setTeam] = useState<string>(user.team);
+
 
      const handleSave = async () => {
           setIsLoading(true);
@@ -165,7 +168,9 @@ export default function UserRow({ user }: UserRowProps) {
      return (
           <TableRow>
                <TableCell className="font-mono text-xs">
-                    {user.id.substring(0, 8)}...
+                    <Link href={`/admin/users/${user.id}`} className="hover:underline">
+                         {user.id.substring(0, 8)}...
+                    </Link>
                </TableCell>
                <TableCell>
                     <Input
