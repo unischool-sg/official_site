@@ -1,9 +1,11 @@
+"use server";
 import { successResponse, notFoundResponse, errorResponse } from "@/lib/api/response";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { cookies } from "next/headers";
 import { User } from "@/lib/service/user";
 
 export async function POST(req: NextRequest) {
-    const { email, password } = await req.json();
+    const [{ email, password }, store] = await Promise.all([req.json(), cookies()]);
 
     const user = await User.get({ email });
     if (!user) {
@@ -15,32 +17,12 @@ export async function POST(req: NextRequest) {
         return errorResponse("Invalid password", { status: 401 });
     }
 
-    // セッション期間（7日間）
-    const sessionDuration = 7 * 24 * 60 * 60; // 秒単位
-
-    // 本番環境かどうかを判定（Vercelではprocess.env.VERCEL === "1"）
-    const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
-
-    // レスポンスを作成
-    const response = successResponse({ token });
-
-    // クッキーをレスポンスヘッダーに設定
-    const cookieOptions = {
+    store.set("s-token", token, {
         httpOnly: true,
-        secure: isProduction, // HTTPS接続時のみtrue
-        maxAge: sessionDuration,
-        path: "/",
-    };
-
-    response.cookies.set("s-token", token, cookieOptions);
-
-    console.log("[Login API] Cookie set in response:", {
-        tokenPrefix: token.substring(0, 10) + "...",
-        environment: isProduction ? "production" : "development",
-        options: cookieOptions,
-        host: req.headers.get("host"),
-        protocol: req.headers.get("x-forwarded-proto") || "http",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60, // 7 days
     });
 
-    return response;
+    return successResponse({ token });
 }

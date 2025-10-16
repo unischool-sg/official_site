@@ -24,19 +24,9 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
             throw new Error(data.error?.message || "Login failed");
         }
         
-        console.log("[Login Handler] Login successful:", {
-            success: data.success,
-            hasToken: !!data.data?.token
-        });
-
-        // サーバーがSet-Cookieヘッダーでクッキーを設定するため、
-        // クライアント側での手動設定は不要（httpOnlyクッキーは設定できないため）
-        
-        // クッキーが確実に保存されるまで少し待機（ブラウザの処理を待つ）
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
         // ダッシュボードへリダイレクト（window.locationを使用して完全なページリロード）
-        window.location.href = "/admin";
+        router.refresh();
+        router.push("/admin");
     } catch (error) {
         console.error("[Login Handler] Login failed:", error);
         setError((error as Error).message);
