@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto_Slab } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import { BlurFade } from "@/components/ui/blur-fade";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { User } from "@/lib/service/user";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -67,31 +64,18 @@ export const metadata: Metadata = {
     "学生",
   ],
 };
-export const session = new Map<string, User | any>();
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await User.current();
-  session.set("user", user);
-
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${robotoSlab.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="pt-3 mx-auto flex font-sans flex-col">
-          <BlurFade delay={0.4} inView>
-            <Header />
-          </BlurFade>
-          <main>{children}</main>
-          <BlurFade delay={0.4} inView>
-            <Footer />
-          </BlurFade>
-        </div>
-
+        className={`${geistSans.variable} ${robotoSlab.variable} ${geistMono.variable} antialiased`}>
+        {children}
+        <Toaster position="bottom-right" richColors />
         <Analytics />
         <SpeedInsights />
       </body>
