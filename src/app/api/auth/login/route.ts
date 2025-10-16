@@ -30,16 +30,10 @@ export async function POST(req: NextRequest) {
         }
 
         // クッキーを設定
-        const store = await cookies();
-        store.set("s-token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 7 * 24 * 60 * 60, // 7 days
-            path: "/",
-        });
-
-        return NextResponse.json(
+        const cookieStore = await cookies();
+        
+        // Next.js 15では、cookieStoreから直接レスポンスを作成する必要がある
+        const response = NextResponse.json(
             { 
                 success: true,
                 data: { 
@@ -56,6 +50,17 @@ export async function POST(req: NextRequest) {
             },
             { status: 200 }
         );
+
+        // レスポンスヘッダーにSet-Cookieを設定
+        response.cookies.set("s-token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 7 * 24 * 60 * 60, // 7 days
+            path: "/",
+        });
+
+        return response;
     } catch (error) {
         console.error("Login error:", error);
         return NextResponse.json(
