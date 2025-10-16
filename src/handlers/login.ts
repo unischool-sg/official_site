@@ -27,7 +27,7 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
 
         console.log("Login successful:", data);
         // ダッシュボードへリダイレクト
-        router.push("/dashboard");
+        router.push("/admin");
     } catch (error) {
         console.error("Login failed:", error);
         setError((error as Error).message);

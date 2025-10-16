@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60, // 7 days
         path: "/",
+        secure: false,
     });
 
     console.log("Cookie set successfully:", {
