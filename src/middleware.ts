@@ -18,7 +18,12 @@ export async function middleware(request: NextRequest) {
 		// 理由: Edge Runtimeでのサイズ制限とパフォーマンス最適化のため
 	}
 
-	return NextResponse.next();
+	// パス情報をヘッダーに追加（Server Componentで利用可能に）
+	const response = NextResponse.next();
+	response.headers.set("x-pathname", pathname);
+	response.headers.set("x-url", request.url);
+	
+	return response;
 }
 
 /**
