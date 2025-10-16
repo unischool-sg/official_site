@@ -327,7 +327,7 @@ class User {
     async sendEmailVerification(): Promise<void> {
         try {
             const token = await Token.new(this.userId, "REGISTRATION_CONFIRMATION", 24); // 24時間有効
-            const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token}`;
+            const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token.token}`;
 
             const result = await send(
                 this.data.email,
