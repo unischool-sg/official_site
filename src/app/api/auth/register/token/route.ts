@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
      ]);
 
      if (!login) {
-          return unauthorizedResponse("ログインに失敗しました");
+          return unauthorizedResponse("ログインに失敗しました。手動ログインをお願いします");
      }
 
      store.set("s-token", login, {
