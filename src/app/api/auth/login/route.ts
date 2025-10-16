@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
 
     store.set("s-token", token, {
         httpOnly: true,
-        sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60, // 7 days
         path: "/",
     });
