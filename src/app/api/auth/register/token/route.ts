@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
     await Promise.all([
         user.update({ name, password: hashedPassword }),
         user.upsertProfile({ bio }),
+        user.verifyEmail(),
         token.delete()
     ]);
     const [login, store] = await Promise.all([
