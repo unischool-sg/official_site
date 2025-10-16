@@ -1,14 +1,18 @@
 import { verifyPassword, hashPassword } from "@/utils/hash";
-import { Prisma, User as PrismaUser } from "@prisma/client";
+import { Prisma, User as PrismaUser, Profile } from "@prisma/client";
 import { generateSecureToken } from "@/utils/token";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
-import { resend } from "../resend";
+import { send } from "../resend";
+
+type UserWithProfile = PrismaUser & {
+    profile?: Profile | null;
+};
 
 class User {
     private readonly userId: string;
-    private readonly data: PrismaUser;
-    private constructor(data: PrismaUser) {
+    private readonly data: UserWithProfile;
+    private constructor(data: UserWithProfile) {
         this.userId = data.id;
         this.data = data;
     }
@@ -46,27 +50,69 @@ class User {
         return this.data.deletedAt;
     }
 
+    get team(): PrismaUser["team"] {
+        return this.data.team;
+    }
+
+    get profile(): Profile | null | undefined {
+        return this.data.profile;
+    }
+
     // Public method to get all data (without password)
     toJSON(): Omit<PrismaUser, "password"> {
         const { password, ...userWithoutPassword } = this.data;
         return userWithoutPassword;
     }
 
-    static async get(data: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    /**
+     * ユーザーのプロフィールを取得
+     * @returns プロフィール情報（存在しない場合はnull）
+     */
+    async getProfile() {
+        const profile = await prisma.profile.findUnique({
+            where: { userId: this.userId },
+        });
+        return profile;
+    }
+
+    /**
+     * ユーザーのプロフィールを作成または更新
+     * @param data - プロフィールデータ
+     * @returns 作成/更新されたプロフィール
+     */
+    async upsertProfile(data: { bio?: string; avatarUrl?: string }) {
+        return await prisma.profile.upsert({
+            where: { userId: this.userId },
+            create: {
+                userId: this.userId,
+                ...data,
+            },
+            update: data,
+        });
+    }
+
+    static async get(
+        data: Prisma.UserWhereUniqueInput,
+        includeProfile: boolean = false
+    ): Promise<User | null> {
         const user = await prisma.user.findUnique({
             where: data,
+            include: {
+                profile: includeProfile,
+            },
         });
         return user ? new User(user) : null;
     }
 
     static async new(data: Prisma.UserCreateInput): Promise<User> {
+        data.password = await hashPassword(data.password);
         const user = await prisma.user.create({
             data,
         });
         return new User(user);
     }
 
-    static async current(): Promise<User | null> {
+    static async current(includeProfile: boolean = false): Promise<User | null> {
         const store = await cookies();
         const sessionToken = store.get("s-token")?.value;
         if (!sessionToken) {
@@ -75,7 +121,13 @@ class User {
 
         const session = await prisma.session.findUnique({
             where: { sessionToken },
-            include: { user: true },
+            include: {
+                user: {
+                    include: {
+                        profile: includeProfile,
+                    },
+                },
+            },
         });
 
         if (!session || session.expires < new Date()) {
@@ -83,6 +135,11 @@ class User {
         }
 
         return new User(session.user);
+    }
+
+    static async all(): Promise<User[]> {
+        const users = await prisma.user.findMany();
+        return users.map((user) => new User(user));
     }
 
     static async hashPassword(password: string): Promise<string> {
@@ -242,12 +299,11 @@ class User {
 
         const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
 
-        await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: this.data.email,
-            subject: "パスワードリセット",
-            html: `以下のリンクをクリックしてパスワードをリセットしてください: <a href="${resetLink}">${resetLink}</a>`,
-        });
+        await send(
+            this.data.email, 
+            "パスワードリセット",  
+            `以下のリンクをクリックしてパスワードをリセットしてください: <a href="${resetLink}">${resetLink}</a>`
+        );
     }
 
     async sendEmailVerification(): Promise<void> {
@@ -259,7 +315,7 @@ class User {
                 data: {
                     userId: this.userId,
                     token,
-                    type: "EMAIL_VERIFICATION",
+                    type: "REGISTRATION_CONFIRMATION",
                     expires,
                 },
             });
@@ -269,12 +325,13 @@ class User {
 
         const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token}`;
 
-        await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: this.data.email,
-            subject: "メールアドレスの確認",
-            html: `以下のリンクからUniSchoolアカウントを作成してください: <a href="${verifyLink}">${verifyLink}</a>`,
-        });
+        const result = await send(
+            this.data.email, 
+            "メールアドレスの確認", 
+            `以下のリンクからUniSchoolアカウントを作成してください: <a href="${verifyLink}">${verifyLink}</a>`
+        );
+
+        console.log("Verification email sent to:", result);
     }
 }
 
