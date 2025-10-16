@@ -55,7 +55,7 @@ export default async function UsersPage() {
 
           // 3. 名前順（昇順）
           return a.name.localeCompare(b.name, 'ja');
-     })
+     });
 
      return (
           <div className="p-6 space-y-6">
