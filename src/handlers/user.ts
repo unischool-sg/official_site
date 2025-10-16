@@ -93,6 +93,9 @@ async function handleRegistTokenUser(
                description: data.data.user.email,
           });
           form.reset();
+
+          router.refresh();
+          router.push("/admin");
      } catch (error) {
           console.error("Error registering user:", error);
           toast.error("ユーザーの登録に失敗しました", {
