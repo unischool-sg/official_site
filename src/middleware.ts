@@ -1,22 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-	const { pathname } = request.nextUrl;
-
-	// /admin パスへのアクセスをチェック
-	if (pathname.startsWith("/admin")) {
-		// クッキーからセッショントークンを取得
-		const sessionToken = request.cookies.get("s-token")?.value;
-		
-		// セッショントークンがない場合はログインページにリダイレクト
-		if (!sessionToken) {
-			return redirectToLogin(request, pathname);
-		}
-
-		// セッショントークンの存在のみチェック
-		// 詳細な検証（有効期限、ロール等）はServer Componentで行う
-		// 理由: Edge Runtimeでのサイズ制限とパフォーマンス最適化のため
-	}
+	const pathname = request.nextUrl.pathname;
 
 	// パス情報をヘッダーに追加（Server Componentで利用可能に）
 	const response = NextResponse.next();

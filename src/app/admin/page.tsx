@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function AdminPage() {
   const user = await User.current();
-
   if (!user) {
     return null; // layout.tsxでリダイレクトされる
   }
