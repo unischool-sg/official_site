@@ -25,8 +25,8 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
         const data = await response.json();
         console.log("Login successful:", data);
         // リダイレクトなどの処理をここに追加
-        router.push("/admin"); // 例: ダッシュボードページへリダイレクト
         router.refresh(); // セッション状態を更新
+        router.push("/admin"); // 例: ダッシュボードページへリダイレクト
     } catch (error) {
         console.error("Login failed:", error);
         setError((error as Error).message);
