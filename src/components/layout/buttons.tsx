@@ -104,25 +104,59 @@ export default function Buttons({ userData }: ButtonsProps) {
     });
 
     return (
-        <div>
-            <div className="flex gap-3 mt-3">
-                <Button variant="destructive" className="w-full" onClick={handleSendPasswordReset}>
-                    <KeyRound className="mr-2 h-4 w-4" />パスワードリセット
-                </Button>
-                <Button variant="secondary" className="w-full" onClick={handleResendVerification}>
-                    <Mail className="mr-2 h-4 w-4" />認証メール再送信
-                </Button>
-            </div>
-            <div className="flex gap-3 mt-3">
-                <Link href={`/admin/users/${userData.id}/send`} className="flex-1">
-                    <Button variant="destructive" className="w-full">
-                        <Mail className="mr-2 h-4 w-4" />メール送信
+        <div className="space-y-3">
+            {/* メール送信関連 */}
+            <div className="p-4 rounded-lg border bg-muted/30 space-y-3">
+                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                    メール送信
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <Link href={`/admin/users/${userData.id}/send`} className="w-full">
+                        <Button variant="default" className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white">
+                            <Mail className="mr-2 h-4 w-4" />
+                            カスタムメール
+                        </Button>
+                    </Link>
+                    <Button 
+                        variant="outline" 
+                        className="w-full h-11 border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950/30" 
+                        onClick={handleResendVerification}
+                        disabled={!!userData.emailVerified}
+                    >
+                        <Mail className="mr-2 h-4 w-4" />
+                        認証メール再送信
                     </Button>
-                </Link>
+                </div>
             </div>
-            <div className="flex gap-3 mt-3">
-                <Button variant="destructive" className="w-full" onClick={handleDelete}>
-                    <Trash2 className="mr-2 h-4 w-4" />ユーザー削除
+
+            {/* パスワード管理 */}
+            <div className="p-4 rounded-lg border bg-muted/30 space-y-3">
+                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                    パスワード管理
+                </h4>
+                <Button 
+                    variant="outline" 
+                    className="w-full h-11 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950/30" 
+                    onClick={handleSendPasswordReset}
+                >
+                    <KeyRound className="mr-2 h-4 w-4" />
+                    パスワードリセット
+                </Button>
+            </div>
+
+            {/* 危険な操作 */}
+            <div className="p-4 rounded-lg border border-red-200 bg-red-50/50 dark:border-red-900 dark:bg-red-950/20 space-y-3">
+                <h4 className="text-sm font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide flex items-center gap-2">
+                    <span>⚠️</span>
+                    危険な操作
+                </h4>
+                <Button 
+                    variant="destructive" 
+                    className="w-full h-11" 
+                    onClick={handleDelete}
+                >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    ユーザーを削除
                 </Button>
             </div>
         </div>
