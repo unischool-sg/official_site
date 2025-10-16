@@ -186,19 +186,6 @@ export default async function UserPage(context: ControlContext) {
                 {/* アクションボタン */}
                 <Card className="shadow-lg border-0">
                     <CardContent className="pt-6">
-                        <div className="flex gap-3">
-                            <Link href={`/admin/users`} className="flex-1">
-                                <Button variant="outline" className="w-full">
-                                    編集する
-                                </Button>
-                            </Link>
-                            <Link href={`/admin/users`} className="flex-1">
-                                <Button variant="outline" className="w-full">
-                                    一覧に戻る
-                                </Button>
-                            </Link>
-                        </div>
-
                         <Buttons userData={userData} />
                     </CardContent>
                 </Card>
