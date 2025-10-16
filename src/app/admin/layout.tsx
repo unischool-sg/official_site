@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { User } from "@/lib/service/user";
+import { session } from "../layout";
 
 export default async function AdminLayout({
   children,
@@ -7,9 +7,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   // サーバーサイドで詳細な認証チェック
-  const user = await User.current();
-
-  // ログインしていない場合
+  const user = session.get("user");
   if (!user) {
     redirect("/403");
   }

@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { User } from "@/lib/service/user";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -66,14 +67,18 @@ export const metadata: Metadata = {
     "学生",
   ],
 };
+export const session = new Map<string, User | any>();
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await User.current();
+  session.set("user", user);
+
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
         className={`${geistSans.variable} ${robotoSlab.variable} ${geistMono.variable} antialiased`}
       >
