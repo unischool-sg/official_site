@@ -16,17 +16,19 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
+            credentials: "include", // クッキーを含める
         });
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error?.message || "Login failed");
+        
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+            throw new Error(data.error?.message || "Login failed");
         }
 
-        const data = await response.json();
         console.log("Login successful:", data);
-        // リダイレクトなどの処理をここに追加
-        router.refresh(); // セッション状態を更新
-        router.push("/admin"); // 例: ダッシュボードページへリダイレクト
+        
+        // ページをリロードしてセッション状態を更新
+        window.location.href = "/admin";
     } catch (error) {
         console.error("Login failed:", error);
         setError((error as Error).message);
