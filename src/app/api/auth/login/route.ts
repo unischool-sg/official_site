@@ -29,10 +29,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // クッキーを設定
-        const cookieStore = await cookies();
-        
-        // Next.js 15では、cookieStoreから直接レスポンスを作成する必要がある
+        // レスポンスを作成
         const response = NextResponse.json(
             { 
                 success: true,
@@ -51,13 +48,27 @@ export async function POST(req: NextRequest) {
             { status: 200 }
         );
 
-        // レスポンスヘッダーにSet-Cookieを設定
-        response.cookies.set("s-token", token, {
+        // クッキーを設定
+        const isProduction = process.env.NODE_ENV === "production";
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+        const isHttps = appUrl.startsWith("https://");
+        
+        response.cookies.set({
+            name: "s-token",
+            value: token,
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: isProduction && isHttps, // 本番環境でHTTPSの場合のみtrue
             sameSite: "lax",
             maxAge: 7 * 24 * 60 * 60, // 7 days
             path: "/",
+        });
+
+        console.log("Cookie set:", { 
+            token: token.substring(0, 20) + "...",
+            isProduction,
+            appUrl,
+            isHttps,
+            secure: isProduction && isHttps
         });
 
         return response;
