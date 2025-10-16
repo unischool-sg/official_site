@@ -3,6 +3,7 @@ import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { verifyEmailTemplate } from "@/mails/verify";
 import { resetEmailTemplate } from "@/mails/reset";
+import { emailTemplates } from "@/mails/mail";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
 import { Token } from "./token";
@@ -364,7 +365,7 @@ class User {
                const result = await send(
                     this.data.email,
                     subject,
-                    body
+                    emailTemplates(subject, body)
                );
 
                console.log("Email sent to:", result);
