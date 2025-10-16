@@ -16,21 +16,26 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
-            // credentials: "include", // クッキーを含める
+            credentials: "include", // クッキーを含める（重要！）
         });
         
         const data = await response.json();
         if (!response.ok || !data.success) {
             throw new Error(data.error?.message || "Login failed");
         }
-        console.log("Login successful:", data);
-        // クッキーを手動で設定
-        window.cookieStore.set("s-token", data.data.token);
+        
+        console.log("[Login Handler] Login successful:", {
+            success: data.success,
+            hasToken: !!data.data?.token
+        });
 
+        // サーバーがSet-Cookieヘッダーでクッキーを設定するため、
+        // クライアント側での手動設定は不要（httpOnlyクッキーは設定できないため）
+        
         // ダッシュボードへリダイレクト
         router.push("/admin");
     } catch (error) {
-        console.error("Login failed:", error);
+        console.error("[Login Handler] Login failed:", error);
         setError((error as Error).message);
         setIsLoading(false);
     }

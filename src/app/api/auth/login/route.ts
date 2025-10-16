@@ -1,11 +1,9 @@
-"use server";
 import { successResponse, notFoundResponse, errorResponse } from "@/lib/api/response";
-import { NextRequest } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/lib/service/user";
 
 export async function POST(req: NextRequest) {
-    const [{ email, password }, store] = await Promise.all([req.json(), cookies()]);
+    const { email, password } = await req.json();
 
     const user = await User.get({ email });
     if (!user) {
@@ -17,13 +15,28 @@ export async function POST(req: NextRequest) {
         return errorResponse("Invalid password", { status: 401 });
     }
 
-    store.set("s-token", token);
+    // セッション期間（7日間）
+    const sessionDuration = 7 * 24 * 60 * 60; // 秒単位
 
-    console.log("Cookie set successfully:", {
-        token: token.substring(0, 20) + "...",
-        maxAge: 7 * 24 * 60 * 60,
+    // レスポンスを作成
+    const response = successResponse({ token });
+
+    // クッキーをレスポンスヘッダーに設定
+    response.cookies.set("s-token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: sessionDuration,
+        path: "/",
+    });
+
+    console.log("[Login API] Cookie set in response:", {
+        tokenPrefix: token.substring(0, 10) + "...",
+        maxAge: sessionDuration,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         path: "/"
     });
 
-    return successResponse({ token });
+    return response;
 }

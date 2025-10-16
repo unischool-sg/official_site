@@ -229,30 +229,12 @@ class User {
 
 			console.log("[User.login] Session created in database:", {
 				sessionId: session.id,
-				expires: session.expires
+				expires: session.expires,
+				tokenPrefix: sessionToken.substring(0, 10) + "..."
 			});
 
-			// クッキーにセッショントークンを保存
-			const cookieStore = await cookies();
-			const cookieOptions = {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax" as const,
-				maxAge: sessionDuration / 1000, // 秒単位
-				path: "/",
-			};
-
-			console.log("[User.login] Setting cookie with options:", cookieOptions);
-			
-			cookieStore.set("s-token", sessionToken, cookieOptions);
-
-			// クッキーが実際に設定されたか確認
-			const setCookie = cookieStore.get("s-token");
-			console.log("[User.login] Cookie verification:", {
-				cookieSet: !!setCookie,
-				cookieValue: setCookie?.value?.substring(0, 10) + "..." || "not found"
-			});
-
+			// セッショントークンを返す
+			// 注意: クッキーの設定はAPI Route層で行う
 			return session.sessionToken;
 		}
 
@@ -276,25 +258,22 @@ class User {
 		const sessionToken = cookieStore.get("s-token")?.value;
 
 		if (sessionToken) {
-			// セッションを削除
+			// セッションをデータベースから削除
 			await prisma.session.delete({
 				where: { sessionToken },
 			});
-
-			// クッキーを削除
-			cookieStore.delete("s-token");
+			
+			// 注意: クッキーの削除はAPI Route層で行う
 		}
 	}
 
 	async logoutAll(): Promise<void> {
-		// すべてのセッションを削除
+		// すべてのセッションをデータベースから削除
 		await prisma.session.deleteMany({
 			where: { userId: this.userId },
 		});
 
-		// クッキーを削除
-		const cookieStore = await cookies();
-		cookieStore.delete("s-token");
+		// 注意: クッキーの削除はAPI Route層で行う
 	}
     
     async update(data: Prisma.UserUpdateInput): Promise<User> {
