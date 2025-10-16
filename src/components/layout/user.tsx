@@ -7,7 +7,7 @@ import {
      SelectValue,
 } from "@/components/ui/select";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Trash2, Save } from "lucide-react";
+import { Trash2, Save, Mail, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "@prisma/client";
@@ -58,6 +58,74 @@ export default function UserRow({ user }: UserRowProps) {
           }
 
           toast.dismiss("update");
+     };
+
+     const handleResendVerification = async () => {
+          if (!confirm(`${user.name} に認証メールを再送信しますか？`)) {
+               return;
+          }
+
+          setIsLoading(true);
+          toast.loading("認証メールを送信中...", { id: "resend" });
+          try {
+               const response = await fetch(`/api/admin/users/${user.id}/send/verify`, {
+                    method: "POST",
+               });
+
+               if (response.ok) {
+                    toast.success("認証メールを送信しました", {
+                         description: `${user.email} に送信しました`,
+                    });
+               } else {
+                    const error = await response.json();
+                    toast.error("送信に失敗しました", {
+                         description:
+                              error.error?.message || "エラーが発生しました",
+                    });
+               }
+          } catch (error) {
+               console.error("Resend verification error:", error);
+               toast.error("ネットワークエラー", {
+                    description: "サーバーに接続できませんでした",
+               });
+          } finally {
+               setIsLoading(false);
+               toast.dismiss("resend");
+          }
+     };
+
+     const handleSendPasswordReset = async () => {
+          if (!confirm(`${user.name} にパスワードリセットメールを送信しますか？`)) {
+               return;
+          }
+
+          setIsLoading(true);
+          toast.loading("パスワードリセットメールを送信中...", { id: "reset" });
+          try {
+               const response = await fetch(`/api/admin/users/${user.id}/send/reset`, {
+                    method: "POST",
+               });
+
+               if (response.ok) {
+                    toast.success("パスワードリセットメールを送信しました", {
+                         description: `${user.email} に送信しました`,
+                    });
+               } else {
+                    const error = await response.json();
+                    toast.error("送信に失敗しました", {
+                         description:
+                              error.error?.message || "エラーが発生しました",
+                    });
+               }
+          } catch (error) {
+               console.error("Send password reset error:", error);
+               toast.error("ネットワークエラー", {
+                    description: "サーバーに接続できませんでした",
+               });
+          } finally {
+               setIsLoading(false);
+               toast.dismiss("reset");
+          }
      };
 
      const handleDelete = async () => {
@@ -167,8 +235,31 @@ export default function UserRow({ user }: UserRowProps) {
                               onClick={handleSave}
                               type="button"
                               disabled={isLoading}
+                              title="保存"
                          >
                               <Save className="h-4 w-4" />
+                         </Button>
+                         <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                              onClick={handleResendVerification}
+                              type="button"
+                              disabled={isLoading || !!user.emailVerified}
+                              title="認証メール再送信"
+                         >
+                              <Mail className="h-4 w-4" />
+                         </Button>
+                         <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-orange-600 hover:text-orange-700 hover:bg-orange-50"
+                              onClick={handleSendPasswordReset}
+                              type="button"
+                              disabled={isLoading}
+                              title="パスワードリセットメール送信"
+                         >
+                              <KeyRound className="h-4 w-4" />
                          </Button>
                          <Button
                               variant="ghost"
@@ -177,6 +268,7 @@ export default function UserRow({ user }: UserRowProps) {
                               onClick={handleDelete}
                               type="button"
                               disabled={isLoading}
+                              title="削除"
                          >
                               <Trash2 className="h-4 w-4" />
                          </Button>
