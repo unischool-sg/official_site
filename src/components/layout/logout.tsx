@@ -10,6 +10,7 @@ export default function Logout() {
         if (confirm("ログアウトしますか？")) {
             router.push("/api/auth/logout");
         }
+        return;
     });
 
     return (
