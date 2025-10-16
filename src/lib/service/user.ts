@@ -340,7 +340,7 @@ class User {
                const token = await Token.new(
                     this.userId,
                     "REGISTRATION_CONFIRMATION",
-                    24,
+                    24 * 15,
                ); // 24時間有効
                const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token.token}`;
 
