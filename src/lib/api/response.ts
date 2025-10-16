@@ -1,35 +1,35 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 /**
  * APIレスポンスの型定義
  */
 export type ApiResponse<T = any> = {
-  success: boolean;
-  data?: T;
-  error?: {
-    message: string;
-    code?: string;
-    details?: any;
-  };
-  meta?: {
-    timestamp: string;
-    requestId?: string;
-    [key: string]: any;
-  };
+     success: boolean;
+     data?: T;
+     error?: {
+          message: string;
+          code?: string;
+          details?: any;
+     };
+     meta?: {
+          timestamp: string;
+          requestId?: string;
+          [key: string]: any;
+     };
 };
 
 /**
  * ページネーション付きレスポンスの型定義
  */
 export type PaginatedApiResponse<T = any> = ApiResponse<T> & {
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-    hasNext: boolean;
-    hasPrev: boolean;
-  };
+     pagination?: {
+          page: number;
+          limit: number;
+          total: number;
+          totalPages: number;
+          hasNext: boolean;
+          hasPrev: boolean;
+     };
 };
 
 /**
@@ -39,31 +39,31 @@ export type PaginatedApiResponse<T = any> = ApiResponse<T> & {
  * @returns NextResponse
  */
 export function successResponse<T>(
-  data: T,
-  options?: {
-    status?: number;
-    meta?: Record<string, any>;
-    headers?: Record<string, string>;
-  }
+     data: T,
+     options?: {
+          status?: number;
+          meta?: Record<string, any>;
+          headers?: Record<string, string>;
+     },
 ): NextResponse<ApiResponse<T>> {
-  const { status = 200, meta = {}, headers = {} } = options || {};
+     const { status = 200, meta = {}, headers = {} } = options || {};
 
-  const response: ApiResponse<T> = {
-    success: true,
-    data,
-    meta: {
-      timestamp: new Date().toISOString(),
-      ...meta,
-    },
-  };
+     const response: ApiResponse<T> = {
+          success: true,
+          data,
+          meta: {
+               timestamp: new Date().toISOString(),
+               ...meta,
+          },
+     };
 
-  return NextResponse.json(response, {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-  });
+     return NextResponse.json(response, {
+          status,
+          headers: {
+               "Content-Type": "application/json",
+               ...headers,
+          },
+     });
 }
 
 /**
@@ -73,35 +73,35 @@ export function successResponse<T>(
  * @returns NextResponse
  */
 export function errorResponse(
-  message: string,
-  options?: {
-    status?: number;
-    code?: string;
-    details?: any;
-    headers?: Record<string, string>;
-  }
+     message: string,
+     options?: {
+          status?: number;
+          code?: string;
+          details?: any;
+          headers?: Record<string, string>;
+     },
 ): NextResponse<ApiResponse> {
-  const { status = 400, code, details, headers = {} } = options || {};
+     const { status = 400, code, details, headers = {} } = options || {};
 
-  const response: ApiResponse = {
-    success: false,
-    error: {
-      message,
-      ...(code && { code }),
-      ...(details && { details }),
-    },
-    meta: {
-      timestamp: new Date().toISOString(),
-    },
-  };
+     const response: ApiResponse = {
+          success: false,
+          error: {
+               message,
+               ...(code && { code }),
+               ...(details && { details }),
+          },
+          meta: {
+               timestamp: new Date().toISOString(),
+          },
+     };
 
-  return NextResponse.json(response, {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-  });
+     return NextResponse.json(response, {
+          status,
+          headers: {
+               "Content-Type": "application/json",
+               ...headers,
+          },
+     });
 }
 
 /**
@@ -112,40 +112,40 @@ export function errorResponse(
  * @returns NextResponse
  */
 export function paginatedResponse<T>(
-  data: T[],
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-  },
-  options?: {
-    status?: number;
-    meta?: Record<string, any>;
-  }
+     data: T[],
+     pagination: {
+          page: number;
+          limit: number;
+          total: number;
+     },
+     options?: {
+          status?: number;
+          meta?: Record<string, any>;
+     },
 ): NextResponse<PaginatedApiResponse<T[]>> {
-  const { status = 200, meta = {} } = options || {};
-  const { page, limit, total } = pagination;
+     const { status = 200, meta = {} } = options || {};
+     const { page, limit, total } = pagination;
 
-  const totalPages = Math.ceil(total / limit);
+     const totalPages = Math.ceil(total / limit);
 
-  const response: PaginatedApiResponse<T[]> = {
-    success: true,
-    data,
-    pagination: {
-      page,
-      limit,
-      total,
-      totalPages,
-      hasNext: page < totalPages,
-      hasPrev: page > 1,
-    },
-    meta: {
-      timestamp: new Date().toISOString(),
-      ...meta,
-    },
-  };
+     const response: PaginatedApiResponse<T[]> = {
+          success: true,
+          data,
+          pagination: {
+               page,
+               limit,
+               total,
+               totalPages,
+               hasNext: page < totalPages,
+               hasPrev: page > 1,
+          },
+          meta: {
+               timestamp: new Date().toISOString(),
+               ...meta,
+          },
+     };
 
-  return NextResponse.json(response, { status });
+     return NextResponse.json(response, { status });
 }
 
 /**
@@ -155,23 +155,23 @@ export function paginatedResponse<T>(
  * @returns NextResponse
  */
 export function createdResponse<T>(
-  data: T,
-  options?: {
-    meta?: Record<string, any>;
-    location?: string;
-  }
+     data: T,
+     options?: {
+          meta?: Record<string, any>;
+          location?: string;
+     },
 ): NextResponse<ApiResponse<T>> {
-  const headers: Record<string, string> = {};
-  
-  if (options?.location) {
-    headers['Location'] = options.location;
-  }
+     const headers: Record<string, string> = {};
 
-  return successResponse(data, {
-    status: 201,
-    meta: options?.meta,
-    headers,
-  });
+     if (options?.location) {
+          headers["Location"] = options.location;
+     }
+
+     return successResponse(data, {
+          status: 201,
+          meta: options?.meta,
+          headers,
+     });
 }
 
 /**
@@ -179,7 +179,7 @@ export function createdResponse<T>(
  * @returns NextResponse
  */
 export function deletedResponse(): NextResponse {
-  return new NextResponse(null, { status: 204 });
+     return new NextResponse(null, { status: 204 });
 }
 
 /**
@@ -188,13 +188,13 @@ export function deletedResponse(): NextResponse {
  * @returns NextResponse
  */
 export function validationErrorResponse(
-  errors: Record<string, string[]> | string[]
+     errors: Record<string, string[]> | string[],
 ): NextResponse<ApiResponse> {
-  return errorResponse('バリデーションエラー', {
-    status: 400,
-    code: 'VALIDATION_ERROR',
-    details: { errors },
-  });
+     return errorResponse("バリデーションエラー", {
+          status: 400,
+          code: "VALIDATION_ERROR",
+          details: { errors },
+     });
 }
 
 /**
@@ -203,12 +203,12 @@ export function validationErrorResponse(
  * @returns NextResponse
  */
 export function unauthorizedResponse(
-  message: string = '認証が必要です'
+     message: string = "認証が必要です",
 ): NextResponse<ApiResponse> {
-  return errorResponse(message, {
-    status: 401,
-    code: 'UNAUTHORIZED',
-  });
+     return errorResponse(message, {
+          status: 401,
+          code: "UNAUTHORIZED",
+     });
 }
 
 /**
@@ -217,12 +217,12 @@ export function unauthorizedResponse(
  * @returns NextResponse
  */
 export function forbiddenResponse(
-  message: string = 'アクセス権限がありません'
+     message: string = "アクセス権限がありません",
 ): NextResponse<ApiResponse> {
-  return errorResponse(message, {
-    status: 403,
-    code: 'FORBIDDEN',
-  });
+     return errorResponse(message, {
+          status: 403,
+          code: "FORBIDDEN",
+     });
 }
 
 /**
@@ -231,12 +231,12 @@ export function forbiddenResponse(
  * @returns NextResponse
  */
 export function notFoundResponse(
-  message: string = 'リソースが見つかりません'
+     message: string = "リソースが見つかりません",
 ): NextResponse<ApiResponse> {
-  return errorResponse(message, {
-    status: 404,
-    code: 'NOT_FOUND',
-  });
+     return errorResponse(message, {
+          status: 404,
+          code: "NOT_FOUND",
+     });
 }
 
 /**
@@ -245,12 +245,12 @@ export function notFoundResponse(
  * @returns NextResponse
  */
 export function conflictResponse(
-  message: string = 'リソースが既に存在します'
+     message: string = "リソースが既に存在します",
 ): NextResponse<ApiResponse> {
-  return errorResponse(message, {
-    status: 409,
-    code: 'CONFLICT',
-  });
+     return errorResponse(message, {
+          status: 409,
+          code: "CONFLICT",
+     });
 }
 
 /**
@@ -260,20 +260,20 @@ export function conflictResponse(
  * @returns NextResponse
  */
 export function rateLimitResponse(
-  message: string = 'リクエスト数が上限に達しました',
-  retryAfter?: number
+     message: string = "リクエスト数が上限に達しました",
+     retryAfter?: number,
 ): NextResponse<ApiResponse> {
-  const headers: Record<string, string> = {};
-  
-  if (retryAfter) {
-    headers['Retry-After'] = retryAfter.toString();
-  }
+     const headers: Record<string, string> = {};
 
-  return errorResponse(message, {
-    status: 429,
-    code: 'RATE_LIMIT_EXCEEDED',
-    headers,
-  });
+     if (retryAfter) {
+          headers["Retry-After"] = retryAfter.toString();
+     }
+
+     return errorResponse(message, {
+          status: 429,
+          code: "RATE_LIMIT_EXCEEDED",
+          headers,
+     });
 }
 
 /**
@@ -283,16 +283,16 @@ export function rateLimitResponse(
  * @returns NextResponse
  */
 export function serverErrorResponse(
-  message: string = 'サーバーエラーが発生しました',
-  details?: any
+     message: string = "サーバーエラーが発生しました",
+     details?: any,
 ): NextResponse<ApiResponse> {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+     const isDevelopment = process.env.NODE_ENV === "development";
 
-  return errorResponse(message, {
-    status: 500,
-    code: 'INTERNAL_SERVER_ERROR',
-    details: isDevelopment ? details : undefined,
-  });
+     return errorResponse(message, {
+          status: 500,
+          code: "INTERNAL_SERVER_ERROR",
+          details: isDevelopment ? details : undefined,
+     });
 }
 
 /**
@@ -301,13 +301,13 @@ export function serverErrorResponse(
  * @returns NextResponse
  */
 export function methodNotAllowedResponse(
-  allowedMethods: string[]
+     allowedMethods: string[],
 ): NextResponse<ApiResponse> {
-  return errorResponse('このHTTPメソッドは許可されていません', {
-    status: 405,
-    code: 'METHOD_NOT_ALLOWED',
-    headers: {
-      'Allow': allowedMethods.join(', '),
-    },
-  });
+     return errorResponse("このHTTPメソッドは許可されていません", {
+          status: 405,
+          code: "METHOD_NOT_ALLOWED",
+          headers: {
+               Allow: allowedMethods.join(", "),
+          },
+     });
 }
