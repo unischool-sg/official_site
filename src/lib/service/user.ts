@@ -1,10 +1,13 @@
 import { Prisma, User as PrismaUser, Profile } from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
+import { verifyEmailTemplate } from "@/mails/verify";
+import { resetEmailTemplate } from "@/mails/reset";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
 import { Token } from "./token";
 import { send } from "../resend";
+
 
 type UserWithProfile = PrismaUser & {
      profile?: Profile | null;
@@ -327,8 +330,8 @@ class User {
 
                await send(
                     this.data.email,
-                    "パスワードリセット",
-                    `以下のリンクをクリックしてパスワードをリセットしてください: <a href="${resetLink}">${resetLink}</a>`,
+                    "【Uni School】パスワードリセットのご案内",
+                    resetEmailTemplate(resetLink),
                );
           } catch (error) {
                throw error;
@@ -346,8 +349,8 @@ class User {
 
                const result = await send(
                     this.data.email,
-                    "メールアドレスの確認",
-                    `以下のリンクからUniSchoolアカウントを作成してください: <a href="${verifyLink}">${verifyLink}</a>`,
+                    "【Uni School】アカウント登録の確認",
+                    verifyEmailTemplate(verifyLink)
                );
 
                console.log("Verification email sent to:", result);
