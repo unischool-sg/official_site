@@ -36,7 +36,7 @@ export default async function UsersPage() {
                self.findIndex((u) => u.id === user.id) === index,
      )
 
-     // 認証済みから順に、そして名前順にソート
+     // 認証済みから順に、そして権限順、名前順にソート
      const sortedUsers = uniqueUsers.sort((a, b) => {
           // 1. 認証済みを上に
           const aVerified = a.emailVerified ? 1 : 0;
@@ -45,7 +45,15 @@ export default async function UsersPage() {
                return bVerified - aVerified; // 認証済み（1）が上に
           }
 
-          // 2. 名前順（昇順）
+          // 2. 権限順（ADMIN > MEMBER）
+          const roleOrder = { ADMIN: 0, MEMBER: 1 };
+          const aRole = roleOrder[a.role as keyof typeof roleOrder] ?? 999;
+          const bRole = roleOrder[b.role as keyof typeof roleOrder] ?? 999;
+          if (aRole !== bRole) {
+               return aRole - bRole;
+          }
+
+          // 3. 名前順（昇順）
           return a.name.localeCompare(b.name, 'ja');
      })
 
