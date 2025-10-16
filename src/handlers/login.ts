@@ -20,12 +20,13 @@ async function handleLogin(e: React.FormEvent, setIsLoading: React.Dispatch<Reac
         });
         
         const data = await response.json();
-        
         if (!response.ok || !data.success) {
             throw new Error(data.error?.message || "Login failed");
         }
-
         console.log("Login successful:", data);
+        // クッキーを手動で設定
+        window.cookieStore.set("s-token", data.data.token);
+
         // ダッシュボードへリダイレクト
         router.push("/admin");
     } catch (error) {
