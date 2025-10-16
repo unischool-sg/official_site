@@ -1,8 +1,9 @@
-import { verifyPassword, hashPassword } from "@/utils/hash";
 import { Prisma, User as PrismaUser, Profile } from "@prisma/client";
+import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
+import { Token } from "./token";
 import { send } from "../resend";
 
 type UserWithProfile = PrismaUser & {
@@ -138,7 +139,7 @@ class User {
 
         const now = new Date();
         const isExpired = session.expires < now;
-        
+
         if (isExpired) {
             console.log("[User.current] Session expired:", {
                 expires: session.expires,
@@ -169,113 +170,113 @@ class User {
         return await hashPassword(password);
     }
 
-	// 基本機能
-	async login(
-		password: string,
-		options?: {
-			rememberMe?: boolean;
-			ipAddress?: string;
-			userAgent?: string;
-		},
-	): Promise<string | null> {
-		const isMatch = await verifyPassword(password, this.data.password);
+    // 基本機能
+    async login(
+        password: string,
+        options?: {
+            rememberMe?: boolean;
+            ipAddress?: string;
+            userAgent?: string;
+        },
+    ): Promise<string | null> {
+        const isMatch = await verifyPassword(password, this.data.password);
 
-		if (isMatch) {
-			// セッションの有効期限を設定
-			const sessionDuration = options?.rememberMe
-				? 90 * 24 * 60 * 60 * 1000 // 90日間
-				: 7 * 24 * 60 * 60 * 1000; // 7日間
+        if (isMatch) {
+            // セッションの有効期限を設定
+            const sessionDuration = options?.rememberMe
+                ? 90 * 24 * 60 * 60 * 1000 // 90日間
+                : 7 * 24 * 60 * 60 * 1000; // 7日間
 
-			// セッショントークンを生成
-			const sessionToken = generateSecureToken(32);
+            // セッショントークンを生成
+            const sessionToken = generateSecureToken(32);
 
-			console.log("[User.login] Creating session:", {
-				userId: this.userId,
-				tokenPrefix: sessionToken.substring(0, 10) + "...",
-				sessionDuration: sessionDuration / 1000 / 60 / 60 + " hours",
-				expires: new Date(Date.now() + sessionDuration)
-			});
+            console.log("[User.login] Creating session:", {
+                userId: this.userId,
+                tokenPrefix: sessionToken.substring(0, 10) + "...",
+                sessionDuration: sessionDuration / 1000 / 60 / 60 + " hours",
+                expires: new Date(Date.now() + sessionDuration)
+            });
 
-			const [session] = await Promise.all([
-				// 新しいセッションを作成
-				prisma.session.create({
-					data: {
-						userId: this.userId,
-						sessionToken,
-						expires: new Date(Date.now() + sessionDuration),
-						ipAddress: options?.ipAddress,
-						userAgent: options?.userAgent,
-					},
-				}),
-				// 期限切れセッションを削除
-				prisma.session.deleteMany({
-					where: {
-						userId: this.userId,
-						expires: {
-							lt: new Date(),
-						},
-					},
-				}),
-				// ログイン履歴を記録（成功）
-				prisma.loginHistory.create({
-					data: {
-						userId: this.userId,
-						success: true,
-						ipAddress: options?.ipAddress,
-						userAgent: options?.userAgent,
-					},
-				}),
-			]);
+            const [session] = await Promise.all([
+                // 新しいセッションを作成
+                prisma.session.create({
+                    data: {
+                        userId: this.userId,
+                        sessionToken,
+                        expires: new Date(Date.now() + sessionDuration),
+                        ipAddress: options?.ipAddress,
+                        userAgent: options?.userAgent,
+                    },
+                }),
+                // 期限切れセッションを削除
+                prisma.session.deleteMany({
+                    where: {
+                        userId: this.userId,
+                        expires: {
+                            lt: new Date(),
+                        },
+                    },
+                }),
+                // ログイン履歴を記録（成功）
+                prisma.loginHistory.create({
+                    data: {
+                        userId: this.userId,
+                        success: true,
+                        ipAddress: options?.ipAddress,
+                        userAgent: options?.userAgent,
+                    },
+                }),
+            ]);
 
-			console.log("[User.login] Session created in database:", {
-				sessionId: session.id,
-				expires: session.expires,
-				tokenPrefix: sessionToken.substring(0, 10) + "..."
-			});
+            console.log("[User.login] Session created in database:", {
+                sessionId: session.id,
+                expires: session.expires,
+                tokenPrefix: sessionToken.substring(0, 10) + "..."
+            });
 
-			// セッショントークンを返す
-			// 注意: クッキーの設定はAPI Route層で行う
-			return session.sessionToken;
-		}
+            // セッショントークンを返す
+            // 注意: クッキーの設定はAPI Route層で行う
+            return session.sessionToken;
+        }
 
-		// ログイン失敗を記録
-		if (options?.ipAddress || options?.userAgent) {
-			await prisma.loginHistory.create({
-				data: {
-					userId: this.userId,
-					success: false,
-					ipAddress: options?.ipAddress,
-					userAgent: options?.userAgent,
-				},
-			});
-		}
+        // ログイン失敗を記録
+        if (options?.ipAddress || options?.userAgent) {
+            await prisma.loginHistory.create({
+                data: {
+                    userId: this.userId,
+                    success: false,
+                    ipAddress: options?.ipAddress,
+                    userAgent: options?.userAgent,
+                },
+            });
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	async logout(): Promise<void> {
-		const cookieStore = await cookies();
-		const sessionToken = cookieStore.get("s-token")?.value;
+    async logout(): Promise<void> {
+        const cookieStore = await cookies();
+        const sessionToken = cookieStore.get("s-token")?.value;
 
-		if (sessionToken) {
-			// セッションをデータベースから削除
-			await prisma.session.delete({
-				where: { sessionToken },
-			});
-			
-			// 注意: クッキーの削除はAPI Route層で行う
-		}
-	}
+        if (sessionToken) {
+            // セッションをデータベースから削除
+            await prisma.session.delete({
+                where: { sessionToken },
+            });
 
-	async logoutAll(): Promise<void> {
-		// すべてのセッションをデータベースから削除
-		await prisma.session.deleteMany({
-			where: { userId: this.userId },
-		});
+            // 注意: クッキーの削除はAPI Route層で行う
+        }
+    }
 
-		// 注意: クッキーの削除はAPI Route層で行う
-	}
-    
+    async logoutAll(): Promise<void> {
+        // すべてのセッションをデータベースから削除
+        await prisma.session.deleteMany({
+            where: { userId: this.userId },
+        });
+
+        // 注意: クッキーの削除はAPI Route層で行う
+    }
+
     async update(data: Prisma.UserUpdateInput): Promise<User> {
         const updatedUser = await prisma.user.update({
             where: { id: this.userId },
@@ -299,6 +300,7 @@ class User {
     }
 
     async changePassword(newPassword: string): Promise<void> {
+        newPassword = await hashPassword(newPassword);
         await prisma.user.update({
             where: { id: this.userId },
             data: { password: newPassword },
@@ -306,57 +308,37 @@ class User {
     }
 
     async sendPasswordResetEmail(): Promise<void> {
-        const token = generateSecureToken(32);
-        const expires = new Date(Date.now() + 60 * 60 * 1000); // 1時間有効
-
         try {
-            await prisma.verificationToken.create({
-                data: {
-                    userId: this.userId,
-                    token,
-                    type: "PASSWORD_RESET",
-                    expires,
-                },
-            });
+            const result = await Token.new(this.userId, "PASSWORD_RESET", 24 * 15); // 15日間有効
+            const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${result.token}`;
+
+            await send(
+                this.data.email,
+                "パスワードリセット",
+                `以下のリンクをクリックしてパスワードをリセットしてください: <a href="${resetLink}">${resetLink}</a>`
+            );
         } catch (error) {
             throw error;
         }
 
-        const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
 
-        await send(
-            this.data.email, 
-            "パスワードリセット",  
-            `以下のリンクをクリックしてパスワードをリセットしてください: <a href="${resetLink}">${resetLink}</a>`
-        );
     }
 
     async sendEmailVerification(): Promise<void> {
-        const token = generateSecureToken(32);
-        const expires = new Date(Date.now() + 60 * 60 * 1000); // 1時間有効
-
         try {
-            await prisma.verificationToken.create({
-                data: {
-                    userId: this.userId,
-                    token,
-                    type: "REGISTRATION_CONFIRMATION",
-                    expires,
-                },
-            });
+            const token = await Token.new(this.userId, "REGISTRATION_CONFIRMATION", 24); // 24時間有効
+            const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token}`;
+
+            const result = await send(
+                this.data.email,
+                "メールアドレスの確認",
+                `以下のリンクからUniSchoolアカウントを作成してください: <a href="${verifyLink}">${verifyLink}</a>`
+            );
+
+            console.log("Verification email sent to:", result);
         } catch (error) {
             throw error;
         }
-
-        const verifyLink = `${process.env.NEXT_PUBLIC_APP_URL}/register?token=${token}`;
-
-        const result = await send(
-            this.data.email, 
-            "メールアドレスの確認", 
-            `以下のリンクからUniSchoolアカウントを作成してください: <a href="${verifyLink}">${verifyLink}</a>`
-        );
-
-        console.log("Verification email sent to:", result);
     }
 }
 
