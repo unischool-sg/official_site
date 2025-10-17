@@ -19,7 +19,7 @@ async function handleProfileUpdate(
      const avatar = formData.get("avatar") as File | null;
      const isPublic = formData.get("isPublic") === "on";
 
-     if (avatar) {
+     if (avatar && avatar.size > 0) {
           console.log("Uploading avatar:", avatar);
           if (avatar.size > 5 * 1024 * 1024) {
                setIsError("アバター画像は5MB以下にしてください。");
