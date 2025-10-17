@@ -113,22 +113,6 @@ export default function NewUserPage() {
                                                        <SelectValue placeholder="役職を選択" />
                                                   </SelectTrigger>
                                                   <SelectContent>
-                                                       <SelectItem value="ADMIN">
-                                                            <span className="font-semibold">
-                                                                 ADMIN
-                                                            </span>
-                                                            <span className="text-xs text-muted-foreground ml-2">
-                                                                 管理者
-                                                            </span>
-                                                       </SelectItem>
-                                                       <SelectItem value="MEMBER">
-                                                            <span className="font-semibold">
-                                                                 MEMBER
-                                                            </span>
-                                                            <span className="text-xs text-muted-foreground ml-2">
-                                                                 メンバー
-                                                            </span>
-                                                       </SelectItem>
                                                        {
                                                             /* PrismaのUserRoleに合わせる */
                                                             Object.values(
