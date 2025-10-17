@@ -27,7 +27,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2 md:col-span-2">
+                <div className="space-y-2">
                     <Label htmlFor="password" className="text-base font-medium">
                         新しいパスワード <span className="text-destructive">*</span>
                     </Label>
@@ -39,12 +39,9 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                         minLength={8}
                         className="h-14 text-base transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
                     />
-                    <p className="text-sm text-muted-foreground">
-                        英数字を含む8文字以上のパスワードを入力してください
-                    </p>
                 </div>
 
-                <div className="space-y-2 md:col-span-2">
+                <div className="space-y-2">
                     <Label htmlFor="confirmPassword" className="text-base font-medium">
                         パスワード（確認） <span className="text-destructive">*</span>
                     </Label>
@@ -60,12 +57,12 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             </div>
 
             {/* 安全性のヒント */}
-            <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
-                <h4 className="font-semibold text-blue-900 dark:text-blue-300 mb-2 flex items-center gap-2">
-                    <KeyRound className="h-4 w-4" />
+            <div className="p-6 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
+                <h4 className="font-semibold text-blue-900 dark:text-blue-300 mb-3 flex items-center gap-2 text-base">
+                    <KeyRound className="h-5 w-5" />
                     安全なパスワードのヒント
                 </h4>
-                <ul className="text-sm text-blue-800 dark:text-blue-400 space-y-1 ml-6 list-disc">
+                <ul className="text-sm text-blue-800 dark:text-blue-400 space-y-1.5 ml-6 list-disc">
                     <li>8文字以上の長さ</li>
                     <li>大文字と小文字を組み合わせる</li>
                     <li>数字や記号を含める</li>

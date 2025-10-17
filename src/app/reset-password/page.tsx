@@ -28,7 +28,7 @@ export default async function ResetPasswordPage({ searchParams }: ResetPasswordP
             <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
             <BlurFade delay={0.3} inView>
-                <Card className="w-full max-w-3xl mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
+                <Card className="w-full max-w-6xl mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
                     <CardHeader className="space-y-4 text-center pb-8">
                         <div className="flex justify-center mb-4">
                             <div className="relative">
