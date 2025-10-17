@@ -1,4 +1,4 @@
-import { Prisma, User as PrismaUser, Profile, Session } from "@prisma/client";
+import { Prisma, User as PrismaUser, Profile, Session, LoginHistory } from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { verifyEmailTemplate } from "@/mails/verify";
@@ -13,6 +13,7 @@ import { send } from "../resend";
 type UserWithProfile = PrismaUser & {
      profile?: Profile | null;
      sessions?: Session[];
+     loginHistory?: LoginHistory[];
 };
 
 class User {
@@ -74,6 +75,10 @@ class User {
           }
           // 期限が最も遠いセッションを現在のセッションとみなす
           return this.sessions[0];
+     }
+
+     get loginHistory() {
+          return this.data.loginHistory;
      }
 
      // Public method to get all data (without password)
@@ -147,6 +152,7 @@ class User {
                          include: {
                               profile: includeProfile,
                               sessions: true,
+                              loginHistory: true,
                          },
                     },
                },
