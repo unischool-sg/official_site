@@ -8,6 +8,14 @@ export async function middleware(request: NextRequest) {
      response.headers.set("x-pathname", pathname);
      response.headers.set("x-url", request.url);
 
+     // クライアントのIPアドレスを取得
+     // Vercelは以下のヘッダーでIPアドレスを提供します
+     const forwardedFor = request.headers.get("x-forwarded-for");
+     const realIp = request.headers.get("x-real-ip");
+     const clientIp = forwardedFor?.split(",")[0].trim() || realIp || "unknown";
+     
+     response.headers.set("x-client-ip", clientIp);
+
      // クッキーを保持（重要！）
      // NextResponse.next()は既存のクッキーを保持しますが、
      // 明示的に確認してログ出力

@@ -19,7 +19,13 @@ export async function POST(req: NextRequest) {
           return notFoundResponse("User not found");
      }
 
-     const token = await user.login(password);
+     const token = await user.login(password, {
+          userAgent: req.headers.get("user-agent") || undefined,
+          ipAddress:
+               req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+               req.headers.get("x-real-ip") ||
+               undefined,
+     });
      if (!token) {
           return errorResponse("Invalid password", { status: 401 });
      }
