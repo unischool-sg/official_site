@@ -172,8 +172,8 @@ class User {
                     now: now,
                     diff:
                          (now.getTime() - session.expires.getTime()) /
-                              1000 /
-                              60 +
+                         1000 /
+                         60 +
                          " minutes ago",
                });
                // 期限切れセッションを削除
@@ -290,9 +290,16 @@ class User {
 
           if (sessionToken) {
                // セッションをデータベースから削除
-               await prisma.session.delete({
-                    where: { sessionToken },
-               });
+               try {
+                    await prisma.session.deleteMany({
+                         where: { sessionToken },
+                    });
+               } catch (error) {
+                    console.error(
+                         "[User.logout] Error deleting session:",
+                         error,
+                    );
+               }
 
                // 注意: クッキーの削除はAPI Route層で行う
           }
@@ -377,7 +384,7 @@ class User {
           }
      }
 
-     async sendCustomEmail({ subject, body }: {subject: string, body: string}): Promise<void> {
+     async sendCustomEmail({ subject, body }: { subject: string, body: string }): Promise<void> {
           try {
                const result = await send(
                     this.data.email,

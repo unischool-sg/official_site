@@ -28,7 +28,7 @@ export default async function AdminLayout({
           console.log("[AdminLayout] No current session found for user");
      }
 
-     if (userAgent === currentSession?.userAgent || ipAdress === currentSession?.ipAddress) {
+     if (userAgent !== currentSession?.userAgent || ipAdress !== currentSession?.ipAddress) {
           await user?.logout();
           redirect("/login");
      }
