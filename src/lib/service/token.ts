@@ -54,8 +54,13 @@ class Token {
                data: { expires: newExpires },
           });
      }
-     async isExpired(): Promise<boolean> {
+     isExpired(): boolean {
           return new Date() > this.data.expires;
+     }
+     isActive(type: TokenType): boolean {
+          return (
+               this.data.type === type && !this.isExpired()
+          );
      }
      async userVerified(): Promise<boolean> {
           const user = await this.user;
