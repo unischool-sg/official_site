@@ -9,10 +9,11 @@ export default function TokenNotFound() {
                     <CardContent className="pt-6">
                          <div className="text-center space-y-4">
                               <h2 className="text-2xl font-bold text-destructive">
-                                   無効な招待リンク
+                                   無効なトークンリンク
                               </h2>
                               <p className="text-muted-foreground">
-                                   有効な招待トークンが必要です。管理者から送られた招待リンクをご確認ください。
+                                   有効なトークンが必要です。管理者から送られたリンクをご確認ください。<br />
+                                   トークンが期限切れの場合、新しいリンクをリクエストしてください。
                               </p>
                               <Link href="/login">
                                    <Button className="w-full">
