@@ -1,4 +1,4 @@
-import { Prisma, User as PrismaUser, Profile } from "@prisma/client";
+import { Prisma, User as PrismaUser, Profile, Session } from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { verifyEmailTemplate } from "@/mails/verify";
@@ -12,6 +12,7 @@ import { send } from "../resend";
 
 type UserWithProfile = PrismaUser & {
      profile?: Profile | null;
+     sessions?: Session[];
 };
 
 class User {
@@ -61,6 +62,18 @@ class User {
 
      get profile(): Profile | null | undefined {
           return this.data.profile;
+     }
+
+     get sessions(): Session[] | undefined {
+          return this.data.sessions;
+     }
+
+     get currentSession(): Session | null {
+          if (!this.sessions || this.sessions.length === 0) {
+               return null;
+          }
+          // 期限が最も遠いセッションを現在のセッションとみなす
+          return this.sessions[0];
      }
 
      // Public method to get all data (without password)
@@ -133,6 +146,7 @@ class User {
                     user: {
                          include: {
                               profile: includeProfile,
+                              sessions: true,
                          },
                     },
                },
@@ -221,13 +235,10 @@ class User {
                               userAgent: options?.userAgent,
                          },
                     }),
-                    // 期限切れセッションを削除
+                    // 自分以外の
                     prisma.session.deleteMany({
                          where: {
-                              userId: this.userId,
-                              expires: {
-                                   lt: new Date(),
-                              },
+                              userId: this.userId
                          },
                     }),
                     // ログイン履歴を記録（成功）
