@@ -70,6 +70,7 @@ model Profile {
   userId    String   @unique
   bio       String?  @db.Text // 自己紹介（長文対応）
   avatarUrl String?  @db.VarChar(500) // アバターURL（長さ制限）
+  isPublic  Boolean  @default(false) // プロフィール公開設定
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
