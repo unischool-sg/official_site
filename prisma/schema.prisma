@@ -16,6 +16,7 @@ datasource db {
 
 enum UserRole {
   ADMIN
+  TEAM_LEADER
   MEMBER
 }
 
@@ -27,6 +28,7 @@ enum TokenType {
 
 enum UserTeam {
   ALL
+  NONE
   VIDEO
   EDIT
   DEVELOP
