@@ -11,14 +11,8 @@ export default async function AdminLayout({
      children: React.ReactNode;
 }) {
      // サーバーサイドで詳細な認証チェック
-     const [user, header] = await Promise.all([User.current(true), headers()]); // プロフィール込みで取得
+     const user = await User.current(true); // プロフィール込みで取得
      const currentSession = user?.currentSession;
-     const userAgent = header.get("user-agent") || "";
-     const ipAdress =
-          header.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-          header.get("x-real-ip") ||
-          "";
-
      if (currentSession) {
           console.log("[AdminLayout] Current session info:", {
                sessionId: currentSession.id,
@@ -28,14 +22,6 @@ export default async function AdminLayout({
           });
      } else {
           console.log("[AdminLayout] No current session found for user");
-     }
-
-     if (
-          userAgent !== currentSession?.userAgent ||
-          ipAdress !== currentSession?.ipAddress
-     ) {
-          await user?.logout();
-          redirect("/login");
      }
 
      console.log("[AdminLayout] User check:", {
