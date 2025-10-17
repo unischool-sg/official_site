@@ -128,6 +128,7 @@ class User {
                where: data,
                include: {
                     profile: includeProfile,
+                    loginHistory: true,
                },
           });
           return user ? new User(user) : null;
