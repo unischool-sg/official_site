@@ -2,6 +2,7 @@ import { Prisma, User as PrismaUser, Profile, Session, LoginHistory } from "@pri
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { verifyEmailTemplate } from "@/mails/verify";
+import { loginEmailTemplate } from "@/mails/login";
 import { resetEmailTemplate } from "@/mails/reset";
 import { emailTemplates } from "@/mails/mail";
 import { cookies } from "next/headers";
@@ -379,6 +380,25 @@ class User {
                );
 
                console.log("Verification email sent to:", result);
+          } catch (error) {
+               throw error;
+          }
+     }
+
+     async sendLoginNotificationEmail(ipAddress: string, deviceInfo: string): Promise<void> {
+          try {
+               const result = await send(
+                    this.data.email,
+                    "【Uni School】新しいデバイスからのログイン通知",
+                    loginEmailTemplate(
+                         new Date().toLocaleString("ja-JP"),
+                         ipAddress || "不明",
+                         deviceInfo || "不明",
+                         "Japan"
+                    )
+               );
+               
+               console.log("Login notification email sent to:", result);
           } catch (error) {
                throw error;
           }
