@@ -20,7 +20,7 @@ async function handleProfileUpdate(
      const isPublic = formData.get("isPublic") === "on";
 
      if (avatar) {
-          if (!(avatar.size > 5 * 1024 * 1024)) {
+          if (avatar.size > 5 * 1024 * 1024) {
                setIsError("アバター画像は5MB以下にしてください。");
                setIsLoading(false);
                toast.error("アバター画像が大きすぎます", { id: "update-profile" });
