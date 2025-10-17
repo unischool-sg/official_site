@@ -34,7 +34,7 @@ export default async function UsersPage() {
      const uniqueUsers = users.filter(
           (user, index, self) =>
                self.findIndex((u) => u.id === user.id) === index,
-     )
+     );
 
      // 認証済みから順に、そして権限順、名前順にソート
      const sortedUsers = uniqueUsers.sort((a, b) => {
@@ -54,7 +54,7 @@ export default async function UsersPage() {
           }
 
           // 3. 名前順（昇順）
-          return a.name.localeCompare(b.name, 'ja');
+          return a.name.localeCompare(b.name, "ja");
      });
 
      return (
@@ -77,7 +77,12 @@ export default async function UsersPage() {
                <Card>
                     <CardHeader>
                          <CardTitle>
-                              ユーザー一覧 - {sortedUsers.length}名(内認証済み{sortedUsers.filter(u => u.emailVerified).length}名)
+                              ユーザー一覧 - {sortedUsers.length}名(内認証済み
+                              {
+                                   sortedUsers.filter((u) => u.emailVerified)
+                                        .length
+                              }
+                              名)
                          </CardTitle>
                     </CardHeader>
                     <CardContent>

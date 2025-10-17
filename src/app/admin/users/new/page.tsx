@@ -132,17 +132,23 @@ export default function NewUserPage() {
                                                        {
                                                             /* PrismaのUserRoleに合わせる */
                                                             Object.values(
-                                                                 UserRole
+                                                                 UserRole,
                                                             ).map((role) => (
                                                                  <SelectItem
                                                                       key={role}
-                                                                      value={role}
+                                                                      value={
+                                                                           role
+                                                                      }
                                                                  >
                                                                       <span className="font-semibold">
-                                                                           { role }
+                                                                           {
+                                                                                role
+                                                                           }
                                                                       </span>
                                                                       <span className="text-xs text-muted-foreground ml-2">
-                                                                           { role }
+                                                                           {
+                                                                                role
+                                                                           }
                                                                       </span>
                                                                  </SelectItem>
                                                             ))
@@ -166,16 +172,24 @@ export default function NewUserPage() {
                                                   <SelectContent>
                                                        {
                                                             /* PrismaのUserTeamに合わせる */
-                                                            Object.values(UserTeam).map((team) => (
+                                                            Object.values(
+                                                                 UserTeam,
+                                                            ).map((team) => (
                                                                  <SelectItem
                                                                       key={team}
-                                                                      value={team}
+                                                                      value={
+                                                                           team
+                                                                      }
                                                                  >
                                                                       <span className="font-semibold">
-                                                                           { team }
+                                                                           {
+                                                                                team
+                                                                           }
                                                                       </span>
                                                                       <span className="text-xs text-muted-foreground ml-2">
-                                                                           { team }
+                                                                           {
+                                                                                team
+                                                                           }
                                                                       </span>
                                                                  </SelectItem>
                                                             ))

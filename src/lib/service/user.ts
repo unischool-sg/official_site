@@ -1,4 +1,10 @@
-import { Prisma, User as PrismaUser, Profile, Session, LoginHistory } from "@prisma/client";
+import {
+     Prisma,
+     User as PrismaUser,
+     Profile,
+     Session,
+     LoginHistory,
+} from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
 import { verifyEmailTemplate } from "@/mails/verify";
@@ -9,7 +15,6 @@ import { cookies } from "next/headers";
 import { prisma } from "../prisma";
 import { Token } from "./token";
 import { send } from "../resend";
-
 
 type UserWithProfile = PrismaUser & {
      profile?: Profile | null;
@@ -173,8 +178,8 @@ class User {
                     now: now,
                     diff:
                          (now.getTime() - session.expires.getTime()) /
-                         1000 /
-                         60 +
+                              1000 /
+                              60 +
                          " minutes ago",
                });
                // 期限切れセッションを削除
@@ -245,7 +250,7 @@ class User {
                     // 自分以外の
                     prisma.session.deleteMany({
                          where: {
-                              userId: this.userId
+                              userId: this.userId,
                          },
                     }),
                     // ログイン履歴を記録（成功）
@@ -376,7 +381,7 @@ class User {
                const result = await send(
                     this.data.email,
                     "【Uni School】アカウント登録の確認",
-                    verifyEmailTemplate(verifyLink)
+                    verifyEmailTemplate(verifyLink),
                );
 
                console.log("Verification email sent to:", result);
@@ -385,7 +390,10 @@ class User {
           }
      }
 
-     async sendLoginNotificationEmail(ipAddress: string, deviceInfo: string): Promise<void> {
+     async sendLoginNotificationEmail(
+          ipAddress: string,
+          deviceInfo: string,
+     ): Promise<void> {
           try {
                const result = await send(
                     this.data.email,
@@ -394,22 +402,28 @@ class User {
                          new Date().toLocaleString("ja-JP"),
                          ipAddress || "不明",
                          deviceInfo || "不明",
-                         "Japan"
-                    )
+                         "Japan",
+                    ),
                );
-               
+
                console.log("Login notification email sent to:", result);
           } catch (error) {
                throw error;
           }
      }
 
-     async sendCustomEmail({ subject, body }: { subject: string, body: string }): Promise<void> {
+     async sendCustomEmail({
+          subject,
+          body,
+     }: {
+          subject: string;
+          body: string;
+     }): Promise<void> {
           try {
                const result = await send(
                     this.data.email,
                     `【Uni School】${subject}`,
-                    emailTemplates(subject, body)
+                    emailTemplates(subject, body),
                );
 
                console.log("Email sent to:", result);

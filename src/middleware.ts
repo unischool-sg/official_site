@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
      const forwardedFor = request.headers.get("x-forwarded-for");
      const realIp = request.headers.get("x-real-ip");
      const clientIp = forwardedFor?.split(",")[0].trim() || realIp || "unknown";
-     
+
      response.headers.set("x-client-ip", clientIp);
 
      // クッキーを保持（重要！）

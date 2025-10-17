@@ -12,7 +12,8 @@ export default function TokenNotFound() {
                                    無効なトークンリンク
                               </h2>
                               <p className="text-muted-foreground">
-                                   有効なトークンが必要です。管理者から送られたリンクをご確認ください。<br />
+                                   有効なトークンが必要です。管理者から送られたリンクをご確認ください。
+                                   <br />
                                    トークンが期限切れの場合、新しいリンクをリクエストしてください。
                               </p>
                               <Link href="/login">

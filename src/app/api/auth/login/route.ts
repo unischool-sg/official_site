@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
      const token = await user.login(password, {
           userAgent,
-          ipAddress
+          ipAddress,
      });
      if (!token) {
           return errorResponse("Invalid password", { status: 401 });
@@ -40,7 +40,10 @@ export async function POST(req: NextRequest) {
           maxAge: 7 * 24 * 60 * 60, // 7 days
      });
 
-     await user.sendLoginNotificationEmail(ipAddress || "不明", userAgent || "不明");
+     await user.sendLoginNotificationEmail(
+          ipAddress || "不明",
+          userAgent || "不明",
+     );
 
      return successResponse({ token });
 }

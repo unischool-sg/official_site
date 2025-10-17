@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import { User } from "@prisma/client";
 import Link from "next/link";
 
-
 interface UserRowProps {
      user: Omit<User, "password">;
 }
@@ -27,7 +26,6 @@ export default function UserRow({ user }: UserRowProps) {
      const [name, setName] = useState<string>(user.name);
      const [role, setRole] = useState<string>(user.role);
      const [team, setTeam] = useState<string>(user.team);
-
 
      const handleSave = async () => {
           setIsLoading(true);
@@ -72,9 +70,12 @@ export default function UserRow({ user }: UserRowProps) {
           setIsLoading(true);
           toast.loading("認証メールを送信中...", { id: "resend" });
           try {
-               const response = await fetch(`/api/admin/users/${user.id}/send/verify`, {
-                    method: "POST",
-               });
+               const response = await fetch(
+                    `/api/admin/users/${user.id}/send/verify`,
+                    {
+                         method: "POST",
+                    },
+               );
 
                if (response.ok) {
                     toast.success("認証メールを送信しました", {
@@ -99,16 +100,23 @@ export default function UserRow({ user }: UserRowProps) {
      };
 
      const handleSendPasswordReset = async () => {
-          if (!confirm(`${user.name} にパスワードリセットメールを送信しますか？`)) {
+          if (
+               !confirm(
+                    `${user.name} にパスワードリセットメールを送信しますか？`,
+               )
+          ) {
                return;
           }
 
           setIsLoading(true);
           toast.loading("パスワードリセットメールを送信中...", { id: "reset" });
           try {
-               const response = await fetch(`/api/admin/users/${user.id}/send/reset`, {
-                    method: "POST",
-               });
+               const response = await fetch(
+                    `/api/admin/users/${user.id}/send/reset`,
+                    {
+                         method: "POST",
+                    },
+               );
 
                if (response.ok) {
                     toast.success("パスワードリセットメールを送信しました", {
@@ -169,7 +177,10 @@ export default function UserRow({ user }: UserRowProps) {
      return (
           <TableRow>
                <TableCell className="font-mono text-xs">
-                    <Link href={`/admin/users/${user.id}`} className="hover:underline">
+                    <Link
+                         href={`/admin/users/${user.id}`}
+                         className="hover:underline"
+                    >
                          {user.id.substring(0, 8)}...
                     </Link>
                </TableCell>
@@ -203,7 +214,10 @@ export default function UserRow({ user }: UserRowProps) {
                               {
                                    /* PrismaのUserRoleに合わせる */
                                    Object.values(UserRole).map((role) => (
-                                        <SelectItem key={`${user.id}-${role}`} value={role}>
+                                        <SelectItem
+                                             key={`${user.id}-${role}`}
+                                             value={role}
+                                        >
                                              {role}
                                         </SelectItem>
                                    ))
@@ -223,7 +237,10 @@ export default function UserRow({ user }: UserRowProps) {
                               {
                                    /* PrismaのUserTeamに合わせる */
                                    Object.values(UserTeam).map((team) => (
-                                        <SelectItem key={`${user.id}-${team}`} value={team}>
+                                        <SelectItem
+                                             key={`${user.id}-${team}`}
+                                             value={team}
+                                        >
                                              {team}
                                         </SelectItem>
                                    ))
