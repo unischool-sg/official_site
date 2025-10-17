@@ -14,6 +14,7 @@ import {
      CardTitle,
 } from "@/components/ui/card";
 import { ArrowLeft, Mail, Lock, UserCircle, Users } from "lucide-react";
+import { UserRole, UserTeam } from "@prisma/client";
 import { handleRegistUser } from "@/handlers/user";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -128,6 +129,24 @@ export default function NewUserPage() {
                                                                  メンバー
                                                             </span>
                                                        </SelectItem>
+                                                       {
+                                                            /* PrismaのUserRoleに合わせる */
+                                                            Object.values(
+                                                                 UserRole
+                                                            ).map((role) => (
+                                                                 <SelectItem
+                                                                      key={role}
+                                                                      value={role}
+                                                                 >
+                                                                      <span className="font-semibold">
+                                                                           { role }
+                                                                      </span>
+                                                                      <span className="text-xs text-muted-foreground ml-2">
+                                                                           { role }
+                                                                      </span>
+                                                                 </SelectItem>
+                                                            ))
+                                                       }
                                                   </SelectContent>
                                              </Select>
                                         </div>
@@ -145,18 +164,22 @@ export default function NewUserPage() {
                                                        <SelectValue placeholder="チームを選択" />
                                                   </SelectTrigger>
                                                   <SelectContent>
-                                                       <SelectItem value="ALL">
-                                                            ALL
-                                                       </SelectItem>
-                                                       <SelectItem value="VIDEO">
-                                                            VIDEO
-                                                       </SelectItem>
-                                                       <SelectItem value="EDIT">
-                                                            EDIT
-                                                       </SelectItem>
-                                                       <SelectItem value="DEVELOP">
-                                                            DEVELOP
-                                                       </SelectItem>
+                                                       {
+                                                            /* PrismaのUserTeamに合わせる */
+                                                            Object.values(UserTeam).map((team) => (
+                                                                 <SelectItem
+                                                                      key={team}
+                                                                      value={team}
+                                                                 >
+                                                                      <span className="font-semibold">
+                                                                           { team }
+                                                                      </span>
+                                                                      <span className="text-xs text-muted-foreground ml-2">
+                                                                           { team }
+                                                                      </span>
+                                                                 </SelectItem>
+                                                            ))
+                                                       }
                                                   </SelectContent>
                                              </Select>
                                         </div>

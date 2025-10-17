@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import { Trash2, Save, Mail, KeyRound } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { UserRole, UserTeam } from "@prisma/client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -199,8 +200,14 @@ export default function UserRow({ user }: UserRowProps) {
                               <SelectValue />
                          </SelectTrigger>
                          <SelectContent>
-                              <SelectItem value="ADMIN">ADMIN</SelectItem>
-                              <SelectItem value="MEMBER">MEMBER</SelectItem>
+                              {
+                                   /* PrismaのUserRoleに合わせる */
+                                   Object.values(UserRole).map((role) => (
+                                        <SelectItem key={`${user.id}-${role}`} value={role}>
+                                             {role}
+                                        </SelectItem>
+                                   ))
+                              }
                          </SelectContent>
                     </Select>
                </TableCell>
@@ -213,10 +220,14 @@ export default function UserRow({ user }: UserRowProps) {
                               <SelectValue />
                          </SelectTrigger>
                          <SelectContent>
-                              <SelectItem value="ALL">ALL</SelectItem>
-                              <SelectItem value="VIDEO">VIDEO</SelectItem>
-                              <SelectItem value="EDIT">EDIT</SelectItem>
-                              <SelectItem value="DEVELOP">DEVELOP</SelectItem>
+                              {
+                                   /* PrismaのUserTeamに合わせる */
+                                   Object.values(UserTeam).map((team) => (
+                                        <SelectItem key={`${user.id}-${team}`} value={team}>
+                                             {team}
+                                        </SelectItem>
+                                   ))
+                              }
                          </SelectContent>
                     </Select>
                </TableCell>
