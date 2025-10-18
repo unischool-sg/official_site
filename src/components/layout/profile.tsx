@@ -23,7 +23,7 @@ export default function ProfileUpdateForm({ user }: ProfileUpdateFormProps) {
      const router = useRouter();
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isError, setIsError] = useState<string | null>(null);
-     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+     const [avatarPreview, setAvatarPreview] = useState<string | null>(user.profile?.avatarUrl || null);
 
      const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const file = e.target.files?.[0];

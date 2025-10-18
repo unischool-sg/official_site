@@ -38,10 +38,10 @@ async function handleProfileUpdate(
           toast.loading("アバター画像をアップロード中...", {
                id: "update-profile",
           });
-          
+
           const formData = new FormData();
           formData.append("avatar", avatar);
-          const uploadResponse = await fetch("/api/user/me/avatar", {
+          const uploadResponse = await fetch("/api/me/avatar", {
                method: "POST",
                body: formData,
           });
@@ -68,7 +68,7 @@ async function handleProfileUpdate(
                bio,
                isPublic,
           };
-          const response = await fetch("/api/user/me/profile", {
+          const response = await fetch("/api/me/profile", {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",
@@ -79,6 +79,8 @@ async function handleProfileUpdate(
                toast.success("プロフィールを更新しました", {
                     id: "update-profile",
                });
+               setIsLoading(false);
+               setIsError(null);
                router.refresh();
           }
           const result = await response.json();
