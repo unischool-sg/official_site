@@ -1,5 +1,3 @@
-import UserRow from "@/components/layout/user";
-import Link from "next/link";
 import {
      Table,
      TableBody,
@@ -11,6 +9,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User } from "@/lib/service/user";
+import UserRow from "@/components/layout/user";
+import Link from "next/link";
 
 export default async function UsersPage() {
      const users = await User.all();
@@ -66,12 +66,20 @@ export default async function UsersPage() {
                               ユーザーの情報を管理します
                          </p>
                     </div>
-                    <Link href="/admin/users/new">
-                         <Button>
-                              <span className="mr-2">+</span>
-                              新規ユーザー
-                         </Button>
-                    </Link>
+                    <div className="flex gap-2">
+                         <Link href="/admin/users/send">
+                              <Button variant="outline">
+                                   <span className="mr-2">✉️</span>
+                                   一括メール送信
+                              </Button>
+                         </Link>
+                         <Link href="/admin/users/new">
+                              <Button>
+                                   <span className="mr-2">+</span>
+                                   新規ユーザー
+                              </Button>
+                         </Link>
+                    </div>
                </div>
 
                <Card>
