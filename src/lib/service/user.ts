@@ -109,7 +109,7 @@ class User {
       * @param data - プロフィールデータ
       * @returns 作成/更新されたプロフィール
       */
-     async upsertProfile(data: { bio?: string; avatarUrl?: string }) {
+     async upsertProfile(data: { bio?: string; avatarUrl?: string, isPublic?: boolean }): Promise<Profile> {
           return await prisma.profile.upsert({
                where: { userId: this.userId },
                create: {

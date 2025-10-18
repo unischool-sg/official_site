@@ -27,11 +27,11 @@ export async function POST(req: NextRequest) {
           console.log("Profile update data:", data);
           const name = data.name?.trim() || "";
           const bio = data.bio?.trim() || "";
-          const isPublic = Boolean(data.isPublic);
+          const isPublic = data.isPublic;
+          console.log("Parsed profile data:", { name, bio, isPublic });
 
           await Promise.all([
-               user.upsertProfile({ bio }),
-               user.changeStatus(isPublic),
+               user.upsertProfile({ bio, isPublic }),
                user.update({ name }),
           ]);
 

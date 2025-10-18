@@ -17,7 +17,7 @@ async function handleProfileUpdate(
      const name = formData.get("name") as string;
      const bio = formData.get("bio") as string;
      const avatar = formData.get("avatar") as File | null;
-     const isPublic = formData.get("isPublic") === "on";
+     const isPublic = (formData.get("isPublic") as string) === "on";
 
      if (avatar && avatar.size > 0) {
           console.log("Uploading avatar:", avatar);
