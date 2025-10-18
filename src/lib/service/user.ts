@@ -200,8 +200,10 @@ class User {
           return new User(session.user);
      }
 
-     static async all(): Promise<User[]> {
-          const users = await prisma.user.findMany();
+     static async all(profile: boolean = false): Promise<User[]> {
+          const users = await prisma.user.findMany({
+               include: { profile },
+          });
           return users.map((user) => new User(user));
      }
 

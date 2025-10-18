@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { User } from "@/lib/service/user";
 
 interface Member {
      name: string;
@@ -53,46 +54,47 @@ function MemberGrid({
      );
 }
 
-export function Members() {
-     const membersData = {
-          editors: [
-               {
-                    name: "宮口 逞",
-                    role: "Owner & Chief Editor",
-                    image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg",
-               },
-          ],
-          photographers: [
-               {
-                    name: "永田 耕平",
-                    role: "Chief Photographer",
-                    image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg",
-               },
-               {
-                    name: "松野下 晃矢",
-                    role: "Photographer",
-                    image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg",
-               },
-          ],
-          programmers: [
-               {
-                    name: "田中 博悠",
-                    href: "https://twitter.com/tanahiro2010",
-                    role: "Chief Programmer",
-                    image: "https://pbs.twimg.com/profile_images/1945969669770280960/yNmM0voi_400x400.jpg",
-               },
-               {
-                    name: "吉岡 和也",
-                    role: "Programmer",
-                    image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg",
-               },
-               {
-                    name: "中塚 祐惺",
-                    role: "Programmer",
-                    image: "https://pbs.twimg.com/profile_images/1953082540832833536/JcdkMWMG_400x400.jpg",
-               },
-          ],
-     };
+interface MemberData {
+     name: string;
+     role: string;
+     image: string;
+}
+
+interface MembersData {
+     EDIT: MemberData[];
+     DEVELOP: MemberData[];
+     VIDEO: MemberData[];
+}
+
+export async function Members() {
+     const users = await User.all(true);
+     const publicUsers = users.filter((user) => user.profile?.isPublic);
+     console.log("[Members] Total users fetched:", users.length);
+     console.log("[Members] Public profiles found:", publicUsers.length);
+     // VIDEO: 'VIDEO',
+     // EDIT: 'EDIT',
+     // DEVELOP: 'DEVELOP'
+     const membersData: MembersData = { EDIT: [], DEVELOP: [], VIDEO: [] };
+
+     publicUsers.forEach((user) => {
+          console.log("[Members] Public user found:", {
+               id: user.id,
+               name: user.name,
+               profile: user.profile,
+               team: user.team,
+          });
+
+          if (["EDIT", "DEVELOP", "VIDEO"].includes(user.team) && user.profile && user.profile.isPublic) {
+               console.log("[Members] Adding user to team:", user);
+               membersData[user.team as keyof MembersData].push({
+                    name: user.name,
+                    role: user.role,
+                    image: user.profile.avatarUrl || "/assets/logo.png",
+               });
+          }
+     });
+
+     console.log("[Members] Compiled members data:", membersData);
 
      return (
           <div
@@ -113,13 +115,13 @@ export function Members() {
                                    <BlurFade delay={0.4} inView>
                                         <MemberGrid
                                              title="編集者"
-                                             members={membersData.editors}
+                                             members={membersData.EDIT}
                                         />
                                    </BlurFade>
                                    <BlurFade delay={0.5} inView>
                                         <MemberGrid
                                              title="撮影者"
-                                             members={membersData.photographers}
+                                             members={membersData.VIDEO}
                                         />
                                    </BlurFade>
                               </div>
@@ -127,7 +129,7 @@ export function Members() {
                               <BlurFade delay={0.6} inView>
                                    <MemberGrid
                                         title="プログラマー"
-                                        members={membersData.programmers}
+                                        members={membersData.DEVELOP}
                                    />
                               </BlurFade>
                          </div>
@@ -135,4 +137,5 @@ export function Members() {
                </Container>
           </div>
      );
+
 }
