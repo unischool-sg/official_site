@@ -120,15 +120,6 @@ class User {
           });
      }
 
-     async changeStatus(isActive: boolean): Promise<void> {
-          await prisma.user.update({
-               where: { id: this.userId },
-               data: {
-                    deletedAt: isActive ? null : new Date(),
-               },
-          });
-     }
-
      static async get(
           data: Prisma.UserWhereUniqueInput,
           includeProfile: boolean = false,
