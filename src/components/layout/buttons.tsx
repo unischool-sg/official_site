@@ -1,15 +1,17 @@
 "use client";
-import { Mail, KeyRound, Trash2 } from "lucide-react";
+import { Mail, KeyRound, Trash2, History } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { User } from "@prisma/client";
-import Link from "next/link";
 
 interface ButtonsProps {
      userData: Omit<User, "password">;
 }
 
 export default function Buttons({ userData }: ButtonsProps) {
+     const router = useRouter();
+
      const handleDelete = async () => {
           if (!confirm(`本当に ${userData.name} を削除しますか？`)) {
                return;
@@ -120,18 +122,13 @@ export default function Buttons({ userData }: ButtonsProps) {
                          メール送信
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                         <Link
-                              href={`/admin/users/${userData.id}/send`}
-                              className="w-full"
-                         >
-                              <Button
-                                   variant="default"
-                                   className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white"
-                              >
-                                   <Mail className="mr-2 h-4 w-4" />
-                                   カスタムメール
-                              </Button>
-                         </Link>
+                         <Button
+                              variant="default"
+                              className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white"
+                              onClick={() => { router.push(`/admin/users/${userData.id}/send`) }}>
+                              <Mail className="mr-2 h-4 w-4" />
+                              カスタムメール
+                         </Button>
                          <Button
                               variant="outline"
                               className="w-full h-11 border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950/30"
@@ -156,6 +153,21 @@ export default function Buttons({ userData }: ButtonsProps) {
                     >
                          <KeyRound className="mr-2 h-4 w-4" />
                          パスワードリセット
+                    </Button>
+               </div>
+
+               {/* セッション管理 */}
+               <div className="p-4 rounded-lg border bg-muted/30 space-y-3">
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                         セッション管理
+                    </h4>
+                    <Button
+                         variant="outline"
+                         className="w-full h-11 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950/30"
+                         onClick={() => { router.push(`/admin/users/${userData.id}/history`) }}
+                    >
+                         <History className="mr-2 h-4 w-4" />
+                         セッション履歴閲覧
                     </Button>
                </div>
 
