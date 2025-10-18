@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
-import { UserRole } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { User } from "@/lib/service/user";
 import ProfileUpdateForm from "@/components/layout/profile";

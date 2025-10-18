@@ -38,6 +38,7 @@ async function handleProfileUpdate(
           toast.loading("アバター画像をアップロード中...", {
                id: "update-profile",
           });
+          
           const formData = new FormData();
           formData.append("avatar", avatar);
           const uploadResponse = await fetch("/api/user/me/avatar", {
