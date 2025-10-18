@@ -7,7 +7,7 @@ import {
 import { NextRequest } from "next/server";
 import { User } from "@/lib/service/user";
 
-export async function GET(req: NextRequest) {
+export async function GET(_: NextRequest) {
      try {
           const user = await User.current(true);
           if (!user) {

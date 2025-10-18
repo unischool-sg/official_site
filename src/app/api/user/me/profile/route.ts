@@ -24,8 +24,23 @@ export async function POST(req: NextRequest) {
 
      try {
           const data = await req.json();
-          await user.update(data);
-          return successResponse({ user: user.toJSON() });
+          console.log("Profile update data:", data);
+          const name = data.name?.trim() || "";
+          const bio = data.bio?.trim() || "";
+          const isPublic = Boolean(data.isPublic);
+
+          await Promise.all([
+               user.upsertProfile({ bio }),
+               user.changeStatus(isPublic),
+               user.update({ name }),
+          ]);
+
+          const newUser = await User.current(true);
+          if (!newUser) {
+               return serverErrorResponse("ユーザー情報の取得に失敗しました(更新後)");
+          }
+
+          return successResponse({ user: newUser.toJSON() });
      } catch (error) {
           console.error("Profile update error:", error);
           return serverErrorResponse(
