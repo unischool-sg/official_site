@@ -76,6 +76,13 @@ export async function Members() {
      // DEVELOP: 'DEVELOP'
      const membersData: MembersData = { EDIT: [], DEVELOP: [], VIDEO: [] };
 
+     // Role の優先順位を定義
+     const roleOrder: Record<string, number> = {
+          ADMIN: 1,
+          TEAM_LEADER: 2,
+          MEMBER: 3,
+     };
+
      publicUsers.forEach((user) => {
           console.log("[Members] Public user found:", {
                id: user.id,
@@ -92,6 +99,15 @@ export async function Members() {
                     image: user.profile.avatarUrl || "/assets/logo.png",
                });
           }
+     });
+
+     // 各チームのメンバーをrole順にソート
+     (Object.keys(membersData) as Array<keyof MembersData>).forEach((team) => {
+          membersData[team].sort((a, b) => {
+               const orderA = roleOrder[a.role] || 999;
+               const orderB = roleOrder[b.role] || 999;
+               return orderA - orderB;
+          });
      });
 
      console.log("[Members] Compiled members data:", membersData);
