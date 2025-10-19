@@ -7,6 +7,7 @@ async function handleProfileUpdate(
      router: AppRouterInstance,
      setIsLoading: (loading: boolean) => void,
      setIsError: (error: string | null) => void,
+     endpoint: string = "/api/me/",
 ) {
      e.preventDefault();
      setIsLoading(true);
@@ -45,7 +46,7 @@ async function handleProfileUpdate(
 
           const formData = new FormData();
           formData.append("avatar", avatar);
-          const uploadResponse = await fetch("/api/me/avatar", {
+          const uploadResponse = await fetch(`${endpoint}/avatar`, {
                method: "POST",
                body: formData,
           });
@@ -72,7 +73,7 @@ async function handleProfileUpdate(
                bio,
                isPublic,
           };
-          const response = await fetch("/api/me/profile", {
+          const response = await fetch(`${endpoint}/profile`, {
                method: "POST",
                headers: {
                     "Content-Type": "application/json",

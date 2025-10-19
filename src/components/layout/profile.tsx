@@ -17,9 +17,10 @@ import { Label } from "@/components/ui/label";
 
 interface ProfileUpdateFormProps {
      user: Omit<User, "password"> & { profile: Profile | null };
+     endpoint?: string;
 }
 
-export default function ProfileUpdateForm({ user }: ProfileUpdateFormProps) {
+export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: ProfileUpdateFormProps) {
      const router = useRouter();
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isError, setIsError] = useState<string | null>(null);
@@ -41,7 +42,7 @@ export default function ProfileUpdateForm({ user }: ProfileUpdateFormProps) {
      return (
           <form
                onSubmit={(e) => {
-                    handleProfileUpdate(e, router, setIsLoading, setIsError);
+                    handleProfileUpdate(e, router, setIsLoading, setIsError, endpoint);
                }}
                className="space-y-6"
           >

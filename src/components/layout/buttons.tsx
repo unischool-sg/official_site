@@ -1,5 +1,5 @@
 "use client";
-import { Mail, KeyRound, Trash2, History } from "lucide-react";
+import { Mail, KeyRound, Trash2, History, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -177,6 +177,18 @@ export default function Buttons({ userData }: ButtonsProps) {
                     >
                          <History className="mr-2 h-4 w-4" />
                          セッション履歴閲覧
+                    </Button>
+                    <Button
+                         variant="outline"
+                         className="w-full h-11 border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-950/30"
+                         onClick={() => {
+                              router.push(
+                                   `/admin/users/${userData.id}/profile`,
+                              );
+                         }}
+                    >
+                         <UserCog className="mr-2 h-4 w-4" />
+                         プロフィール編集
                     </Button>
                </div>
 
