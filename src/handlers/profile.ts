@@ -24,13 +24,17 @@ async function handleProfileUpdate(
           if (avatar.size > 5 * 1024 * 1024) {
                setIsError("アバター画像は5MB以下にしてください。");
                setIsLoading(false);
-               toast.error("アバター画像が大きすぎます", { id: "update-profile" });
+               toast.error("アバター画像が大きすぎます", {
+                    id: "update-profile",
+               });
                return;
           }
           if (!["image/png", "image/jpeg", "image/gif"].includes(avatar.type)) {
                setIsError("アバター画像はPNG、JPEG、GIF形式にしてください。");
                setIsLoading(false);
-               toast.error("アバター画像の形式が無効です", { id: "update-profile" });
+               toast.error("アバター画像の形式が無効です", {
+                    id: "update-profile",
+               });
                return;
           }
 

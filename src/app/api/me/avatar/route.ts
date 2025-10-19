@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
           if (!response.ok) {
                return serverErrorResponse(
                     "アバター画像のアップロードに失敗しました",
-                    { status: response.status, body: await response.text() }
+                    { status: response.status, body: await response.text() },
                );
           }
 

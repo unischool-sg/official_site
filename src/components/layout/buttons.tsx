@@ -125,7 +125,12 @@ export default function Buttons({ userData }: ButtonsProps) {
                          <Button
                               variant="default"
                               className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white"
-                              onClick={() => { router.push(`/admin/users/${userData.id}/send`) }}>
+                              onClick={() => {
+                                   router.push(
+                                        `/admin/users/${userData.id}/send`,
+                                   );
+                              }}
+                         >
                               <Mail className="mr-2 h-4 w-4" />
                               カスタムメール
                          </Button>
@@ -164,7 +169,11 @@ export default function Buttons({ userData }: ButtonsProps) {
                     <Button
                          variant="outline"
                          className="w-full h-11 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950/30"
-                         onClick={() => { router.push(`/admin/users/${userData.id}/history`) }}
+                         onClick={() => {
+                              router.push(
+                                   `/admin/users/${userData.id}/history`,
+                              );
+                         }}
                     >
                          <History className="mr-2 h-4 w-4" />
                          セッション履歴閲覧

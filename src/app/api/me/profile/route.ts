@@ -37,7 +37,9 @@ export async function POST(req: NextRequest) {
 
           const newUser = await User.current(true);
           if (!newUser) {
-               return serverErrorResponse("ユーザー情報の取得に失敗しました(更新後)");
+               return serverErrorResponse(
+                    "ユーザー情報の取得に失敗しました(更新後)",
+               );
           }
 
           return successResponse({ user: newUser.toJSON() });

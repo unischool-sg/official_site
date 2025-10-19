@@ -91,7 +91,11 @@ export async function Members() {
                team: user.team,
           });
 
-          if (["EDIT", "DEVELOP", "VIDEO"].includes(user.team) && user.profile && user.profile.isPublic) {
+          if (
+               ["EDIT", "DEVELOP", "VIDEO"].includes(user.team) &&
+               user.profile &&
+               user.profile.isPublic
+          ) {
                console.log("[Members] Adding user to team:", user);
                membersData[user.team as keyof MembersData].push({
                     name: user.name,
@@ -153,5 +157,4 @@ export async function Members() {
                </Container>
           </div>
      );
-
 }
