@@ -27,13 +27,20 @@ export async function POST(req: NextRequest) {
             return notFoundResponse("送信先のユーザーが見つかりません");
         }
 
-        await resend.emails.send({
-            from: user.email,
+        const result = await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL || "<default_from@example.com>",
             to: user.email,
-            bcc: user.email,
+            bcc: emails,
             subject: `【UniSchool】${subject}`,
             html: emailTemplates(subject, body),
         });
+        if (!result) {
+            return serverErrorResponse("メールの送信に失敗しました");
+        }
+
+        console.log(`Admin broadcast email sent by ${user.email} to ${emails.length} users.`);
+        console.log("Email send result:", result);
+
         return successResponse("メールを送信しました");
     } catch (error) {
         console.error(error);
