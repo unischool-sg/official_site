@@ -29,7 +29,7 @@ export async function Header({ user }: HeaderProps) {
                     <nav className="flex justify-center items-center space-x-4">
                          <BlurFade delay={0.5} inView>
                               <Link
-                                   href="#about"
+                                   href="/#about"
                                    className="text-neutral-950 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                               >
                                    About
@@ -37,7 +37,7 @@ export async function Header({ user }: HeaderProps) {
                          </BlurFade>
                          <BlurFade delay={0.6} inView>
                               <Link
-                                   href="#members"
+                                   href="/#members"
                                    className="text-neutral-950 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                               >
                                    Members
@@ -45,7 +45,7 @@ export async function Header({ user }: HeaderProps) {
                          </BlurFade>
                          <BlurFade delay={0.7} inView>
                               <Link
-                                   href="#achievements"
+                                   href="/#achievements"
                                    className="text-neutral-950 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                               >
                                    History
