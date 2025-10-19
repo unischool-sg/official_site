@@ -11,6 +11,27 @@ interface Context {
     params: Promise<{ id: string }>;
 }
 
+// 安全にHTMLをエスケープ
+function escapeHtml(str: string) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+// bio内のURLをaタグ化し、改行を<br>に変換
+function linkifyBio(text: string): string {
+    const escaped = escapeHtml(text);
+    const urlRegex = /((https?:\/\/|www\.)[^\s<]+)/gi;
+    const linked = escaped.replace(urlRegex, (match) => {
+        const href = match.startsWith("http") ? match : `https://${match}`;
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all">${match}</a>`;
+    });
+    return linked.replace(/\n/g, "<br />");
+}
+
 // ロールのラベルと色
 const roleConfig = {
     ADMIN: { label: "管理者", color: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" },
@@ -76,6 +97,8 @@ export default async function MemberPage({ params }: Context) {
         day: "numeric",
     });
 
+    const bioHtml = linkifyBio(user.profile?.bio || "");
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-neutral-900">
             <Container className="py-12">
@@ -130,9 +153,10 @@ export default async function MemberPage({ params }: Context) {
                                         )}
                                     </div>
                                     {user.profile.bio && (
-                                        <p className="text-muted-foreground leading-relaxed">
-                                            {user.profile.bio}
-                                        </p>
+                                        <p
+                                            className="text-muted-foreground leading-relaxed"
+                                            dangerouslySetInnerHTML={{ __html: bioHtml }}
+                                        />
                                     )}
                                 </div>
                             </div>
@@ -208,9 +232,10 @@ export default async function MemberPage({ params }: Context) {
                                 <h2 className="text-xl font-semibold">自己紹介</h2>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                                    {user.profile.bio}
-                                </p>
+                                <p
+                                    className="text-muted-foreground leading-relaxed whitespace-pre-wrap"
+                                    dangerouslySetInnerHTML={{ __html: bioHtml }}
+                                />
                             </CardContent>
                         </Card>
                     )}
