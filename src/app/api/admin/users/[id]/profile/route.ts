@@ -29,13 +29,16 @@ export async function POST(req: NextRequest, context: Context) {
             bio: data.bio,
             avatarUrl: data.avatarUrl,
             isPublic: data.isPublic,
+            twitterUsername: data.twitterUsername?.trim() || null,
+            githubUsername: data.githubUsername?.trim() || null,
+            instagramUsername: data.instagramUsername?.trim() || null,
         });
         return successResponse({
             profile: result,
             message: "ユーザープロフィールを更新しました",
         });
     } catch (error) {
-        console.error("Send password reset email error:", error);
+        console.error("Update user profile error:", error);
         return serverErrorResponse("ユーザーの更新に失敗しました");
     }
 
