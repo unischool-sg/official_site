@@ -1,10 +1,3 @@
-import { prisma } from "@/lib/prisma";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
 import {
     Table,
     TableBody,
@@ -13,8 +6,19 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { prisma } from "@/lib/prisma";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import BlogRow from "@/components/layout/blogs";
 import Link from "next/link";
+
+
 
 export default async function BlogsPage() {
     const blogs = await prisma.blog.findMany({
@@ -38,7 +42,14 @@ export default async function BlogsPage() {
                         投稿されたブログを一覧表示します（{publishedCount}/{total} 公開中）
                     </p>
                 </div>
-                {/* ここに「新規作成」ボタンなどを将来追加可能 */}
+                <div className="flex gap-2">
+                    <Link href="/admin/blogs/new">
+                        <Button>
+                            <Plus className="mr-2 h-4 w-4" />
+                            新規作成
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             <Card>
@@ -67,48 +78,7 @@ export default async function BlogsPage() {
                                     </TableRow>
                                 ) : (
                                     blogs.map((blog) => {
-                                        const publishedAt = blog.publishedAt
-                                            ? new Date(blog.publishedAt).toLocaleDateString("ja-JP", {
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                            })
-                                            : "-";
-                                        const createdAt = new Date(blog.createdAt).toLocaleDateString("ja-JP", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        });
-
-                                        return (
-                                            <TableRow key={blog.id}>
-                                                <TableCell>
-                                                    {blog.published ? (
-                                                        <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                                                            公開中
-                                                        </Badge>
-                                                    ) : (
-                                                        <Badge variant="outline">下書き</Badge>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell className="font-medium">
-                                                    {blog.title}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {blog.author?.name || "-"}
-                                                </TableCell>
-                                                <TableCell>{publishedAt}</TableCell>
-                                                <TableCell>{createdAt}</TableCell>
-                                                <TableCell className="text-right">
-                                                    <Link
-                                                        href={`/blogs/${blog.slug || blog.id}`}
-                                                        className="text-primary hover:underline"
-                                                    >
-                                                        公開ページを表示
-                                                    </Link>
-                                                </TableCell>
-                                            </TableRow>
-                                        );
+                                        return <BlogRow key={blog.id} blog={blog} />;
                                     })
                                 )}
                             </TableBody>

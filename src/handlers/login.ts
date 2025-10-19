@@ -2,7 +2,7 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 async function handleLogin(
-     e: React.FormEvent,
+     e: React.FormEvent<HTMLFormElement>,
      setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
      setError: React.Dispatch<React.SetStateAction<string | null>>,
      router: AppRouterInstance,
