@@ -4,6 +4,7 @@ import {
      Profile,
      Session,
      LoginHistory,
+     Blog
 } from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
@@ -20,6 +21,7 @@ type UserWithProfile = PrismaUser & {
      profile?: Profile | null;
      sessions?: Session[];
      loginHistory?: LoginHistory[];
+     blogs?: Blog[];
 };
 
 class User {
@@ -87,6 +89,10 @@ class User {
           return this.data.loginHistory;
      }
 
+     get blogs() {
+          return this.data.blogs;
+     }
+
      // Public method to get all data (without password)
      toJSON(): Omit<PrismaUser, "password"> {
           const { password, ...userWithoutPassword } = this.data;
@@ -127,12 +133,14 @@ class User {
      static async get(
           data: Prisma.UserWhereUniqueInput,
           includeProfile: boolean = false,
+          includeBlogs: boolean = false,
      ): Promise<User | null> {
           const user = await prisma.user.findUnique({
                where: data,
                include: {
                     profile: includeProfile,
                     loginHistory: true,
+                    blogs: includeBlogs,
                },
           });
           return user ? new User(user) : null;
