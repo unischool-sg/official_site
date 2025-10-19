@@ -72,6 +72,10 @@ model Profile {
   avatarUrl String? @db.VarChar(500) // アバターURL（長さ制限）
   isPublic  Boolean @default(false) // プロフィール公開設定
 
+  twitterUsername   String? @db.VarChar(15) // Twitterのユーザー名 
+  githubUsername    String? @db.VarChar(39) // GitHubのユーザー名
+  instagramUsername String? @db.VarChar(30) // Instagramのユーザー名
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
