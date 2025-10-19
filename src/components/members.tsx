@@ -6,7 +6,7 @@ import { User } from "@/lib/service/user";
 
 interface Member {
      name: string;
-     href?: string;
+     id: string;
      role: string;
      image: string;
 }
@@ -14,8 +14,7 @@ interface Member {
 function MemberCard({ member }: { member: Member }) {
      return (
           <Link
-               href={member.href ?? "#members"}
-               target={member.href ? "_blank" : undefined}
+               href={`/members/${member.id}`}
                className="flex flex-col items-center text-center hover:scale-105 transition-transform"
           >
                <div className="max-h-70 max-w-59 w-full h-full rounded-lg">
@@ -58,6 +57,7 @@ interface MemberData {
      name: string;
      role: string;
      image: string;
+     id: string;
 }
 
 interface MembersData {
@@ -101,6 +101,7 @@ export async function Members() {
                     name: user.name,
                     role: user.role,
                     image: user.profile.avatarUrl || "/assets/logo.png",
+                    id: user.id,
                });
           }
      });
