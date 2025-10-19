@@ -1,11 +1,12 @@
-import { User } from "@/lib/service/user";
+import { Mail, Calendar, Users, Award, ArrowLeft, Instagram, Github } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
-import { Mail, Calendar, Users, Award, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { User } from "@/lib/service/user";
 import Image from "next/image";
+import Link from "next/link";
+
 
 interface Context {
     params: Promise<{ id: string }>;
@@ -137,7 +138,47 @@ export default async function MemberPage({ params }: Context) {
 
                                 {/* 名前とバッジ */}
                                 <div className="flex-1 mt-4 md:mt-8">
-                                    <h1 className="text-3xl md:text-4xl font-bold mb-3">{user.name}</h1>
+                                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                                        <h1 className="text-3xl md:text-4xl font-bold">{user.name}</h1>
+                                        {/* SNSリンク */}
+                                        <div className="flex items-center gap-2">
+                                            {user.profile?.twitterUsername && (
+                                                <Link
+                                                    href={`https://twitter.com/${user.profile.twitterUsername}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 rounded-full bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                                                    title={`@${user.profile.twitterUsername}`}
+                                                >
+                                                    <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                                    </svg>
+                                                </Link>
+                                            )}
+                                            {user.profile?.instagramUsername && (
+                                                <Link
+                                                    href={`https://instagram.com/${user.profile.instagramUsername}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 rounded-full bg-pink-100 dark:bg-pink-900/30 hover:bg-pink-200 dark:hover:bg-pink-900/50 transition-colors"
+                                                    title={`@${user.profile.instagramUsername}`}
+                                                >
+                                                    <Instagram className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+                                                </Link>
+                                            )}
+                                            {user.profile?.githubUsername && (
+                                                <Link
+                                                    href={`https://github.com/${user.profile.githubUsername}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                                    title={user.profile.githubUsername}
+                                                >
+                                                    <Github className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+                                                </Link>
+                                            )}
+                                        </div>
+                                    </div>
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {roleInfo && (
                                             <Badge className={roleInfo.color}>

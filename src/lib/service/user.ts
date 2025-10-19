@@ -119,6 +119,9 @@ class User {
           bio?: string;
           avatarUrl?: string;
           isPublic?: boolean;
+          twitterUsername?: string | null;
+          githubUsername?: string | null;
+          instagramUsername?: string | null;
      }): Promise<Profile> {
           return await prisma.profile.upsert({
                where: { userId: this.userId },

@@ -18,6 +18,9 @@ async function handleProfileUpdate(
      const name = formData.get("name") as string;
      const bio = formData.get("bio") as string;
      const avatar = formData.get("avatar") as File | null;
+     const twitterUsername = formData.get("twitterUsername") as string;
+     const githubUsername = formData.get("githubUsername") as string;
+     const instagramUsername = formData.get("instagramUsername") as string;
      const isPublic = (formData.get("isPublic") as string) === "on";
 
      if (avatar && avatar.size > 0) {
@@ -71,6 +74,9 @@ async function handleProfileUpdate(
           const data = {
                name,
                bio,
+               twitterUsername,
+               githubUsername,
+               instagramUsername,
                isPublic,
           };
           const response = await fetch(`${endpoint}/profile`, {

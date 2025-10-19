@@ -115,6 +115,79 @@ export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: Profil
 
                <Card>
                     <CardHeader>
+                         <CardTitle>ソーシャルメディア</CardTitle>
+                         <CardDescription>
+                              SNSアカウントのユーザー名を入力してください
+                         </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                         <div className="space-y-2">
+                              <Label htmlFor="twitterUsername">
+                                   Twitter (X)
+                              </Label>
+                              <div className="flex items-center gap-2">
+                                   <span className="text-muted-foreground">@</span>
+                                   <Input
+                                        id="twitterUsername"
+                                        name="twitterUsername"
+                                        type="text"
+                                        defaultValue={user.profile?.twitterUsername || ""}
+                                        placeholder="username"
+                                        maxLength={15}
+                                        disabled={isLoading}
+                                   />
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                   @を除いたユーザー名を入力
+                              </p>
+                         </div>
+
+                         <div className="space-y-2">
+                              <Label htmlFor="instagramUsername">
+                                   Instagram
+                              </Label>
+                              <div className="flex items-center gap-2">
+                                   <span className="text-muted-foreground">@</span>
+                                   <Input
+                                        id="instagramUsername"
+                                        name="instagramUsername"
+                                        type="text"
+                                        defaultValue={user.profile?.instagramUsername || ""}
+                                        placeholder="username"
+                                        maxLength={30}
+                                        disabled={isLoading}
+                                   />
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                   @を除いたユーザー名を入力
+                              </p>
+                         </div>
+
+                         <div className="space-y-2">
+                              <Label htmlFor="githubUsername">
+                                   GitHub
+                              </Label>
+                              <div className="flex items-center gap-2">
+                                   <span className="text-muted-foreground">github.com/</span>
+                                   <Input
+                                        id="githubUsername"
+                                        name="githubUsername"
+                                        type="text"
+                                        defaultValue={user.profile?.githubUsername || ""}
+                                        placeholder="username"
+                                        maxLength={39}
+                                        disabled={isLoading}
+                                   />
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                   GitHubのユーザー名を入力
+                              </p>
+                         </div>
+                    </CardContent>
+               </Card>
+
+               <Card>
+                    <CardHeader>
                          <CardTitle>アバター画像</CardTitle>
                          <CardDescription>
                               PNG、JPEG、GIF形式、5MB以下

@@ -28,10 +28,26 @@ export async function POST(req: NextRequest) {
           const name = data.name?.trim() || "";
           const bio = data.bio?.trim() || "";
           const isPublic = data.isPublic;
-          console.log("Parsed profile data:", { name, bio, isPublic });
+          const twitterUsername = data.twitterUsername?.trim() || null;
+          const githubUsername = data.githubUsername?.trim() || null;
+          const instagramUsername = data.instagramUsername?.trim() || null;
+          console.log("Parsed profile data:", { 
+               name, 
+               bio, 
+               isPublic, 
+               twitterUsername, 
+               githubUsername, 
+               instagramUsername 
+          });
 
           await Promise.all([
-               user.upsertProfile({ bio, isPublic }),
+               user.upsertProfile({ 
+                    bio, 
+                    isPublic, 
+                    twitterUsername, 
+                    githubUsername, 
+                    instagramUsername 
+               }),
                user.update({ name }),
           ]);
 
