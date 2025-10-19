@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
             subject: `【UniSchool】${subject}`,
             html: emailTemplates(subject, body),
         });
-        if (!result) {
-            return serverErrorResponse("メールの送信に失敗しました");
+        if (result.error) {
+            return serverErrorResponse("メールの送信に失敗しました", result.error);
         }
 
         console.log(`Admin broadcast email sent by ${user.email} to ${emails.length} users.`);
