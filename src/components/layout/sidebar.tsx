@@ -100,16 +100,6 @@ export default function AdminSidebar({ user }: SidebarProps) {
                                    セッション履歴
                               </Link>
                          </SidebarMenuItem>
-
-                         <SidebarMenuItem>
-                              <Link
-                                   href="/admin/settings"
-                                   className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors rounded-lg mx-2"
-                              >
-                                   <Settings className="w-5 h-5" />
-                                   設定
-                              </Link>
-                         </SidebarMenuItem>
                     </SidebarMenu>
                </SidebarContent>
                <SidebarFooter>
