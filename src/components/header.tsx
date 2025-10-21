@@ -59,6 +59,14 @@ export async function Header({ user }: HeaderProps) {
                                    Blogs
                               </Link>
                          </BlurFade>
+                         <BlurFade delay={0.7} inView>
+                              <Link
+                                   href="https://forms.gle/SnpJiruyeujYFYjr5"
+                                   className="text-neutral-950 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                              >
+                                   Contact
+                              </Link>
+                         </BlurFade>
 
                          <BlurFade delay={0.8} inView>
                               <Link href={isLogin ? `/admin` : `/login`}>
