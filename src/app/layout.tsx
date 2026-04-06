@@ -56,6 +56,7 @@ export const metadata: Metadata = {
   },
   keywords: [
     "Uni School",
+    "UniSchool",
     "Sanda Gakuen",
     "三田学園",
     "三田学園中学校",
@@ -64,6 +65,7 @@ export const metadata: Metadata = {
     "学生",
   ],
 };
+
 
 export default async function RootLayout({
   children,
