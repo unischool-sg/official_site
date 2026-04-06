@@ -366,7 +366,7 @@ class User {
 
       await send(
         this.data.email,
-        "【Uni School】パスワードリセットのご案内",
+        "【UniSchool】パスワードリセットのご案内",
         resetEmailTemplate(resetLink),
       );
     } catch (error) {
@@ -385,7 +385,7 @@ class User {
 
       const result = await send(
         this.data.email,
-        "【Uni School】アカウント登録の確認",
+        "【UniSchool】アカウント登録の確認",
         verifyEmailTemplate(verifyLink),
       );
 
@@ -402,7 +402,7 @@ class User {
     try {
       const result = await send(
         this.data.email,
-        "【Uni School】新しいデバイスからのログイン通知",
+        "【UniSchool】新しいデバイスからのログイン通知",
         loginEmailTemplate(
           new Date().toLocaleString("ja-JP"),
           ipAddress || "不明",
@@ -427,7 +427,7 @@ class User {
     try {
       const result = await send(
         this.data.email,
-        `【Uni School】${subject}`,
+        `【UniSchool】${subject}`,
         emailTemplates(subject, body),
       );
 

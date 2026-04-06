@@ -4,7 +4,7 @@ export const verifyEmailTemplate = (verifyLink: string) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uni School - アカウント登録確認</title>
+    <title>UniSchool - アカウント登録確認</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
@@ -17,7 +17,7 @@ export const verifyEmailTemplate = (verifyLink: string) => `
                     <tr>
                         <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 40px 30px; text-align: center;">
                             <h1 style="margin: 0 0 10px; color: #ffffff; font-size: 32px; font-weight: 600; letter-spacing: -0.5px;">
-                                Uni School
+                                UniSchool
                             </h1>
                             <p style="margin: 0; color: rgba(255, 255, 255, 0.8); font-size: 16px; font-weight: 400;">
                                 We are team of <span style="background: linear-gradient(90deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;">Creators</span>
@@ -33,7 +33,7 @@ export const verifyEmailTemplate = (verifyLink: string) => `
                             </h2>
                             
                             <p style="margin: 0 0 30px; color: #525252; font-size: 16px; line-height: 1.6;">
-                                Uni School クリエイターチームへようこそ！<br>
+                                UniSchool クリエイターチームへようこそ！<br>
                                 以下のボタンをクリックして、メールアドレスの確認を行ってください。
                             </p>
                             
@@ -76,13 +76,13 @@ export const verifyEmailTemplate = (verifyLink: string) => `
                     <tr>
                         <td style="background-color: #fafafa; padding: 30px 40px; border-top: 1px solid #e5e5e5;">
                             <p style="margin: 0 0 10px; color: #525252; font-size: 16px; font-weight: 600; text-align: center;">
-                                Uni School
+                                UniSchool
                             </p>
                             <p style="margin: 0 0 15px; color: #737373; font-size: 13px; text-align: center; line-height: 1.5;">
                                 We are students. But we are pro.
                             </p>
                             <p style="margin: 0; color: #a3a3a3; font-size: 12px; text-align: center;">
-                                © 2025 Uni School. All rights reserved.
+                                © 2025 UniSchool. All rights reserved.
                             </p>
                         </td>
                     </tr>

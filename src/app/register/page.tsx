@@ -38,7 +38,7 @@ export default async function RegisterPage({
               <div className="relative">
                 <Image
                   src="/assets/logo.png"
-                  alt="Uni School Logo"
+                  alt="UniSchool Logo"
                   width={100}
                   height={100}
                   className="rounded-full"
@@ -50,7 +50,7 @@ export default async function RegisterPage({
               アカウント登録
             </CardTitle>
             <CardDescription className="text-lg text-muted-foreground">
-              Uni School クリエイターチームへようこそ
+              UniSchool クリエイターチームへようこそ
             </CardDescription>
           </CardHeader>
 

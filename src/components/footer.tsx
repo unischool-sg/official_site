@@ -28,7 +28,7 @@ export function Footer({ user }: FooterProps) {
                 />
               </Link>
               <p className="text-xs text-neutral-400 mt-4">
-                © 2025 Uni School. All rights reserved.
+                © 2025 UniSchool. All rights reserved.
               </p>
               <p className="text-xs text-neutral-400 flex justify-center">
                 当チームは

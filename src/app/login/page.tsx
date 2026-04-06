@@ -32,7 +32,7 @@ export default function LoginPage() {
               <div className="relative">
                 <Image
                   src="/assets/logo.png"
-                  alt="Uni School Logo"
+                  alt="UniSchool Logo"
                   width={80}
                   height={80}
                   className="rounded-full"
@@ -41,7 +41,7 @@ export default function LoginPage() {
               </div>
             </div>
             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Uni School
+              UniSchool
             </CardTitle>
             <CardDescription className="text-base text-muted-foreground">
               クリエイターチームへのログイン
