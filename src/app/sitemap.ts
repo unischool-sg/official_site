@@ -30,6 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         };
     });
     const publicUsers = users.filter((user) => user.profile?.isPublic);
+    const publicProfiles: Profile[] = publicUsers.map((user) => user.profile!) as Profile[];
     const defaultSitemap: MetadataRoute.Sitemap = [
         {
             url: baseUrl + "/",
@@ -48,9 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
         ...defaultSitemap,
         ...blogs.map(({ url, lastModified }) => ({ url, lastModified })),
-        ...publicUsers.map((member) => ({
-            url: `${baseUrl}/members/${member.id}`,
-            lastModified: member.updatedAt,
+        ...publicProfiles.map((profile: Profile) => ({
+            url: `${baseUrl}/members/${profile.userId}`,
+            lastModified: profile.updatedAt,
         })),
     ];
 }
