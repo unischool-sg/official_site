@@ -9,16 +9,18 @@ type SitemapEntry = {
 };
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-    const articles = await prisma.blog.findMany({
-        where: {
-            published: true,
-        },
-        orderBy: {
-            createdAt: "desc",
-        },
-        take: 100,
-    });
-    const users = await User.all(true);
+    const [articles, users]: [Blog[], User[]] = await Promise.all([
+        prisma.blog.findMany({
+            where: {
+                published: true,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+            take: 100,
+        }),
+        User.all(true),
+    ]);
     const lastModified =
         articles.length > 0 ? articles[0].createdAt : new Date("2025-01-01");
     const blogs: SitemapEntry[] = articles.map((article: Blog) => {
@@ -27,7 +29,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: article.createdAt,
         };
     });
-
+    const members: User[] = users.filter((user) => user.profile.isPublic);
+    const membersProfiles: Profile[] = members.map((member) => member.profile);
     const defaultSitemap: MetadataRoute.Sitemap = [
         {
             url: baseUrl + "/",
@@ -46,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
         ...defaultSitemap,
         ...blogs.map(({ url, lastModified }) => ({ url, lastModified })),
-        ...members.map((member: Profile) => ({
+        ...membersProfiles.map((member: Profile) => ({
             url: `${baseUrl}/members/${member.id}`,
             lastModified: member.updatedAt,
         })),
