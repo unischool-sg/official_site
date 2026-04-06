@@ -1,8 +1,8 @@
 export const loginEmailTemplate = (
-  loginTime: string,
-  ipAddress: string,
-  deviceInfo: string,
-  location: string,
+    loginTime: string,
+    ipAddress: string,
+    deviceInfo: string,
+    location: string,
 ) => `
 <!DOCTYPE html>
 <html lang="ja">
