@@ -39,7 +39,7 @@ export default async function ResetPasswordPage({
               <div className="relative">
                 <Image
                   src="/assets/logo.png"
-                  alt="Uni School Logo"
+                  alt="UniSchool Logo"
                   width={100}
                   height={100}
                   className="rounded-full"

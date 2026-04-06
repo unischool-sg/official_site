@@ -16,7 +16,7 @@ export default async function AdminPage() {
         <div>
           <h1 className="text-4xl font-bold">管理ダッシュボード</h1>
           <p className="text-muted-foreground mt-2">
-            Uni School 管理パネルへようこそ
+            UniSchool 管理パネルへようこそ
           </p>
         </div>
 

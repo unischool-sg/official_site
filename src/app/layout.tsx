@@ -24,7 +24,7 @@ const robotoSlab = Roboto_Slab({
 const url = "https://uni.sandagakuen.ed.jp/";
 const icon = "/favicon.ico";
 const ogpIcon = "/ogp.webp";
-const siteName = "Uni School";
+const siteName = "UniSchool";
 const description = "We are team of Creaters. We are studens. But we are pro.";
 
 export const metadata: Metadata = {
@@ -55,7 +55,8 @@ export const metadata: Metadata = {
     images: ogpIcon,
   },
   keywords: [
-    "Uni School",
+    "UniSchool",
+    "UniSchool",
     "Sanda Gakuen",
     "三田学園",
     "三田学園中学校",
@@ -64,6 +65,7 @@ export const metadata: Metadata = {
     "学生",
   ],
 };
+
 
 export default async function RootLayout({
   children,
