@@ -21,7 +21,7 @@ const robotoSlab = Roboto_Slab({
   weight: ["400"],
 });
 
-const url = "https://uni.sandagakuen.ed.jp/";
+const url = "https://unischool.jp";
 const icon = "/favicon.ico";
 const ogpIcon = "/ogp.webp";
 const siteName = "UniSchool";
