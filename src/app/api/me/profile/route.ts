@@ -31,22 +31,22 @@ export async function POST(req: NextRequest) {
           const twitterUsername = data.twitterUsername?.trim() || null;
           const githubUsername = data.githubUsername?.trim() || null;
           const instagramUsername = data.instagramUsername?.trim() || null;
-          console.log("Parsed profile data:", { 
-               name, 
-               bio, 
-               isPublic, 
-               twitterUsername, 
-               githubUsername, 
-               instagramUsername 
+          console.log("Parsed profile data:", {
+               name,
+               bio,
+               isPublic,
+               twitterUsername,
+               githubUsername,
+               instagramUsername,
           });
 
           await Promise.all([
-               user.upsertProfile({ 
-                    bio, 
-                    isPublic, 
-                    twitterUsername, 
-                    githubUsername, 
-                    instagramUsername 
+               user.upsertProfile({
+                    bio,
+                    isPublic,
+                    twitterUsername,
+                    githubUsername,
+                    instagramUsername,
                }),
                user.update({ name }),
           ]);

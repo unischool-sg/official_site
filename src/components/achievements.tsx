@@ -42,7 +42,8 @@ const videos: Video[] = [
           // https://drive.google.com/file/d/1-hn-zpipT22EiQerrVAoKYcjxIhFXLDr/view?usp=drive_link
           driveId: "1-hn-zpipT22EiQerrVAoKYcjxIhFXLDr",
           title: "ラーニングコンパス紹介動画",
-          description: "三田学園で行われている、教育の方向性を生徒や教員主体で考え、学びの幅を広げていく、ラーニングコンパスという活動の紹介動画です。",
+          description:
+               "三田学園で行われている、教育の方向性を生徒や教員主体で考え、学びの幅を広げていく、ラーニングコンパスという活動の紹介動画です。",
      },
      {
           // https://drive.google.com/file/d/1S5T54uS6-FqfpfPgGdjg6ZTuRZ2_qHlP/view?usp=drive_link

@@ -23,12 +23,18 @@ export function AdminFunctionCard({
                     <CardContent className="p-6">
                          <div className="flex items-start justify-between">
                               <div className="flex items-center gap-3">
-                                   <div className={`p-3 ${colorClass} rounded-lg`}>
+                                   <div
+                                        className={`p-3 ${colorClass} rounded-lg`}
+                                   >
                                         <Icon className="w-6 h-6" />
                                    </div>
                                    <div>
-                                        <h3 className="font-semibold text-lg">{title}</h3>
-                                        <p className="text-sm text-muted-foreground">{description}</p>
+                                        <h3 className="font-semibold text-lg">
+                                             {title}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground">
+                                             {description}
+                                        </p>
                                    </div>
                               </div>
                               <ArrowRight className="w-5 h-5 text-muted-foreground" />

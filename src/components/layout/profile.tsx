@@ -20,7 +20,10 @@ interface ProfileUpdateFormProps {
      endpoint?: string;
 }
 
-export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: ProfileUpdateFormProps) {
+export default function ProfileUpdateForm({
+     user,
+     endpoint = "/api/me",
+}: ProfileUpdateFormProps) {
      const router = useRouter();
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isError, setIsError] = useState<string | null>(null);
@@ -42,7 +45,13 @@ export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: Profil
      return (
           <form
                onSubmit={(e) => {
-                    handleProfileUpdate(e, router, setIsLoading, setIsError, endpoint);
+                    handleProfileUpdate(
+                         e,
+                         router,
+                         setIsLoading,
+                         setIsError,
+                         endpoint,
+                    );
                }}
                className="space-y-6"
           >
@@ -126,12 +135,16 @@ export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: Profil
                                    Twitter (X)
                               </Label>
                               <div className="flex items-center gap-2">
-                                   <span className="text-muted-foreground">@</span>
+                                   <span className="text-muted-foreground">
+                                        @
+                                   </span>
                                    <Input
                                         id="twitterUsername"
                                         name="twitterUsername"
                                         type="text"
-                                        defaultValue={user.profile?.twitterUsername || ""}
+                                        defaultValue={
+                                             user.profile?.twitterUsername || ""
+                                        }
                                         placeholder="username"
                                         maxLength={15}
                                         disabled={isLoading}
@@ -147,12 +160,17 @@ export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: Profil
                                    Instagram
                               </Label>
                               <div className="flex items-center gap-2">
-                                   <span className="text-muted-foreground">@</span>
+                                   <span className="text-muted-foreground">
+                                        @
+                                   </span>
                                    <Input
                                         id="instagramUsername"
                                         name="instagramUsername"
                                         type="text"
-                                        defaultValue={user.profile?.instagramUsername || ""}
+                                        defaultValue={
+                                             user.profile?.instagramUsername ||
+                                             ""
+                                        }
                                         placeholder="username"
                                         maxLength={30}
                                         disabled={isLoading}
@@ -164,16 +182,18 @@ export default function ProfileUpdateForm({ user, endpoint = "/api/me" }: Profil
                          </div>
 
                          <div className="space-y-2">
-                              <Label htmlFor="githubUsername">
-                                   GitHub
-                              </Label>
+                              <Label htmlFor="githubUsername">GitHub</Label>
                               <div className="flex items-center gap-2">
-                                   <span className="text-muted-foreground">github.com/</span>
+                                   <span className="text-muted-foreground">
+                                        github.com/
+                                   </span>
                                    <Input
                                         id="githubUsername"
                                         name="githubUsername"
                                         type="text"
-                                        defaultValue={user.profile?.githubUsername || ""}
+                                        defaultValue={
+                                             user.profile?.githubUsername || ""
+                                        }
                                         placeholder="username"
                                         maxLength={39}
                                         disabled={isLoading}

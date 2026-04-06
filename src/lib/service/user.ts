@@ -4,7 +4,7 @@ import {
      Profile,
      Session,
      LoginHistory,
-     Blog
+     Blog,
 } from "@prisma/client";
 import { verifyPassword, hashPassword } from "@/utils/hash";
 import { generateSecureToken } from "@/utils/token";
