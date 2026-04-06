@@ -24,15 +24,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const defaultSitemap: MetadataRoute.Sitemap = [
         {
-            url: "/",
+            url: baseUrl + "/",
             lastModified: new Date("2025-01-01"),
         },
         {
-            url: "/blog",
+            url: baseUrl + "/blog",
             lastModified: lastModified,
         },
         {
-            url: "/members",
+            url: baseUrl + "/members",
             lastModified: new Date("2025-01-01"),
         }
     ];
