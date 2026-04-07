@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Roboto_Slab } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -80,6 +81,9 @@ export default async function RootLayout({
                 <Toaster position="bottom-right" richColors />
                 <Analytics />
                 <SpeedInsights />
+                {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+                    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}/>
+                )}
             </body>
         </html>
     );
