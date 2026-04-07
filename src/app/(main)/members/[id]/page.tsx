@@ -85,7 +85,7 @@ const teamConfig = {
 export async function generateMetadata({ params }: Context): Promise<Metadata> {
     const { id } = await params;
     const user = await User.get({ id }, true);
-    if (!user) return {
+    if (!user || !user.profile) return {
         title: "Member not found",
         description: "メンバーが見つかりません。"
     }
