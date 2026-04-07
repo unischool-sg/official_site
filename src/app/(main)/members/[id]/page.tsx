@@ -8,7 +8,7 @@ import {
     Instagram,
     Github,
 } from "lucide-react";
-import { Blog, Profile } from "@prisma/client";
+import { Blog } from "@prisma/client";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
