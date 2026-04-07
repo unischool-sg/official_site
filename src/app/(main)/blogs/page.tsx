@@ -1,10 +1,18 @@
-import { prisma } from "@/lib/prisma";
+import type { Metadata } from "next";
+import { Calendar } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { Calendar } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+
+export function generateMetadata(): Metadata {
+    return {
+        title: "Blogs",
+        description: "UniSchoolメンバーの書いたブログ一覧ページです"
+    }
+}
 
 export default async function BlogsPage() {
     const blogs = await prisma.blog.findMany({
