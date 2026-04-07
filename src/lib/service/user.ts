@@ -103,7 +103,7 @@ class User {
      * ユーザーのプロフィールを取得
      * @returns プロフィール情報（存在しない場合はnull）
      */
-    async getProfile() {
+    async getProfile(): Promise<Profile | null> {
         const profile = await prisma.profile.findUnique({
             where: { userId: this.userId },
         });

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
     Mail,
     Calendar,
@@ -7,6 +8,7 @@ import {
     Instagram,
     Github,
 } from "lucide-react";
+import { Blog, Profile } from "@prisma/client";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -14,7 +16,6 @@ import { Badge } from "@/components/ui/badge";
 import { User } from "@/lib/service/user";
 import Image from "next/image";
 import Link from "next/link";
-import { Blog } from "@prisma/client";
 
 interface Context {
     params: Promise<{ id: string }>;
@@ -80,6 +81,20 @@ const teamConfig = {
         icon: "🌐",
     },
 };
+
+export async function generateMetadata({ params }: Context): Promise<Metadata> {
+    const { id } = await params;
+    const user = await User.get({ id }, true);
+    if (!user) return {
+        title: "Member not found",
+        description: "メンバーが見つかりません。"
+    }
+
+    return {
+        title: user.name + "のプロフィール",
+        description: user.profile.bio
+    }
+}
 
 export default async function MemberPage({ params }: Context) {
     const { id } = await params;
