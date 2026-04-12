@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date("2025-01-01"),
         },
         {
-            url: baseUrl + "/blog",
+            url: baseUrl + "/blogs",
             lastModified: lastModified,
         },
         {
