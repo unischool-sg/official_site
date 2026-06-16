@@ -156,7 +156,7 @@ export default function Privacy() {
                 </p>
                 <div className="mt-4 p-4 bg-neutral-50 rounded-lg border border-neutral-200">
                     <p className="font-medium">UniSchool プライバシー窓口</p>
-                    <p>メール: unischool.team@gmail.com</p>
+                    <p>メール: unischool@sandagakuen.ed.jp</p>
                 </div>
             </section>
 
