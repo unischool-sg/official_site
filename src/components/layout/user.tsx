@@ -269,7 +269,7 @@ export default function UserRow({ user }: UserRowProps) {
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                        className="h-8 w-8 p-0"
                         onClick={handleResendVerification}
                         type="button"
                         disabled={isLoading}
@@ -280,7 +280,7 @@ export default function UserRow({ user }: UserRowProps) {
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-orange-600 hover:text-orange-700 hover:bg-orange-50"
+                        className="h-8 w-8 p-0"
                         onClick={handleSendPasswordReset}
                         type="button"
                         disabled={isLoading}

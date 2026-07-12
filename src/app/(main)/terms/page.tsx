@@ -115,7 +115,7 @@ export default function Terms() {
                 <h2 className="text-xl font-semibold mb-4">9. プライバシー</h2>
                 <p className="leading-relaxed">
                     当チームは、ユーザーの個人情報を、別途定める
-                    <a href="/privacy" className="underline text-blue-600 hover:text-blue-800">プライバシーポリシー</a>
+                    <a href="/privacy" className="underline text-green-900 hover:underline">プライバシーポリシー</a>
                     に従って適切に取り扱います。
                     本サービスを利用することにより、ユーザーは当該プライバシーポリシーに同意したものとみなされます。
                 </p>
