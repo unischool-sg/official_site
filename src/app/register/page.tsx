@@ -28,25 +28,20 @@ export default async function RegisterPage({
         return <TokenNotFound />;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4 md:p-8">
-            <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50 p-4 md:p-8">
             <BlurFade delay={0.3} inView>
-                <Card className="w-full max-w-6xl mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
+                <Card className="w-full max-w-6xl mx-auto border border-neutral-200 bg-white shadow-none">
                     <CardHeader className="space-y-4 text-center pb-8">
                         <div className="flex justify-center mb-4">
-                            <div className="relative">
-                                <Image
-                                    src="/assets/logo.png"
-                                    alt="UniSchool Logo"
-                                    width={100}
-                                    height={100}
-                                    className="rounded-full"
-                                />
-                                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse"></div>
-                            </div>
+                            <Image
+                                src="/assets/logo.png"
+                                alt="UniSchool Logo"
+                                width={100}
+                                height={100}
+                                className="rounded-full"
+                            />
                         </div>
-                        <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                        <CardTitle className="text-4xl font-bold text-neutral-950">
                             アカウント登録
                         </CardTitle>
                         <CardDescription className="text-lg text-muted-foreground">

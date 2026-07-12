@@ -46,7 +46,7 @@ export default async function ProfilePage() {
         <div className="p-6 space-y-6 max-w-5xl mx-auto">
             {/* ヘッダー */}
             <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground text-2xl font-bold">
+                <div className="flex-shrink-0 w-16 h-16 rounded-full bg-neutral-950 flex items-center justify-center text-white text-2xl font-bold">
                     {user.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -59,7 +59,7 @@ export default async function ProfilePage() {
             </div>
 
             {/* プロフィール情報 */}
-            <Card className="shadow-lg border-0">
+            <Card className="border border-neutral-200 shadow-none">
                 <CardHeader>
                     <div className="flex items-center gap-2">
                         <UserCircle2 className="h-5 w-5 text-primary" />
@@ -150,7 +150,7 @@ export default async function ProfilePage() {
             </Card>
 
             {/* アカウント設定 */}
-            <Card className="shadow-lg border-0">
+            <Card className="border border-neutral-200 shadow-none">
                 <CardHeader>
                     <CardTitle>アカウント設定</CardTitle>
                     <CardDescription>

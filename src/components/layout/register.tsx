@@ -36,7 +36,7 @@ export default function RegisterForm({ token }: { token?: string }) {
                         type="text"
                         placeholder="山田 太郎"
                         required
-                        className="h-14 text-base transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
+                        className="h-14 text-base"
                     />
                 </div>
 
@@ -50,7 +50,7 @@ export default function RegisterForm({ token }: { token?: string }) {
                         placeholder="8文字以上"
                         required
                         minLength={8}
-                        className="h-14 text-base transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
+                        className="h-14 text-base"
                     />
                 </div>
 
@@ -68,7 +68,7 @@ export default function RegisterForm({ token }: { token?: string }) {
                         placeholder="パスワードを再入力"
                         required
                         minLength={8}
-                        className="h-14 text-base transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
+                        className="h-14 text-base"
                     />
                 </div>
             </div>
@@ -81,14 +81,14 @@ export default function RegisterForm({ token }: { token?: string }) {
                     name="bio"
                     placeholder="簡単な自己紹介を入力してください（任意）"
                     rows={6}
-                    className="resize-none text-base transition-all duration-200 focus:scale-[1.01] focus:shadow-lg"
+                    className="resize-none text-base"
                 />
             </div>
 
             <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-14 text-lg font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-14 text-lg font-medium bg-neutral-950 hover:bg-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isLoading ? (
                     <div className="flex items-center space-x-2">

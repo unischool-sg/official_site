@@ -153,7 +153,7 @@ export default async function MemberPage({ params }: Context) {
     const bioHtml = linkifyBio(user.profile?.bio || "");
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-neutral-900">
+        <div className="min-h-screen bg-neutral-50">
             <Container className="py-12">
                 {/* 戻るボタン */}
                 <Link href="/#members">
@@ -165,13 +165,13 @@ export default async function MemberPage({ params }: Context) {
 
                 <div className="max-w-4xl mx-auto">
                     {/* ヘッダーカード */}
-                    <Card className="overflow-hidden border-2">
-                        <div className="h-32 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600" />
+                    <Card className="overflow-hidden border border-neutral-200 shadow-none">
+                        <div className="h-24 bg-neutral-100 border-b border-neutral-200" />
                         <CardContent className="relative pt-0 pb-6">
                             {/* アバター */}
-                            <div className="flex flex-col md:flex-row gap-6 -mt-16 md:-mt-12">
+                            <div className="flex flex-col md:flex-row gap-6 -mt-12">
                                 <div className="relative">
-                                    <div className="w-32 h-32 rounded-full border-4 border-white dark:border-neutral-900 overflow-hidden bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center shadow-xl">
+                                    <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden bg-green-900 flex items-center justify-center">
                                         {user.profile?.avatarUrl ? (
                                             <Image
                                                 src={user.profile.avatarUrl}
@@ -407,14 +407,14 @@ export default async function MemberPage({ params }: Context) {
                                                 href={`/blogs/${blog.slug || blog.id}`}
                                                 className="block group"
                                             >
-                                                <Card className="transition-all hover:shadow-lg hover:scale-[1.02] border-2 hover:border-primary/50">
+                                                <Card className="transition-colors border border-neutral-200 hover:border-green-900/40 shadow-none">
                                                     <CardContent className="p-6">
                                                         <div className="flex flex-col gap-4">
                                                             {/* コンテンツ */}
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="flex items-center gap-2 mb-2">
                                                                     {blog.published ? (
-                                                                        <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                                                        <Badge className="bg-green-100 text-green-700">
                                                                             公開中
                                                                         </Badge>
                                                                     ) : (
@@ -423,7 +423,7 @@ export default async function MemberPage({ params }: Context) {
                                                                         </Badge>
                                                                     )}
                                                                 </div>
-                                                                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                                                <h3 className="text-xl font-bold mb-2 group-hover:text-green-900 transition-colors line-clamp-2">
                                                                     {blog.title}
                                                                 </h3>
                                                                 {blog.content && (
@@ -450,7 +450,7 @@ export default async function MemberPage({ params }: Context) {
                                                                     {blog.slug && (
                                                                         <div className="flex items-center gap-1">
                                                                             <span>
-                                                                                �
+                                                                                #
                                                                             </span>
                                                                             {
                                                                                 blog.slug
