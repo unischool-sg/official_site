@@ -107,7 +107,7 @@ export default async function BlogsPage({ params }: Context) {
                                         className="h-8 w-8 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-sm font-bold text-white">
+                                    <div className="h-8 w-8 rounded-full bg-green-900 flex items-center justify-center text-sm font-bold text-white">
                                         {authorName.charAt(0).toUpperCase()}
                                     </div>
                                 )}
@@ -164,7 +164,7 @@ export default async function BlogsPage({ params }: Context) {
                                     className="h-16 w-16 rounded-full object-cover"
                                 />
                             ) : (
-                                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
+                                <div className="h-16 w-16 rounded-full bg-green-900 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
                                     {authorName.charAt(0).toUpperCase()}
                                 </div>
                             )}

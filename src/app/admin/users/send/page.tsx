@@ -57,7 +57,7 @@ export default function SendMailPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90 p-6">
+        <div className="min-h-screen bg-neutral-50 p-6">
             <div className="max-w-4xl mx-auto space-y-6">
                 {/* ヘッダー */}
                 <div className="flex items-center justify-between">
@@ -70,7 +70,7 @@ export default function SendMailPage() {
                 </div>
 
                 {/* メインカード */}
-                <Card className="shadow-lg border-0">
+                <Card className="border border-neutral-200 shadow-none">
                     <CardHeader className="space-y-2">
                         <div className="flex items-center gap-3">
                             <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">

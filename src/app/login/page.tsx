@@ -22,25 +22,20 @@ export default function LoginPage() {
     const [error, setError] = useState<string | null>(null);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4">
-            <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50 p-4">
             <BlurFade delay={0.3} inView>
-                <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
+                <Card className="w-full max-w-md mx-auto border border-neutral-200 bg-white shadow-none">
                     <CardHeader className="space-y-4 text-center pb-6">
                         <div className="flex justify-center mb-4">
-                            <div className="relative">
-                                <Image
-                                    src="/assets/logo.png"
-                                    alt="UniSchool Logo"
-                                    width={80}
-                                    height={80}
-                                    className="rounded-full"
-                                />
-                                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse"></div>
-                            </div>
+                            <Image
+                                src="/assets/logo.png"
+                                alt="UniSchool Logo"
+                                width={80}
+                                height={80}
+                                className="rounded-full"
+                            />
                         </div>
-                        <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                        <CardTitle className="text-3xl font-bold text-neutral-950">
                             UniSchool
                         </CardTitle>
                         <CardDescription className="text-base text-muted-foreground">
@@ -73,7 +68,7 @@ export default function LoginPage() {
                                     type="email"
                                     placeholder="your@email.com"
                                     required
-                                    className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
+                                    className="h-12"
                                 />
                             </div>
 
@@ -89,14 +84,14 @@ export default function LoginPage() {
                                     type="password"
                                     placeholder="•••••••"
                                     required
-                                    className="h-12 transition-all duration-200 focus:scale-[1.02] focus:shadow-lg"
+                                    className="h-12"
                                 />
                             </div>
 
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full h-12 text-base font-medium bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full h-12 text-base font-medium bg-neutral-950 hover:bg-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? (
                                     <div className="flex items-center space-x-2">
@@ -118,13 +113,6 @@ export default function LoginPage() {
                     </CardContent>
                 </Card>
             </BlurFade>
-
-            <style jsx>{`
-        .bg-grid-pattern {
-          background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-          background-size: 20px 20px;
-        }
-      `}</style>
         </div>
     );
 }

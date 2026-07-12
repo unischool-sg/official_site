@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function TokenNotFound() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/80 to-background/60 p-4">
-            <Card className="w-full max-w-3xl mx-auto shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
+        <div className="min-h-screen flex items-center justify-center bg-neutral-50 p-4">
+            <Card className="w-full max-w-3xl mx-auto border border-neutral-200 bg-white shadow-none">
                 <CardContent className="pt-6">
                     <div className="text-center space-y-4">
                         <h2 className="text-2xl font-bold text-destructive">

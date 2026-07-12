@@ -19,7 +19,7 @@ export function AdminFunctionCard({
 }: AdminFunctionCardProps) {
     return (
         <Link href={href}>
-            <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-primary/50">
+            <Card className="h-full transition-colors cursor-pointer border border-neutral-200 hover:border-green-900/40 shadow-none">
                 <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">

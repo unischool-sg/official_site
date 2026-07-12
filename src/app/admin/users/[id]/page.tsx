@@ -71,7 +71,7 @@ export default async function UserPage(context: ControlContext) {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90 p-6">
+        <div className="min-h-screen bg-neutral-50 p-6">
             <div className="max-w-4xl mx-auto space-y-6">
                 {/* ヘッダー */}
                 <div className="flex items-center justify-between">
@@ -84,11 +84,11 @@ export default async function UserPage(context: ControlContext) {
                 </div>
 
                 {/* メインカード */}
-                <Card className="shadow-lg border-0">
+                <Card className="border border-neutral-200 shadow-none">
                     <CardHeader className="space-y-4 pb-8">
                         <div className="flex items-start justify-between">
                             <div className="space-y-2">
-                                <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                                <CardTitle className="text-3xl font-bold text-neutral-950">
                                     {userData.name}
                                 </CardTitle>
                                 <CardDescription className="text-base flex items-center gap-2">
@@ -219,7 +219,7 @@ export default async function UserPage(context: ControlContext) {
                 </Card>
 
                 {/* アクションボタン */}
-                <Card className="shadow-lg border-0">
+                <Card className="border border-neutral-200 shadow-none">
                     <CardContent className="pt-6">
                         <Buttons userData={userData} />
                     </CardContent>

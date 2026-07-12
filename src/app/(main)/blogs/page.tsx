@@ -30,14 +30,14 @@ export default async function BlogsPage() {
     return (
         <div className="w-full">
             {/* ヒーローセクション */}
-            <div className="w-full border-b border-neutral-200 bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-neutral-900">
+            <div className="w-full border-b border-neutral-200 bg-neutral-100">
                 <Container className="py-20">
                     <BlurFade delay={0.2} inView>
                         <div className="text-center">
                             <h1 className="text-5xl font-bold mb-4">
                                 Our <span className="text-green-900">Blog</span>
                             </h1>
-                            <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
                                 メンバーの活動や技術、日々の出来事を発信しています
                             </p>
                         </div>
@@ -46,18 +46,18 @@ export default async function BlogsPage() {
             </div>
 
             {/* ブログ一覧セクション */}
-            <div className="w-full bg-white dark:bg-neutral-900">
+            <div className="w-full bg-white">
                 <Container className="py-20">
                     {blogs.length === 0 ? (
                         <BlurFade delay={0.3} inView>
                             <div className="text-center py-20">
-                                <div className="w-24 h-24 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto mb-6">
+                                <div className="w-24 h-24 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center mx-auto mb-6">
                                     <span className="text-5xl">📝</span>
                                 </div>
                                 <h2 className="text-2xl font-semibold mb-3">
                                     まだブログがありません
                                 </h2>
-                                <p className="text-neutral-600 dark:text-neutral-400">
+                                <p className="text-neutral-600">
                                     近日中に公開予定です。お楽しみに！
                                 </p>
                             </div>
@@ -82,11 +82,11 @@ export default async function BlogsPage() {
                                         <Link
                                             href={`/blogs/${blog.slug || blog.id}`}
                                         >
-                                            <Card className="h-full transition-all hover:shadow-xl hover:scale-[1.02] group border-2 hover:border-primary/50">
+                                            <Card className="h-full transition-colors group border border-neutral-200 hover:border-green-900/40 shadow-none">
                                                 <CardContent className="p-6 flex flex-col h-full">
                                                     {/* ヘッダー情報 */}
                                                     <div className="flex items-center justify-between mb-4">
-                                                        <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                                        <Badge className="bg-green-100 text-green-700">
                                                             公開中
                                                         </Badge>
                                                         {blog.slug && (
@@ -97,7 +97,7 @@ export default async function BlogsPage() {
                                                     </div>
 
                                                     {/* タイトル */}
-                                                    <h2 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                                                    <h2 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-green-900 transition-colors">
                                                         {blog.title}
                                                     </h2>
 
@@ -120,7 +120,7 @@ export default async function BlogsPage() {
                                                         </div>
                                                         {blog.author && (
                                                             <div className="flex items-center gap-2">
-                                                                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-xs font-bold text-white">
+                                                                <div className="w-6 h-6 rounded-full bg-green-900 flex items-center justify-center text-xs font-bold text-white">
                                                                     {blog.author.name
                                                                         .charAt(
                                                                             0,
