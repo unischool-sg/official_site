@@ -46,15 +46,15 @@ function linkifyBio(text: string): string {
 const roleConfig = {
     ADMIN: {
         label: "管理者",
-        color: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+        color: "bg-neutral-100 text-neutral-700",
     },
     TEAM_LEADER: {
         label: "チームリーダー",
-        color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+        color: "bg-neutral-100 text-neutral-700",
     },
     MEMBER: {
         label: "メンバー",
-        color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+        color: "bg-neutral-100 text-neutral-700",
     },
 };
 
@@ -62,22 +62,22 @@ const roleConfig = {
 const teamConfig = {
     EDIT: {
         label: "編集チーム",
-        color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+        color: "bg-neutral-100 text-neutral-700",
         icon: "✂️",
     },
     VIDEO: {
         label: "撮影チーム",
-        color: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+        color: "bg-neutral-100 text-neutral-700",
         icon: "📹",
     },
     DEVELOP: {
         label: "開発チーム",
-        color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400",
+        color: "bg-neutral-100 text-neutral-700",
         icon: "💻",
     },
     ALL: {
         label: "全体",
-        color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
+        color: "bg-neutral-100 text-neutral-700",
         icon: "🌐",
     },
 };
@@ -203,11 +203,11 @@ export default async function MemberPage({ params }: Context) {
                                                     href={`https://twitter.com/${user.profile.twitterUsername}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="p-2 rounded-full bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                                                    className="p-2 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors"
                                                     title={`@${user.profile.twitterUsername}`}
                                                 >
                                                     <svg
-                                                        className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                                                        className="h-5 w-5 text-neutral-700"
                                                         viewBox="0 0 24 24"
                                                         fill="currentColor"
                                                     >
@@ -221,10 +221,10 @@ export default async function MemberPage({ params }: Context) {
                                                     href={`https://instagram.com/${user.profile.instagramUsername}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="p-2 rounded-full bg-pink-100 dark:bg-pink-900/30 hover:bg-pink-200 dark:hover:bg-pink-900/50 transition-colors"
+                                                    className="p-2 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors"
                                                     title={`@${user.profile.instagramUsername}`}
                                                 >
-                                                    <Instagram className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+                                                    <Instagram className="h-5 w-5 text-neutral-700" />
                                                 </Link>
                                             )}
                                             {user.profile?.githubUsername && (
@@ -232,13 +232,13 @@ export default async function MemberPage({ params }: Context) {
                                                     href={`https://github.com/${user.profile.githubUsername}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                                    className="p-2 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors"
                                                     title={
                                                         user.profile
                                                             .githubUsername
                                                     }
                                                 >
-                                                    <Github className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+                                                    <Github className="h-5 w-5 text-neutral-700" />
                                                 </Link>
                                             )}
                                         </div>

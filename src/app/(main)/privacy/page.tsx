@@ -131,7 +131,7 @@ export default function Privacy() {
                     <li>Google API から取得した情報の使用は、
                         <a href="https://developers.google.com/terms/api-services-user-data-policy"
                            target="_blank" rel="noopener noreferrer"
-                           className="underline text-blue-600 hover:text-blue-800">
+                           className="underline text-green-900 hover:underline">
                             Google API Services User Data Policy
                         </a> を含む、Google の利用制限に準拠します。
                     </li>

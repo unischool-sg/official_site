@@ -121,7 +121,7 @@ export default function Buttons({ userData }: ButtonsProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <Button
                         variant="default"
-                        className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white"
+                        className="w-full h-11"
                         onClick={() => {
                             router.push(`/admin/users/${userData.id}/send`);
                         }}
@@ -131,7 +131,7 @@ export default function Buttons({ userData }: ButtonsProps) {
                     </Button>
                     <Button
                         variant="outline"
-                        className="w-full h-11 border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950/30"
+                        className="w-full h-11"
                         onClick={handleResendVerification}
                         disabled={!!userData.emailVerified}
                     >
@@ -148,7 +148,7 @@ export default function Buttons({ userData }: ButtonsProps) {
                 </h4>
                 <Button
                     variant="outline"
-                    className="w-full h-11 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950/30"
+                    className="w-full h-11"
                     onClick={handleSendPasswordReset}
                 >
                     <KeyRound className="mr-2 h-4 w-4" />
@@ -163,7 +163,7 @@ export default function Buttons({ userData }: ButtonsProps) {
                 </h4>
                 <Button
                     variant="outline"
-                    className="w-full h-11 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950/30"
+                    className="w-full h-11"
                     onClick={() => {
                         router.push(`/admin/users/${userData.id}/history`);
                     }}
@@ -173,7 +173,7 @@ export default function Buttons({ userData }: ButtonsProps) {
                 </Button>
                 <Button
                     variant="outline"
-                    className="w-full h-11 border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-950/30"
+                    className="w-full h-11"
                     onClick={() => {
                         router.push(`/admin/users/${userData.id}/profile`);
                     }}

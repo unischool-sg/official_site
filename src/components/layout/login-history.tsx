@@ -36,35 +36,16 @@ interface LoginHistoryViewProps {
 
 // ユーザーエージェントから簡易的にブラウザ情報を抽出
 const getBrowserInfo = (userAgent: string | null) => {
-    if (!userAgent)
-        return {
-            name: "Unknown",
-            color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
-        };
+    if (!userAgent) return { name: "Unknown", color: "bg-neutral-100 text-neutral-700" };
     if (userAgent.includes("Chrome"))
-        return {
-            name: "Chrome",
-            color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-        };
+        return { name: "Chrome", color: "bg-neutral-100 text-neutral-700" };
     if (userAgent.includes("Firefox"))
-        return {
-            name: "Firefox",
-            color: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
-        };
+        return { name: "Firefox", color: "bg-neutral-100 text-neutral-700" };
     if (userAgent.includes("Safari"))
-        return {
-            name: "Safari",
-            color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-        };
+        return { name: "Safari", color: "bg-neutral-100 text-neutral-700" };
     if (userAgent.includes("Edge"))
-        return {
-            name: "Edge",
-            color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400",
-        };
-    return {
-        name: "Other",
-        color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
-    };
+        return { name: "Edge", color: "bg-neutral-100 text-neutral-700" };
+    return { name: "Other", color: "bg-neutral-100 text-neutral-700" };
 };
 
 // 相対時間を表示
@@ -424,19 +405,19 @@ export default function LoginHistoryView({
             </Card>
 
             {/* セキュリティ情報 */}
-            <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-900 dark:bg-blue-950/20">
+            <Card className="border border-neutral-200 bg-neutral-100">
                 <CardContent className="pt-6">
                     <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                            <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center">
+                            <MapPin className="h-5 w-5 text-neutral-700" />
                         </div>
                         <div className="space-y-1">
-                            <h4 className="font-semibold text-blue-900 dark:text-blue-300">
+                            <h4 className="font-semibold text-neutral-900">
                                 {userName
                                     ? "管理者向け情報"
                                     : "セキュリティに関するヒント"}
                             </h4>
-                            <p className="text-sm text-blue-800 dark:text-blue-400">
+                            <p className="text-sm text-neutral-600">
                                 {userName ? (
                                     <>
                                         このユーザーの身に覚えのないログイン履歴がある場合は、セキュリティ上の問題がある可能性があります。

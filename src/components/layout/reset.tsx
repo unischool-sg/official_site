@@ -66,12 +66,12 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             </div>
 
             {/* 安全性のヒント */}
-            <div className="p-6 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
-                <h4 className="font-semibold text-blue-900 dark:text-blue-300 mb-3 flex items-center gap-2 text-base">
+            <div className="p-6 rounded-lg bg-neutral-100 border border-neutral-200">
+                <h4 className="font-semibold text-neutral-900 mb-3 flex items-center gap-2 text-base">
                     <KeyRound className="h-5 w-5" />
                     安全なパスワードのヒント
                 </h4>
-                <ul className="text-sm text-blue-800 dark:text-blue-400 space-y-1.5 ml-6 list-disc">
+                <ul className="text-sm text-neutral-600 space-y-1.5 ml-6 list-disc">
                     <li>8文字以上の長さ</li>
                     <li>大文字と小文字を組み合わせる</li>
                     <li>数字や記号を含める</li>

@@ -56,7 +56,7 @@ export default async function AdminPage() {
                             icon={Home}
                             title="ダッシュボード"
                             description="管理画面のホーム"
-                            colorClass="bg-primary/10 text-primary"
+                            colorClass="bg-neutral-100 text-neutral-700"
                         />
 
                         <AdminFunctionCard
@@ -64,7 +64,7 @@ export default async function AdminPage() {
                             icon={UserIcon}
                             title="プロフィール"
                             description="アカウント設定"
-                            colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                            colorClass="bg-neutral-100 text-neutral-700"
                         />
 
                         {user.role === "ADMIN" && (
@@ -73,7 +73,7 @@ export default async function AdminPage() {
                                 icon={Users}
                                 title="ユーザー管理"
                                 description="メンバー管理"
-                                colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
+                                colorClass="bg-neutral-100 text-neutral-700"
                             />
                         )}
 
@@ -82,7 +82,7 @@ export default async function AdminPage() {
                             icon={FileText}
                             title="投稿管理"
                             description="ブログ記事管理"
-                            colorClass="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+                            colorClass="bg-green-100 text-green-900"
                         />
 
                         <AdminFunctionCard
@@ -90,7 +90,7 @@ export default async function AdminPage() {
                             icon={History}
                             title="セッション履歴"
                             description="ログイン履歴"
-                            colorClass="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400"
+                            colorClass="bg-neutral-100 text-neutral-700"
                         />
                     </div>
                 </div>
