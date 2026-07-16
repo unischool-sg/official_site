@@ -12,7 +12,7 @@ function GridCard({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex flex-col bg-neutral-100 border border-neutral-200 rounded-xl p-10 h-full">
+        <div className="flex flex-col bg-neutral-100 border border-neutral-200 rounded-xl p-6 sm:p-10 h-full">
             <Icon className="text-green-900 mb-2" size={30} />
             <h1 className="text-2xl lg:text-3xl font-semibold mb-4">{title}</h1>
             <p className="flex-grow">{children}</p>
@@ -24,10 +24,10 @@ export function About() {
     return (
         <Container id="about" className="mt-25">
             <BlurFade delay={0.7} inView>
-                <div className="flex bg-neutral-100 border border-neutral-200 w-full rounded-xl mx-auto p-10 gap-10">
-                    <div className="flex flex-col">
+                <div className="flex flex-col md:flex-row bg-neutral-100 border border-neutral-200 w-full rounded-xl mx-auto p-6 sm:p-10 gap-6 md:gap-10">
+                    <div className="flex flex-col shrink-0">
                         <UsersRound className="text-green-900 mb-2" size={30} />
-                        <h1 className="text-4xl font-semibold mb-4">
+                        <h1 className="text-3xl sm:text-4xl font-semibold mb-4">
                             What are <span className="text-green-900">We</span>?
                         </h1>
                     </div>

@@ -58,15 +58,15 @@ export default async function UsersPage() {
     });
 
     return (
-        <div className="p-6 space-y-6">
-            <div className="flex justify-between items-center">
+        <div className="p-4 sm:p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold">ユーザー管理</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold">ユーザー管理</h1>
                     <p className="text-muted-foreground mt-1">
                         ユーザーの情報を管理します
                     </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <Link href="/admin/users/send">
                         <Button variant="outline">
                             <span className="mr-2">✉️</span>

@@ -94,7 +94,7 @@ export default function LoginHistoryView({
                     <History className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-xl sm:text-3xl font-bold">
                         {userName
                             ? `${userName} のログイン履歴`
                             : "ログイン履歴"}
@@ -158,7 +158,7 @@ export default function LoginHistoryView({
             {/* ログイン履歴テーブル */}
             <Card>
                 <CardHeader>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div>
                             <CardTitle>ログイン履歴</CardTitle>
                             <CardDescription>
@@ -296,13 +296,13 @@ export default function LoginHistoryView({
 
                             {/* ページネーション（下部） */}
                             {totalPages > 1 && (
-                                <div className="flex items-center justify-between px-4 py-4 border-t">
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-4 border-t">
                                     <div className="text-sm text-muted-foreground">
                                         {startIndex + 1}-
                                         {Math.min(endIndex, history.length)} /{" "}
                                         {history.length}件
                                     </div>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2 flex-wrap">
                                         <Button
                                             variant="outline"
                                             size="sm"

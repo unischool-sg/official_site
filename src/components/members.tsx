@@ -15,9 +15,9 @@ function MemberCard({ member }: { member: Member }) {
     return (
         <Link
             href={`/members/${member.id}`}
-            className="flex flex-col items-center text-center hover:scale-105 transition-transform"
+            className="flex flex-col items-center text-center hover:scale-105 transition-transform w-28 sm:w-40 md:w-59 shrink-0"
         >
-            <div className="max-h-70 max-w-59 w-full h-full rounded-lg">
+            <div className="max-h-70 w-full h-full rounded-lg">
                 <Image
                     src={member.image}
                     alt={member.name}
@@ -25,8 +25,8 @@ function MemberCard({ member }: { member: Member }) {
                     height={400}
                     className="w-full h-auto rounded-md mb-4"
                 />
-                <h2 className="text-lg font-medium">{member.name}</h2>
-                <p className="text-sm text-neutral-600">{member.role}</p>
+                <h2 className="text-sm sm:text-lg font-medium">{member.name}</h2>
+                <p className="text-xs sm:text-sm text-neutral-600">{member.role}</p>
             </div>
         </Link>
     );
@@ -44,7 +44,7 @@ function MemberGrid({
     return (
         <div className={className}>
             <p className="text-xs text-neutral-400">{title}</p>
-            <div className={`flex py-3 gap-5 mt-3`}>
+            <div className="flex flex-wrap py-3 gap-5 mt-3">
                 {members.map((member, index) => (
                     <MemberCard key={index} member={member} />
                 ))}
@@ -131,8 +131,8 @@ export async function Members() {
                 </p>
 
                 <div className="flex flex-col py-5 h-full">
-                    <div className="flex flex-col gap-y-20">
-                        <div className="flex gap-x-20 items-stretch">
+                    <div className="flex flex-col gap-y-10 md:gap-y-20">
+                        <div className="flex flex-col sm:flex-row gap-x-20 gap-y-10 items-start">
                             <BlurFade delay={0.4} inView>
                                 <MemberGrid
                                     title="編集者"

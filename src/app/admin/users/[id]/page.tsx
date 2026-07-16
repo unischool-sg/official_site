@@ -85,9 +85,9 @@ export default async function UserPage(context: ControlContext) {
                 {/* メインカード */}
                 <Card className="border border-neutral-200 shadow-none">
                     <CardHeader className="space-y-4 pb-8">
-                        <div className="flex items-start justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                             <div className="space-y-2">
-                                <CardTitle className="text-3xl font-bold text-neutral-950">
+                                <CardTitle className="text-2xl sm:text-3xl font-bold text-neutral-950">
                                     {userData.name}
                                 </CardTitle>
                                 <CardDescription className="text-base flex items-center gap-2">
@@ -95,7 +95,7 @@ export default async function UserPage(context: ControlContext) {
                                     {userData.email}
                                 </CardDescription>
                             </div>
-                            <div className="flex flex-col gap-2 items-end">
+                            <div className="flex flex-row sm:flex-col gap-2 sm:items-end">
                                 <Badge className={roleColors[userData.role]}>
                                     <Shield className="mr-1 h-3 w-3" />
                                     {userData.role}

@@ -41,14 +41,14 @@ export default async function ProfilePage() {
     };
 
     return (
-        <div className="p-6 space-y-6 max-w-5xl mx-auto">
+        <div className="p-4 sm:p-6 space-y-6 max-w-5xl mx-auto">
             {/* ヘッダー */}
             <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 w-16 h-16 rounded-full bg-neutral-950 flex items-center justify-center text-white text-2xl font-bold">
+                <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-neutral-950 flex items-center justify-center text-white text-xl sm:text-2xl font-bold">
                     {user.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                    <h1 className="text-3xl font-bold">{user.name}</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold">{user.name}</h1>
                     <p className="text-muted-foreground mt-1 flex items-center gap-2">
                         <Mail className="h-4 w-4" />
                         {user.email}

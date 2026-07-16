@@ -89,12 +89,12 @@ export default async function BlogsPage({ params }: Context) {
                     <Badge variant="outline" className="mb-2">
                         ブログ記事
                     </Badge>
-                    <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight lg:text-5xl">
                         {blog.title}
                     </h1>
 
                     {/* メタ情報 */}
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Link
                                 href={`/members/${blog.author.id}`}
