@@ -34,10 +34,10 @@ export default async function BlogsPage() {
                 <Container className="py-20">
                     <BlurFade delay={0.2} inView>
                         <div className="text-center">
-                            <h1 className="text-5xl font-bold mb-4">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                                 Our <span className="text-green-900">Blog</span>
                             </h1>
-                            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
+                            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto">
                                 メンバーの活動や技術、日々の出来事を発信しています
                             </p>
                         </div>

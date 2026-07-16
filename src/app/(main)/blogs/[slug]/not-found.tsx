@@ -11,11 +11,11 @@ export default function NotFound() {
                     <FileQuestion className="h-12 w-12 text-muted-foreground" />
                 </div>
 
-                <h1 className="text-4xl font-bold tracking-tight">
+                <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
                     ブログが見つかりません
                 </h1>
 
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base sm:text-lg text-muted-foreground">
                     お探しのブログ記事は削除されたか、非公開になっている可能性があります。
                 </p>
 

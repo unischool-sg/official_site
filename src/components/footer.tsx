@@ -13,9 +13,9 @@ export function Footer({ user }: FooterProps) {
     const isLogin = !!user;
 
     return (
-        <footer className="border-t border-neutral-200 pt-8 pb-25 mt-30">
+        <footer className="border-t border-neutral-200 pt-8 pb-16 sm:pb-25 mt-20 sm:mt-30">
             <Container>
-                <div className="flex items-top justify-between">
+                <div className="flex flex-col md:flex-row md:items-top gap-8 md:justify-between">
                     <BlurFade delay={0.5} inView>
                         <div className="flex flex-col">
                             <Link href="/">
@@ -30,7 +30,7 @@ export function Footer({ user }: FooterProps) {
                             <p className="text-xs text-neutral-400 mt-4">
                                 © 2025 UniSchool. All rights reserved.
                             </p>
-                            <p className="text-xs text-neutral-400 flex justify-center">
+                            <p className="text-xs text-neutral-400 flex flex-wrap items-center">
                                 当チームは
                                 <Link
                                     href="https://www.sandagakuen.ed.jp/"
@@ -45,7 +45,7 @@ export function Footer({ user }: FooterProps) {
                         </div>
                     </BlurFade>
 
-                    <nav className="flex space-x-6">
+                    <nav className="flex flex-wrap gap-x-4 gap-y-2 md:gap-x-6">
                         <BlurFade delay={0.6} inView>
                             <Link
                                 href="#about"

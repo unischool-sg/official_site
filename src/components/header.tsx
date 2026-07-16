@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { Button } from "@/components/ui/button";
+import { MobileNav } from "@/components/mobile-nav";
 import { User } from "@/lib/service/user";
 
 interface HeaderProps {
@@ -22,11 +23,12 @@ export async function Header({ user }: HeaderProps) {
                             alt="Logo"
                             width={120}
                             height={40}
+                            className="h-9 w-auto sm:h-10"
                         />
                     </Link>
                 </div>
 
-                <nav className="flex justify-center items-center space-x-4">
+                <nav className="hidden md:flex justify-center items-center space-x-4">
                     <BlurFade delay={0.5} inView>
                         <Link
                             href="/#about"
@@ -76,6 +78,8 @@ export async function Header({ user }: HeaderProps) {
                         </Link>
                     </BlurFade>
                 </nav>
+
+                <MobileNav isLogin={isLogin} />
             </div>
         </Container>
     );
